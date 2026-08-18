@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400" role="img" aria-label="Adv. Pankaj Tiwari">
+  <defs>
+    <linearGradient id="bg" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="400" y2="400">
+      <stop offset="0%" stop-color="#123f47"/><stop offset="100%" stop-color="#08262c"/>
+    </linearGradient>
+    <linearGradient id="ink" gradientUnits="userSpaceOnUse" x1="110" y1="130" x2="290" y2="270">
+      <stop offset="0%" stop-color="#f4e2ac"/><stop offset="55%" stop-color="#dcb85f"/><stop offset="100%" stop-color="#b98f34"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" fill="url(#bg)"/>
+  <g opacity="0.11" fill="none" stroke="#e8d29a" stroke-width="9" stroke-linecap="round" transform="translate(200,208) scale(0.86) translate(-256,-256)">
+    <path d="M256 132 V 372"/><path d="M112 186 H 400"/>
+    <path d="M64 252 Q112 320 160 252"/><path d="M352 252 Q400 320 448 252"/>
+    <path d="M190 372 Q256 352 322 372"/>
+  </g>
+  <circle cx="200" cy="200" r="150" fill="none" stroke="#e8d29a" stroke-width="2" opacity="0.22"/>
+  <text x="200" y="200" text-anchor="middle" dominant-baseline="central" font-family="Georgia, 'Times New Roman', serif" font-size="152" font-weight="700" fill="url(#ink)">PT</text>
+</svg>

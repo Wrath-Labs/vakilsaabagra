@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1400" viewBox="0 0 1400 1400">
+  <defs>
+    <linearGradient id="navy" gradientUnits="userSpaceOnUse" x1="20" y1="550" x2="320" y2="850">
+      <stop offset="0%" stop-color="#1b3f68"/><stop offset="50%" stop-color="#0f2540"/><stop offset="100%" stop-color="#081527"/>
+    </linearGradient>
+    <linearGradient id="gold" gradientUnits="userSpaceOnUse" x1="60" y1="560" x2="300" y2="840">
+      <stop offset="0%" stop-color="#f7e3a1"/><stop offset="35%" stop-color="#dcb85f"/><stop offset="70%" stop-color="#c39c40"/><stop offset="100%" stop-color="#9d7728"/>
+    </linearGradient>
+    <linearGradient id="goldtext" gradientUnits="userSpaceOnUse" x1="360" y1="740" x2="1100" y2="820">
+      <stop offset="0%" stop-color="#b3862a"/><stop offset="45%" stop-color="#d4ad50"/><stop offset="100%" stop-color="#a87f27"/>
+    </linearGradient>
+  </defs>
+
+  <!-- content band: 1400 x 380, centred vertically (y 510..890) -->
+  <g transform="translate(0,510)">
+    <g transform="translate(24,38) scale(0.594)">
+      <rect width="512" height="512" rx="116" fill="url(#navy)"/>
+      <rect x="16" y="16" width="480" height="480" rx="102" fill="none" stroke="url(#gold)" stroke-width="4" opacity="0.5"/>
+      <g fill="none" stroke="url(#gold)" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M214 132 Q256 62 298 132" stroke-width="13"/>
+        <path d="M256 62 V 40" stroke-width="9"/>
+        <path d="M256 132 V 372" stroke-width="16"/>
+        <path d="M112 186 H 400" stroke-width="16"/>
+        <path d="M112 186 L 76 252 M112 186 L 148 252" stroke-width="8"/>
+        <path d="M400 186 L 364 252 M400 186 L 436 252" stroke-width="8"/>
+        <path d="M64 252 Q112 320 160 252" stroke-width="15"/>
+        <path d="M352 252 Q400 320 448 252" stroke-width="15"/>
+        <path d="M190 372 Q256 352 322 372" stroke-width="15"/>
+      </g>
+      <circle cx="256" cy="40" r="11" fill="url(#gold)"/>
+      <circle cx="256" cy="186" r="22" fill="url(#gold)"/>
+      <circle cx="256" cy="186" r="8" fill="#0f2540"/>
+      <rect x="166" y="386" width="180" height="18" rx="9" fill="url(#gold)"/>
+      <rect x="60" y="246" width="104" height="12" rx="6" fill="url(#gold)"/>
+      <rect x="348" y="246" width="104" height="12" rx="6" fill="url(#gold)"/>
+    </g>
+
+    <text x="368" y="212" font-family="Georgia, 'Times New Roman', serif" font-size="122" font-weight="700" fill="#0f2540">Vakil Saab</text>
+    <rect x="372" y="244" width="612" height="4" rx="2" fill="url(#goldtext)" opacity="0.85"/>
+    <text x="374" y="312" font-family="Helvetica, Arial, sans-serif" font-size="35" font-weight="600" fill="url(#goldtext)" letter-spacing="7.5">AGRA &#183; ADVOCATE DIRECTORY</text>
+  </g>
+</svg>

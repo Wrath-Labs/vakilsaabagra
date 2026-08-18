@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200">
+  <defs>
+    <linearGradient id="bg" gradientUnits="userSpaceOnUse" x1="0" y1="285" x2="1200" y2="915">
+      <stop offset="0%" stop-color="#173a60"/><stop offset="55%" stop-color="#0f2540"/><stop offset="100%" stop-color="#08172a"/>
+    </linearGradient>
+    <linearGradient id="gold" gradientUnits="userSpaceOnUse" x1="80" y1="330" x2="300" y2="560">
+      <stop offset="0%" stop-color="#f7e3a1"/><stop offset="40%" stop-color="#dcb85f"/><stop offset="100%" stop-color="#a9822f"/>
+    </linearGradient>
+    <linearGradient id="goldtext" gradientUnits="userSpaceOnUse" x1="80" y1="600" x2="900" y2="700">
+      <stop offset="0%" stop-color="#e6c876"/><stop offset="50%" stop-color="#d4ad50"/><stop offset="100%" stop-color="#c09a3c"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="1200" fill="url(#bg)"/>
+  <g transform="translate(0,285)">
+    <!-- decorative rings -->
+    <circle cx="1075" cy="150" r="230" fill="none" stroke="#dcb85f" stroke-width="2" opacity="0.13"/>
+    <circle cx="1075" cy="150" r="330" fill="none" stroke="#dcb85f" stroke-width="2" opacity="0.09"/>
+    <circle cx="70" cy="560" r="200" fill="none" stroke="#dcb85f" stroke-width="2" opacity="0.10"/>
+
+    <g transform="translate(80,58) scale(0.293)">
+      <rect width="512" height="512" rx="116" fill="none"/>
+      <g fill="none" stroke="url(#gold)" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M214 132 Q256 62 298 132" stroke-width="13"/>
+        <path d="M256 62 V 40" stroke-width="9"/>
+        <path d="M256 132 V 372" stroke-width="16"/>
+        <path d="M112 186 H 400" stroke-width="16"/>
+        <path d="M112 186 L 76 252 M112 186 L 148 252" stroke-width="8"/>
+        <path d="M400 186 L 364 252 M400 186 L 436 252" stroke-width="8"/>
+        <path d="M64 252 Q112 320 160 252" stroke-width="15"/>
+        <path d="M352 252 Q400 320 448 252" stroke-width="15"/>
+        <path d="M190 372 Q256 352 322 372" stroke-width="15"/>
+      </g>
+      <circle cx="256" cy="40" r="11" fill="url(#gold)"/>
+      <circle cx="256" cy="186" r="22" fill="url(#gold)"/>
+      <circle cx="256" cy="186" r="8" fill="#0f2540"/>
+      <rect x="166" y="386" width="180" height="18" rx="9" fill="url(#gold)"/>
+      <rect x="60" y="246" width="104" height="12" rx="6" fill="url(#gold)"/>
+      <rect x="348" y="246" width="104" height="12" rx="6" fill="url(#gold)"/>
+    </g>
+    <text x="248" y="130" font-family="Georgia, 'Times New Roman', serif" font-size="62" font-weight="700" fill="#ffffff">Vakil Saab Agra</text>
+    <text x="252" y="180" font-family="Helvetica, Arial, sans-serif" font-size="24" font-weight="600" fill="url(#goldtext)" letter-spacing="6">ADVOCATE DIRECTORY</text>
+
+    <text x="80" y="320" font-family="Georgia, 'Times New Roman', serif" font-size="76" font-weight="700" fill="#ffffff">Find the right advocate</text>
+    <text x="80" y="404" font-family="Georgia, 'Times New Roman', serif" font-size="76" font-weight="700" fill="url(#goldtext)">in Agra &#8212; fast.</text>
+    <text x="80" y="466" font-family="Helvetica, Arial, sans-serif" font-size="30" fill="#a8bdd4">Criminal &#183; Family &#183; Property &#183; Cheque Bounce &#183; Consumer &#183; Corporate</text>
+
+    <rect x="80" y="510" width="330" height="66" rx="33" fill="url(#goldtext)"/>
+    <text x="245" y="553" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="27" font-weight="700" fill="#0f2540" letter-spacing="1">Browse Advocates</text>
+    <text x="452" y="553" font-family="Helvetica, Arial, sans-serif" font-size="26" fill="#8ea6c2">vakilsaabagra.com</text>
+  </g>
+</svg>

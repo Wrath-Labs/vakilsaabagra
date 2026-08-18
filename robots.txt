@@ -1,0 +1,17 @@
+# Vakil Saab Agra — https://www.vakilsaabagra.com
+User-agent: *
+Allow: /
+Disallow: /tools/
+Disallow: /404.html
+
+# Directory listings are the point of this site — let crawlers read the data.
+Allow: /data/
+Allow: /assets/
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+Sitemap: https://www.vakilsaabagra.com/sitemap.xml
