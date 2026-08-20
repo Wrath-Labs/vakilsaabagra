@@ -2,7 +2,7 @@
 /**
  * Point the whole site at a different domain.
  *
- *   node tools/set-domain.js https://www.vakilsaabagra.com
+ *   node tools/set-domain.js https://vakilsaabagra.in
  *   node tools/set-domain.js https://teewrath.github.io/vakilsaabagra
  *
  * Rewrites the canonical, Open Graph, Twitter and JSON-LD URLs in every page,
@@ -21,7 +21,7 @@ const ROOT = path.join(__dirname, '..');
 const next = (process.argv[2] || '').replace(/\/+$/, '');
 
 if (!/^https?:\/\/[^/]+/.test(next)) {
-  console.error('Usage: node tools/set-domain.js https://your-domain.com');
+  console.error('Usage: node tools/set-domain.js https://your-domain.in');
   console.error('       (no trailing slash; a sub-path such as /repo is fine)');
   process.exit(1);
 }
@@ -38,6 +38,11 @@ if (current === next) { console.log(`Already set to ${next} — nothing to do.`)
 const TARGETS = [
   ...fs.readdirSync(ROOT).filter(f => f.endsWith('.html')),
   'js/config.js', 'tools/sync.js', 'robots.txt', 'sitemap.xml',
+  /* added later: the microsite template, the admin page, and the string
+     tables — a canonical URL hiding in any of these is just as wrong */
+  'templates/microsite.html', 'admin/stats.html',
+  'data/i18n/en.json', 'data/i18n/hi.json',
+  'functions/_middleware.js', 'functions/api/track.js',
 ];
 
 let files = 0, hits = 0;

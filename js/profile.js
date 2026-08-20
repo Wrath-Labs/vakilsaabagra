@@ -144,13 +144,17 @@
                   (l.verified ? '<span class="inline-flex items-center gap-1.5 rounded-full bg-[#e8f5ee] px-3 py-1 text-xs font-semibold text-[#0e7a4a] ring-1 ring-[#bfe3d0]">' +
                     tick('h-3 w-3') + T('js.card.verified', 'Verified listing') + '</span>' : '') +
                   (l.featured ? '<span class="rounded-full bg-[#fdf6e3] px-3 py-1 text-xs font-semibold text-[var(--gold)] ring-1 ring-[#e8d9ac]">' +
-                    T('js.card.featured', 'Top rated') + '</span>' : '') +
+                    T('js.card.featured', 'Featured') + '</span>' : '') +
                 '</div>' +
-                '<div class="mt-3 flex items-center gap-2">' + VS.stars(l.rating) +
-                  '<span class="tabular text-sm font-bold text-[var(--ink)]">' + l.rating.toFixed(1) + '</span>' +
-                  '<span class="text-sm text-[var(--muted)]">' +
-                    T('js.profile.fromReviews', 'from {n} client reviews').replace('{n}', l.reviewsCount) + '</span>' +
-                '</div>' +
+                /* no invented stars: the whole row goes when there is no
+                   real feedback, rather than rendering an empty five-star row */
+                (VS.hasReviews(l)
+                  ? '<div class="mt-3 flex items-center gap-2">' + VS.stars(l.rating) +
+                    '<span class="tabular text-sm font-bold text-[var(--ink)]">' + l.rating.toFixed(1) + '</span>' +
+                    '<span class="text-sm text-[var(--muted)]">' +
+                      T('js.profile.fromReviews', 'from {n} client reviews').replace('{n}', l.reviewsCount) + '</span>' +
+                  '</div>'
+                  : '') +
               '</div>' +
             '</div>' +
 
@@ -306,10 +310,9 @@
       },
       areaServed: { '@type': 'City', name: 'Agra' },
       parentOrganization: { '@id': C.url + '/#organization' },
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: l.rating, reviewCount: l.reviewsCount, bestRating: 5, worstRating: 1
-      },
+      /* No aggregateRating. There is no review pipeline behind it, and
+         structured data claiming ratings we do not have is exactly what earns
+         a manual action from Google. It goes back only with real reviews. */
       makesOffer: l.categories.map(function (c) {
         return { '@type': 'Offer', itemOffered: { '@type': 'Service', name: (db.byCategory[c] || {}).name + ' legal services in Agra' } };
       })

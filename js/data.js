@@ -101,23 +101,35 @@
         .every(function (word) { return lawyer.search.indexOf(word) !== -1; });
     },
 
+    /** rating and reviewsCount are null until there is a real review pipeline,
+     *  so every comparison has to treat them as absent rather than as zero —
+     *  null arithmetic silently sorts everything into one indistinguishable
+     *  blob. */
+    num: function (v) { return typeof v === 'number' ? v : -1; },
+
     /** Deterministic ordering so the page never reshuffles between loads. */
     sort: function (list, mode) {
       var out = list.slice();
+      var n = VS.num;
       var cmp = {
         relevance: function (a, b) {
           return (b.featured - a.featured)
-              || (b.rating - a.rating)
+              || (n(b.rating) - n(a.rating))
               || (b.experienceYears - a.experienceYears)
               || a.name.localeCompare(b.name);
         },
         experience: function (a, b) { return b.experienceYears - a.experienceYears || a.name.localeCompare(b.name); },
-        rating:     function (a, b) { return b.rating - a.rating || b.reviewsCount - a.reviewsCount; },
-        reviews:    function (a, b) { return b.reviewsCount - a.reviewsCount || b.rating - a.rating; },
+        rating:     function (a, b) { return (n(b.rating) - n(a.rating)) || (n(b.reviewsCount) - n(a.reviewsCount)) || a.name.localeCompare(b.name); },
+        reviews:    function (a, b) { return (n(b.reviewsCount) - n(a.reviewsCount)) || (n(b.rating) - n(a.rating)) || a.name.localeCompare(b.name); },
         feeLow:     function (a, b) { return a.consultationFee - b.consultationFee || a.name.localeCompare(b.name); },
         name:       function (a, b) { return a.name.localeCompare(b.name); }
       }[mode] || null;
       return cmp ? out.sort(cmp) : out;
+    },
+
+    /** True when at least one advocate has real feedback behind them. */
+    anyReviews: function (list) {
+      return list.some(function (l) { return l.reviewsCount && l.rating; });
     },
 
     money: function (n) {

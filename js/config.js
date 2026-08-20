@@ -6,13 +6,20 @@
 window.VS_CONFIG = {
   name: 'Vakil Saab Agra',
   tagline: 'Agra’s advocate directory',
-  url: 'https://www.vakilsaabagra.com',
+  url: 'https://vakilsaabagra.in',
 
-  /* the number advocates call to get listed, and users call for help */
+  /* The number advocates call to get listed, and users call for help.
+     TODO(subroto): +919876543210 is the stock example number and is NOT real.
+     It appears in the header, the footer, the mobile drawer, the contact page,
+     the FAQ answers, the WhatsApp prefill links and the JSON-LD — grep the repo
+     for 9876543210 to catch every one, since some are written into the HTML
+     rather than read from here. Nothing dials until this is replaced. */
   phone: '+919876543210',
   phoneDisplay: '+91 98765 43210',
   whatsapp: '919876543210',
-  email: 'hello@vakilsaabagra.com',
+  /* TODO(subroto): confirm this mailbox exists and forwards somewhere you
+     read. It is printed on the contact page and in the JSON-LD. */
+  email: 'hello@vakilsaabagra.in',
 
   /* advocate microsites are served at <slug>.<micrositeDomain> */
   micrositeDomain: 'vakilsaabagra.in',
@@ -27,11 +34,15 @@ window.VS_CONFIG = {
   geo: { lat: 27.1767, lng: 78.0081 },
   hours: 'Mon–Sat, 10:00 AM – 7:00 PM',
 
+  /* Real profile URLs only. These are published as schema.org `sameAs`, which
+     is a claim about who we are — pointing it at facebook.com's own home page
+     told Google our brand's profile *is* Facebook. Empty values are skipped.
+     TODO(subroto): fill in the profiles that actually exist, delete the rest. */
   social: {
-    facebook: 'https://www.facebook.com/',
-    instagram: 'https://www.instagram.com/',
-    linkedin: 'https://www.linkedin.com/',
-    youtube: 'https://www.youtube.com/'
+    facebook: '',
+    instagram: '',
+    linkedin: '',
+    youtube: ''
   },
 
   /* Shows a small "sample listings" line in the footer.

@@ -215,6 +215,14 @@ function jsOwnedOrHidden(el) {
 const pageData = {};
 const seenOn = new Map();   /* english text → Set(page) */
 
+/**
+ * Every key the site actually uses right now — the ones this run assigns plus
+ * the ones already stamped into the markup. Anything in en.json that is not in
+ * here belongs to copy that has since been rewritten or deleted, and is pruned
+ * so the file stays an honest list of what needs translating.
+ */
+const liveKeys = new Set();
+
 for (const file of Object.keys(PAGES)) {
   const abs = path.join(ROOT, file);
   if (!fs.existsSync(abs)) { console.warn(`  ! missing ${file}`); continue; }
@@ -225,7 +233,10 @@ for (const file of Object.keys(PAGES)) {
 
   texts.forEach((t) => {
     const el = t.parent;
-    if ('data-i18n' in el.attrs) return;          /* already marked up */
+    if ('data-i18n' in el.attrs) {                /* already marked up */
+      if (el.attrs['data-i18n']) liveKeys.add(el.attrs['data-i18n']);
+      return;
+    }
     if (jsOwnedOrHidden(el)) return;
     if (!translatable(t.raw)) return;
     strings.push({ kind: 'text', node: t, en: normalise(t.raw) });
@@ -233,7 +244,13 @@ for (const file of Object.keys(PAGES)) {
 
   tags.forEach((el) => {
     if (el.inRaw || el.hidden) return;
-    if ('data-i18n-attr' in el.attrs) return;
+    if ('data-i18n-attr' in el.attrs) {
+      el.attrs['data-i18n-attr'].split(',').forEach((pair) => {
+        const key = (pair.split(':')[1] || '').trim();
+        if (key) liveKeys.add(key);
+      });
+      return;
+    }
     if ('data-lang' in el.attrs) return;
     ATTRS.forEach((a) => {
       const v = el.attrs[a];
@@ -284,6 +301,7 @@ ordered.sort((a, b) => {
 ordered.forEach(({ file, s }) => {
   const shared = seenOn.get(s.en).size >= CHROME_THRESHOLD;
   s.key = assign(s.en, shared ? 'common' : PAGES[file], s.kind === 'attr' ? s.attr : null);
+  liveKeys.add(s.key);
 });
 
 /* ------------------------------------------------------------- pass three */
@@ -418,7 +436,10 @@ if (fs.existsSync(EN)) {
      this run skips elements that are already stamped, so it cannot see them
      all and must not judge them. */
   Object.keys(before).forEach((k) => {
-    if (k.indexOf('js.') === 0 && !codeKeys.has(k)) { delete before[k]; pruned++; }
+    const dead = k.indexOf('js.') === 0
+      ? !codeKeys.has(k)
+      : !(liveKeys.has(k) || codeKeys.has(k));
+    if (dead) { delete before[k]; pruned++; }
   });
   merged = Object.assign({}, before, en);
 }
@@ -436,7 +457,7 @@ Object.keys(perPage).forEach((f) => {
   if (perPage[f]) console.log(`  ${f.padEnd(28)} ${perPage[f]}`);
 });
 if (jsKeys) console.log(`  js/*.js                      ${jsKeys} strings built in JavaScript`);
-if (pruned) console.log(`  pruned                       ${pruned} js.* key(s) no longer called`);
+if (pruned) console.log(`  pruned                       ${pruned} key(s) whose copy no longer exists`);
 console.log(`  data/i18n/en.json            ${Object.keys(sorted).length} keys total`);
 
 /* translation status */

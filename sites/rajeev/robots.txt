@@ -1,5 +1,5 @@
-# Adv. Rajeev Upadhyay — rajeev.vakilsaabagra.com
+# Adv. Rajeev Upadhyay — rajeev.vakilsaabagra.in
 User-agent: *
 Allow: /
 
-Sitemap: https://rajeev.vakilsaabagra.com/sitemap.xml
+Sitemap: https://rajeev.vakilsaabagra.in/sitemap.xml

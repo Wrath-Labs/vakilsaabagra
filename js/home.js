@@ -176,7 +176,14 @@
           geo: { '@type': 'GeoCoordinates', latitude: C.geo.lat, longitude: C.geo.lng },
           areaServed: { '@type': 'City', name: 'Agra', containedInPlace: { '@type': 'State', name: 'Uttar Pradesh' } },
           openingHours: 'Mo-Sa 10:00-19:00',
-          sameAs: Object.keys(C.social).map(function (k) { return C.social[k]; })
+          /* only profiles that actually exist — an empty or placeholder sameAs
+             is a false claim about who we are, in machine-readable form */
+          sameAs: (function () {
+            var out = Object.keys(C.social)
+              .map(function (k) { return C.social[k]; })
+              .filter(function (v) { return v && v.indexOf('http') === 0; });
+            return out.length ? out : undefined;
+          })()
         },
         {
           '@type': 'WebSite',

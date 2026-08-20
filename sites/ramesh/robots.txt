@@ -1,5 +1,5 @@
-# Adv. Ramesh Chandra Chauhan — ramesh.vakilsaabagra.com
+# Adv. Ramesh Chandra Chauhan — ramesh.vakilsaabagra.in
 User-agent: *
 Allow: /
 
-Sitemap: https://ramesh.vakilsaabagra.com/sitemap.xml
+Sitemap: https://ramesh.vakilsaabagra.in/sitemap.xml

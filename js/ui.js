@@ -202,7 +202,17 @@
   }
 
   /* ----------------------------------------------------------- star row */
+  /**
+   * Renders nothing at all when there is no real feedback behind it. An empty
+   * five-star row or a "(0)" reads as a bad review rather than as no review,
+   * and inventing the numbers on a legal directory is not an option.
+   */
+  function hasReviews(l) {
+    return !!(l && l.reviewsCount && l.rating);
+  }
+
   function stars(rating) {
+    if (!rating) return '';
     var full = Math.floor(rating);
     var half = rating - full >= 0.35;
     var out = '';
@@ -238,7 +248,7 @@
     var isFeatured = l.featured && !opts.hideFeatured;
     var featured = isFeatured
       ? '<span class="rounded-full bg-[#fdf6e3] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[var(--gold)] ring-1 ring-[#e8d9ac]">' +
-        T('js.card.featured', 'Top rated') + '</span>'
+        T('js.card.featured', 'Featured') + '</span>'
       : '';
 
     return '' +
@@ -258,12 +268,16 @@
             badge +
           '</h3>' +
           '<p class="mt-1 text-sm font-medium leading-snug text-[var(--gold)]">' + e(catName) + '</p>' +
-          '<div class="mt-2 flex flex-wrap items-center gap-x-1.5 gap-y-1.5 text-xs text-[var(--muted)]">' +
-            VS.stars(l.rating) +
-            '<span class="tabular font-semibold text-[var(--ink)]">' + l.rating.toFixed(1) + '</span>' +
-            '<span>(' + l.reviewsCount + ')</span>' +
-            featured +
-          '</div>' +
+          (hasReviews(l) || featured
+            ? '<div class="mt-2 flex flex-wrap items-center gap-x-1.5 gap-y-1.5 text-xs text-[var(--muted)]">' +
+              (hasReviews(l)
+                ? VS.stars(l.rating) +
+                  '<span class="tabular font-semibold text-[var(--ink)]">' + l.rating.toFixed(1) + '</span>' +
+                  '<span>(' + l.reviewsCount + ')</span>'
+                : '') +
+              featured +
+            '</div>'
+            : '') +
         '</div>' +
       '</div>' +
 
@@ -318,6 +332,7 @@
   w.VS.applyConfig = applyConfig;
   w.VS.toast = toast;
   w.VS.stars = stars;
+  w.VS.hasReviews = hasReviews;
   w.VS.lawyerCard = lawyerCard;
   w.VS.reduced = reduced;
 

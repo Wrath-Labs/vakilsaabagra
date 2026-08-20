@@ -40,7 +40,7 @@ const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
 const DATA = path.join(ROOT, 'data', 'lawyers.json');
-const SITE = 'https://www.vakilsaabagra.com';
+const SITE = 'https://vakilsaabagra.in';
 
 /* midnight UTC today — every date comparison below uses this */
 const TODAY = new Date(new Date().toISOString().slice(0, 10));

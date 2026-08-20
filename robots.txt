@@ -1,4 +1,4 @@
-# Vakil Saab Agra — https://www.vakilsaabagra.com
+# Vakil Saab Agra — https://vakilsaabagra.in
 User-agent: *
 Allow: /
 Disallow: /tools/
@@ -24,4 +24,4 @@ Allow: /
 User-agent: Bingbot
 Allow: /
 
-Sitemap: https://www.vakilsaabagra.com/sitemap.xml
+Sitemap: https://vakilsaabagra.in/sitemap.xml

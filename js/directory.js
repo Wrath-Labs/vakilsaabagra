@@ -176,6 +176,20 @@
   }
 
   /* ------------------------------------------------------------- controls */
+  /**
+   * "Highest rated" and "Most reviewed" cannot mean anything while no advocate
+   * has a review, and an option that silently does nothing is worse than one
+   * that is not there. They come back on their own once real feedback exists.
+   */
+  function hideReviewSorts() {
+    if (VS.anyReviews(db.lawyers)) return;
+    ['rating', 'reviews'].forEach(function (mode) {
+      var opt = el.sort.querySelector('option[value="' + mode + '"]');
+      if (opt) opt.remove();
+      if (state.sort === mode) state.sort = 'relevance';
+    });
+  }
+
   function buildControls() {
     el.cats.innerHTML = db.categories.map(function (c) {
       return '<button type="button" role="checkbox" aria-checked="false" data-cat="' + e(c.slug) + '" ' +
@@ -348,6 +362,7 @@
       moreCount: d.getElementById('load-more-count')
     };
     readUrl();
+    hideReviewSorts();
     buildControls();
     bind();
     render();

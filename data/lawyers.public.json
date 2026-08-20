@@ -3,7 +3,7 @@
     "city": "Agra",
     "state": "Uttar Pradesh",
     "lastUpdated": "2026-08-18",
-    "note": "Sample directory entries for demonstration. Replace with verified advocate details before going live."
+    "note": "Sample directory entries for demonstration. Replace with verified advocate details before going live. rating and reviewsCount are null on purpose: there is no review pipeline yet, and invented review counts on a legal directory are a trust risk."
   },
   "categories": [
     {
@@ -408,8 +408,8 @@
         "LL.B., Dr. B.R. Ambedkar University, Agra",
         "B.A. (Hons.), St. John's College, Agra"
       ],
-      "rating": 4.8,
-      "reviewsCount": 146,
+      "rating": null,
+      "reviewsCount": null,
       "verified": true,
       "featured": true,
       "microsite": {
@@ -480,8 +480,8 @@
         "LL.M. (Family Law), University of Lucknow",
         "LL.B., Dr. B.R. Ambedkar University, Agra"
       ],
-      "rating": 4.9,
-      "reviewsCount": 211,
+      "rating": null,
+      "reviewsCount": null,
       "verified": true,
       "featured": true,
       "microsite": {
@@ -554,8 +554,8 @@
         "LL.B., Dr. B.R. Ambedkar University, Agra",
         "B.Com., Agra College"
       ],
-      "rating": 4.7,
-      "reviewsCount": 98,
+      "rating": null,
+      "reviewsCount": null,
       "verified": true,
       "featured": true,
       "microsite": {
@@ -625,8 +625,8 @@
         "LL.B., Dr. B.R. Ambedkar University, Agra",
         "B.A. LL.B. coursework, Agra College"
       ],
-      "rating": 4.6,
-      "reviewsCount": 64,
+      "rating": null,
+      "reviewsCount": null,
       "verified": true,
       "featured": false,
       "microsite": {
@@ -698,8 +698,8 @@
         "LL.B., Aligarh Muslim University",
         "B.A., Agra College"
       ],
-      "rating": 4.7,
-      "reviewsCount": 127,
+      "rating": null,
+      "reviewsCount": null,
       "verified": true,
       "featured": true,
       "microsite": {
@@ -771,8 +771,8 @@
         "LL.B., Dr. B.R. Ambedkar University, Agra",
         "B.Com. (Hons.), Agra College"
       ],
-      "rating": 4.8,
-      "reviewsCount": 173,
+      "rating": null,
+      "reviewsCount": null,
       "verified": true,
       "featured": true,
       "microsite": {
@@ -843,8 +843,8 @@
         "LL.B., Dr. B.R. Ambedkar University, Agra",
         "B.Sc., Agra College"
       ],
-      "rating": 4.7,
-      "reviewsCount": 89,
+      "rating": null,
+      "reviewsCount": null,
       "verified": true,
       "featured": false,
       "microsite": {
@@ -918,8 +918,8 @@
         "B.Com., Agra College",
         "Company Secretary (Executive)"
       ],
-      "rating": 4.8,
-      "reviewsCount": 76,
+      "rating": null,
+      "reviewsCount": null,
       "verified": true,
       "featured": true,
       "microsite": {
@@ -990,8 +990,8 @@
         "LL.M. (Labour Law), Dr. B.R. Ambedkar University, Agra",
         "LL.B., Agra College"
       ],
-      "rating": 4.6,
-      "reviewsCount": 58,
+      "rating": null,
+      "reviewsCount": null,
       "verified": true,
       "featured": false,
       "microsite": {
@@ -1062,8 +1062,8 @@
         "LL.B., Dr. B.R. Ambedkar University, Agra",
         "B.Tech. (Computer Science), GLA University"
       ],
-      "rating": 4.9,
-      "reviewsCount": 112,
+      "rating": null,
+      "reviewsCount": null,
       "verified": true,
       "featured": true,
       "microsite": {
@@ -1134,8 +1134,8 @@
         "LL.B., Dr. B.R. Ambedkar University, Agra",
         "M.Com., Agra College"
       ],
-      "rating": 4.7,
-      "reviewsCount": 67,
+      "rating": null,
+      "reviewsCount": null,
       "verified": true,
       "featured": false,
       "microsite": {
@@ -1208,8 +1208,8 @@
         "LL.B., Dr. B.R. Ambedkar University, Agra",
         "B.A., Aligarh Muslim University"
       ],
-      "rating": 4.8,
-      "reviewsCount": 134,
+      "rating": null,
+      "reviewsCount": null,
       "verified": true,
       "featured": true,
       "microsite": {
@@ -1281,8 +1281,8 @@
         "LL.B., Dr. B.R. Ambedkar University, Agra",
         "B.A. (Hons.), Agra College"
       ],
-      "rating": 4.7,
-      "reviewsCount": 93,
+      "rating": null,
+      "reviewsCount": null,
       "verified": true,
       "featured": false,
       "microsite": {
@@ -1354,8 +1354,8 @@
         "LL.B., Dr. B.R. Ambedkar University, Agra",
         "B.A., St. John's College, Agra"
       ],
-      "rating": 4.6,
-      "reviewsCount": 81,
+      "rating": null,
+      "reviewsCount": null,
       "verified": true,
       "featured": false,
       "microsite": {
@@ -1426,8 +1426,8 @@
         "LL.B., Dr. B.R. Ambedkar University, Agra",
         "B.A., Agra College"
       ],
-      "rating": 4.8,
-      "reviewsCount": 145,
+      "rating": null,
+      "reviewsCount": null,
       "verified": true,
       "featured": true,
       "microsite": {
@@ -1500,8 +1500,8 @@
         "LL.B., Dr. B.R. Ambedkar University, Agra",
         "B.A., Agra College"
       ],
-      "rating": 4.7,
-      "reviewsCount": 72,
+      "rating": null,
+      "reviewsCount": null,
       "verified": true,
       "featured": false,
       "microsite": {
@@ -1572,8 +1572,8 @@
       "education": [
         "B.A. LL.B. (Hons.), Symbiosis Law School, Pune"
       ],
-      "rating": 4.9,
-      "reviewsCount": 54,
+      "rating": null,
+      "reviewsCount": null,
       "verified": true,
       "featured": true,
       "microsite": {
@@ -1645,8 +1645,8 @@
         "LL.B., Dr. B.R. Ambedkar University, Agra",
         "B.Com., Agra College"
       ],
-      "rating": 4.5,
-      "reviewsCount": 61,
+      "rating": null,
+      "reviewsCount": null,
       "verified": true,
       "featured": false,
       "microsite": {
@@ -1718,8 +1718,8 @@
       "education": [
         "B.A. LL.B., Aligarh Muslim University"
       ],
-      "rating": 4.9,
-      "reviewsCount": 88,
+      "rating": null,
+      "reviewsCount": null,
       "verified": true,
       "featured": true,
       "microsite": {
@@ -1792,8 +1792,8 @@
         "LL.M., Dr. B.R. Ambedkar University, Agra",
         "LL.B., Agra College"
       ],
-      "rating": 4.8,
-      "reviewsCount": 103,
+      "rating": null,
+      "reviewsCount": null,
       "verified": true,
       "featured": true,
       "microsite": {
