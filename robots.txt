@@ -3,6 +3,11 @@ User-agent: *
 Allow: /
 Disallow: /tools/
 Disallow: /404.html
+Disallow: /admin/
+
+# data/lawyers.json is the working source of truth and carries billing fields.
+# What the site actually serves is data/lawyers.public.json.
+Disallow: /data/lawyers.json
 
 # Directory listings are the point of this site — let crawlers read the data.
 Allow: /data/

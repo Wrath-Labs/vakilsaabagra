@@ -168,7 +168,9 @@
       '</div>' +
 
       /* ---------------------------------------------------------- sidebar */
-      '<aside class="lg:sticky lg:top-28 lg:self-start">' +
+      /* data-vs-id scopes every contact link in here to this advocate, so
+         js/track.js can tell them apart from the site's own number */
+      '<aside class="lg:sticky lg:top-28 lg:self-start" data-vs-id="' + e(l.id) + '">' +
         '<div class="card p-6" data-reveal="right">' +
           '<p class="text-xs font-semibold uppercase tracking-[.18em] text-[var(--muted-2)]">Contact this advocate</p>' +
           '<p class="mt-3 font-display text-2xl font-bold tracking-tight text-[var(--ink)]">' +
@@ -208,6 +210,14 @@
         '</div>' +
       '</aside>' +
     '</div>';
+
+    /* ------------------------------------------------------------ counting */
+    /* the call, WhatsApp and copy buttons are picked up by the delegated
+       listener in js/track.js — this only tells it whose profile this is */
+    if (VS.track) {
+      VS.track.context({ lawyerId: l.id });
+      VS.track.view(l.id);
+    }
 
     /* ------------------------------------------------------------ actions */
     var copy = d.getElementById('copy-phone');

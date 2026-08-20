@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Listing stats — Vakil Saab Agra (internal)</title>
+
+<!-- internal tool: never indexed, never linked from the site, also
+     Disallow'ed in /robots.txt -->
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon.png">
+<link rel="stylesheet" href="../css/tailwind.css">
+</head>
+<body class="bg-[var(--paper-2)] antialiased">
+
+<main class="mx-auto max-w-4xl px-4 py-10 sm:px-6">
+
+  <header>
+    <p class="text-xs font-bold uppercase tracking-[.2em] text-[var(--gold)]">Internal tool</p>
+    <h1 class="mt-2 font-display text-3xl font-bold text-[var(--ink)]">Listing stats</h1>
+    <p class="mt-2 text-sm text-[var(--muted)]">
+      Anonymous view and contact counts per advocate, straight out of D1. Nothing here
+      identifies a visitor. The admin token is held for this browser tab only and is never
+      written to disk.
+    </p>
+  </header>
+
+  <!-- ------------------------------------------------------------- controls -->
+  <form id="f" class="card mt-8 grid gap-4 p-5 sm:p-6 sm:grid-cols-2">
+    <div class="sm:col-span-2">
+      <label for="token" class="mb-1.5 block text-xs font-bold uppercase tracking-[.14em] text-[var(--muted-2)]">Admin token</label>
+      <input id="token" type="password" autocomplete="off" spellcheck="false"
+             placeholder="paste ADMIN_TOKEN"
+             class="select-field w-full px-3 py-2.5 text-sm text-[var(--ink)]">
+    </div>
+
+    <div class="sm:col-span-2">
+      <label for="lawyer" class="mb-1.5 block text-xs font-bold uppercase tracking-[.14em] text-[var(--muted-2)]">Advocate</label>
+      <select id="lawyer" class="select-field w-full px-3 py-2.5 text-sm text-[var(--ink)]">
+        <option value="">loading…</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="from" class="mb-1.5 block text-xs font-bold uppercase tracking-[.14em] text-[var(--muted-2)]">From</label>
+      <input id="from" type="date" class="select-field w-full px-3 py-2.5 text-sm text-[var(--ink)]">
+    </div>
+    <div>
+      <label for="to" class="mb-1.5 block text-xs font-bold uppercase tracking-[.14em] text-[var(--muted-2)]">To (inclusive)</label>
+      <input id="to" type="date" class="select-field w-full px-3 py-2.5 text-sm text-[var(--ink)]">
+    </div>
+
+    <div class="sm:col-span-2 flex flex-wrap items-center gap-3">
+      <button type="submit" class="btn btn-primary px-6 py-2.5 text-sm">Fetch report</button>
+      <button type="button" id="this-month" class="btn btn-ghost px-4 py-2.5 text-sm">This month</button>
+      <button type="button" id="last-month" class="btn btn-ghost px-4 py-2.5 text-sm">Last month</button>
+      <span id="status" class="text-sm text-[var(--muted)]"></span>
+    </div>
+  </form>
+
+  <!-- --------------------------------------------------------------- output -->
+  <section id="out" class="hidden">
+
+    <div id="tiles" class="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5"></div>
+
+    <div class="card mt-6 p-5 sm:p-6">
+      <h2 class="font-display text-lg font-bold text-[var(--ink)]">Conversion</h2>
+      <div class="rule-gold mt-3 mb-4"></div>
+      <dl id="rates" class="grid gap-3 sm:grid-cols-3 text-sm"></dl>
+    </div>
+
+    <div class="card mt-6 p-5 sm:p-6">
+      <h2 class="font-display text-lg font-bold text-[var(--ink)]">Message for the advocate</h2>
+      <div class="rule-gold mt-3 mb-4"></div>
+      <p class="text-sm text-[var(--muted)]">
+        Ready to paste into WhatsApp. Single asterisks are what WhatsApp renders as bold.
+      </p>
+      <textarea id="msg" rows="6" readonly
+                class="select-field mt-3 w-full px-3 py-2.5 text-[15px] leading-relaxed text-[var(--ink)]"></textarea>
+      <button type="button" id="copy-msg" class="btn btn-gold mt-3 px-5 py-2.5 text-sm">Copy message</button>
+      <span id="copied" class="ml-2 text-sm font-medium text-[#0e7a4a]"></span>
+    </div>
+
+    <div class="card mt-6 overflow-x-auto p-5 sm:p-6">
+      <h2 class="font-display text-lg font-bold text-[var(--ink)]">Day by day</h2>
+      <div class="rule-gold mt-3 mb-4"></div>
+      <table class="w-full min-w-[520px] text-sm">
+        <thead>
+          <tr class="border-b border-[var(--line)] text-left text-xs uppercase tracking-wide text-[var(--muted-2)]">
+            <th class="py-2 pr-4 font-semibold">Date</th>
+            <th class="py-2 pr-4 font-semibold">Views</th>
+            <th class="py-2 pr-4 font-semibold">Calls</th>
+            <th class="py-2 pr-4 font-semibold">WhatsApp</th>
+            <th class="py-2 pr-4 font-semibold">Copies</th>
+            <th class="py-2 font-semibold">Impressions</th>
+          </tr>
+        </thead>
+        <tbody id="daily"></tbody>
+      </table>
+      <p id="daily-empty" class="hidden py-4 text-sm text-[var(--muted)]">No activity in this period.</p>
+    </div>
+
+    <div class="card mt-6 p-5 sm:p-6">
+      <h2 class="font-display text-lg font-bold text-[var(--ink)]">Top searches (site-wide)</h2>
+      <div class="rule-gold mt-3 mb-4"></div>
+      <ol id="queries" class="grid gap-1.5 text-sm text-[var(--ink)]"></ol>
+      <p id="queries-empty" class="hidden text-sm text-[var(--muted)]">No searches recorded in this period.</p>
+    </div>
+  </section>
+</main>
+
+<script>
+(function (w, d) {
+  'use strict';
+
+  var el = function (id) { return d.getElementById(id); };
+  var names = {};
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+  function iso(dt) { return dt.getUTCFullYear() + '-' + pad(dt.getUTCMonth() + 1) + '-' + pad(dt.getUTCDate()); }
+
+  function setRange(monthsBack) {
+    var now = new Date();
+    var y = now.getUTCFullYear(), m = now.getUTCMonth() - monthsBack;
+    var start = new Date(Date.UTC(y, m, 1));
+    var end = monthsBack === 0 ? now : new Date(Date.UTC(y, m + 1, 0));
+    el('from').value = iso(start);
+    el('to').value = iso(end);
+  }
+
+  /* ------------------------------------------------------- advocate picker */
+  fetch('../data/lawyers.public.json', { cache: 'no-cache' })
+    .then(function (r) { return r.json(); })
+    .then(function (db) {
+      var list = db.lawyers.slice().sort(function (a, b) { return a.name.localeCompare(b.name); });
+      el('lawyer').innerHTML = list.map(function (l) {
+        names[l.id] = l.name;
+        return '<option value="' + l.id + '">' + l.name + '</option>';
+      }).join('');
+    })
+    .catch(function () { el('lawyer').innerHTML = '<option value="">could not load advocates</option>'; });
+
+  /* --------------------------------------------------------------- tiles */
+  function tile(label, value) {
+    return '<div class="card p-4 text-center">' +
+             '<p class="tabular font-display text-3xl font-bold text-[var(--ink)]">' + value + '</p>' +
+             '<p class="mt-1 text-[11px] uppercase tracking-wide text-[var(--muted-2)]">' + label + '</p>' +
+           '</div>';
+  }
+
+  function pct(v) { return v == null ? '—' : v + '%'; }
+
+  /* -------------------------------------------------- the renewal message */
+  function hindiMessage(id, data) {
+    var name = (names[id] || id).replace(/^Adv\.?\s*/i, '');
+    var t = data.totals;
+    return 'नमस्ते ' + name + ' जी,\n\n' +
+           'इस महीने Vakil Saab Agra पर आपकी प्रोफ़ाइल *' + t.view + ' बार* देखी गई, ' +
+           '*' + t.call + ' कॉल* और *' + t.whatsapp + ' WhatsApp* मैसेज आए।\n\n' +
+           '(' + data.from + ' से ' + data.to + ' तक)';
+  }
+
+  /* --------------------------------------------------------------- render */
+  function render(id, data) {
+    var t = data.totals;
+    el('tiles').innerHTML =
+      tile('Profile views', t.view) +
+      tile('Calls', t.call) +
+      tile('WhatsApp', t.whatsapp) +
+      tile('Number copied', t.copy) +
+      tile('Shown in results', t.impression);
+
+    el('rates').innerHTML =
+      '<div><dt class="text-[var(--muted-2)]">Views per listing shown</dt>' +
+      '<dd class="tabular text-lg font-bold text-[var(--ink)]">' + pct(data.rates.viewsPerImpression) + '</dd></div>' +
+      '<div><dt class="text-[var(--muted-2)]">Calls per view</dt>' +
+      '<dd class="tabular text-lg font-bold text-[var(--ink)]">' + pct(data.rates.callsPerView) + '</dd></div>' +
+      '<div><dt class="text-[var(--muted-2)]">Any contact per view</dt>' +
+      '<dd class="tabular text-lg font-bold text-[var(--ink)]">' + pct(data.rates.contactsPerView) +
+      ' <span class="text-xs font-normal text-[var(--muted)]">(' + data.contacts + ')</span></dd></div>';
+
+    el('msg').value = hindiMessage(id, data);
+
+    el('daily').innerHTML = data.daily.map(function (r) {
+      return '<tr class="border-b border-[var(--line-2)] last:border-0">' +
+        '<td class="py-2 pr-4 tabular">' + r.date + '</td>' +
+        '<td class="py-2 pr-4 tabular">' + r.view + '</td>' +
+        '<td class="py-2 pr-4 tabular">' + r.call + '</td>' +
+        '<td class="py-2 pr-4 tabular">' + r.whatsapp + '</td>' +
+        '<td class="py-2 pr-4 tabular">' + r.copy + '</td>' +
+        '<td class="py-2 tabular">' + r.impression + '</td></tr>';
+    }).join('');
+    el('daily-empty').classList.toggle('hidden', data.daily.length > 0);
+
+    el('queries').innerHTML = data.topQueries.map(function (q) {
+      return '<li class="flex items-baseline justify-between gap-4 border-b border-[var(--line-2)] py-1.5 last:border-0">' +
+        '<span>' + q.query.replace(/[<>&]/g, '') + '</span>' +
+        '<span class="tabular shrink-0 font-semibold">' + q.count + '</span></li>';
+    }).join('');
+    el('queries-empty').classList.toggle('hidden', data.topQueries.length > 0);
+
+    el('out').classList.remove('hidden');
+  }
+
+  /* ----------------------------------------------------------------- wire */
+  el('f').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var token = el('token').value.trim();
+    var id = el('lawyer').value;
+    if (!token || !id) { el('status').textContent = 'Token and advocate are both needed.'; return; }
+
+    el('status').textContent = 'fetching…';
+    var qs = '?lawyer=' + encodeURIComponent(id) +
+             '&from=' + encodeURIComponent(el('from').value) +
+             '&to=' + encodeURIComponent(el('to').value);
+
+    fetch('/api/stats' + qs, { headers: { 'X-VS-Admin': token }, cache: 'no-store' })
+      .then(function (r) {
+        return r.json().then(function (body) {
+          if (!r.ok) throw new Error(body.error || ('HTTP ' + r.status));
+          return body;
+        });
+      })
+      .then(function (data) { el('status').textContent = ''; render(id, data); })
+      .catch(function (err) {
+        el('status').textContent = 'failed: ' + err.message;
+        el('out').classList.add('hidden');
+      });
+  });
+
+  el('this-month').addEventListener('click', function () { setRange(0); });
+  el('last-month').addEventListener('click', function () { setRange(1); });
+
+  el('copy-msg').addEventListener('click', function () {
+    var text = el('msg').value;
+    var done = function () {
+      el('copied').textContent = 'copied';
+      setTimeout(function () { el('copied').textContent = ''; }, 2000);
+    };
+    if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, function () {});
+    else { el('msg').select(); d.execCommand('copy'); done(); }
+  });
+
+  setRange(0);
+})(window, document);
+</script>
+</body>
+</html>

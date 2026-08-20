@@ -98,6 +98,9 @@
     VS.stagger(el.grid, 55);
     VS.reveal(el.grid);
 
+    /* one beacon for the whole render, not one per card */
+    if (VS.track) VS.track.impressions(slice.map(function (l) { return l.id; }));
+
     el.empty.classList.toggle('hidden', total !== 0);
     el.more.classList.toggle('hidden', slice.length >= total);
     el.moreCount.textContent = Math.min(PAGE, total - slice.length);
@@ -171,7 +174,13 @@
       clearTimeout(t);
       t = setTimeout(function () { state.q = el.q.value.trim(); state.page = 1; render(); }, 220);
     });
-    el.form.addEventListener('submit', function (ev) { ev.preventDefault(); state.q = el.q.value.trim(); state.page = 1; render(true); });
+    el.form.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      state.q = el.q.value.trim();
+      state.page = 1;
+      render(true);
+      if (VS.track) VS.track.search(state.q, state.categories.join(','), state.area);
+    });
 
     el.cats.addEventListener('click', function (ev) {
       var b = ev.target.closest('[data-cat]');

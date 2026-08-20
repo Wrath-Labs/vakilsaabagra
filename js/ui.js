@@ -228,7 +228,10 @@
       : '';
 
     return '' +
-    '<article class="card card-hover group relative flex min-w-0 flex-col p-5 sm:p-6" data-reveal>' +
+    /* data-vs-id lets js/track.js attribute a call or WhatsApp click on this
+       card to this advocate rather than to whatever profile the page shows */
+    '<article class="card card-hover group relative flex min-w-0 flex-col p-5 sm:p-6" data-reveal ' +
+            'data-vs-id="' + e(l.id) + '">' +
       '<div class="flex min-w-0 items-start gap-4">' +
         '<div class="avatar-ring h-[68px] w-[68px] shrink-0 transition-transform duration-500 group-hover:scale-[1.04] sm:h-[76px] sm:w-[76px]">' +
           '<img src="' + e(l.photo) + '" width="76" height="76" loading="lazy" decoding="async" ' +
