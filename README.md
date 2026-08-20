@@ -29,8 +29,10 @@ Everything lives in **`data/lawyers.json`**. Copy an existing entry in the
 npm run sync
 ```
 
-That one command validates the file, generates a monogram avatar for the new
-advocate, refreshes `data/lawyers.fallback.js`, and rewrites `sitemap.xml`.
+That one command validates the file, works out who is currently live,
+publishes `data/lawyers.public.json` and `data/lawyers.fallback.js`, generates a
+monogram avatar for the new advocate, rewrites `sitemap.xml`, and prints a
+renewal reminder for anyone expiring soon.
 
 ### The fields
 
@@ -52,6 +54,9 @@ advocate, refreshes `data/lawyers.fallback.js`, and rewrites `sitemap.xml`.
 | `highlights`, `courts`, `languages`, `education`, `feeNote`, `availability`, `email` | | optional but they make the profile far stronger |
 | `rating`, `reviewsCount` | | shown as stars; feed real feedback only |
 | `verified`, `featured` | | booleans. `featured: true` puts them on the home page |
+| `featuredUntil` | | `YYYY-MM-DD` or `null`. Once it passes, the featured slot stops showing — the record is not touched |
+| `listing` | ✅ | billing block, see *Plans and billing* below |
+| `microsite` | ✅ | microsite block, see *Microsites* below |
 
 `sync` will refuse to write if an `id` is duplicated, a category slug is
 unknown, or a required field is missing — so a typo can't quietly break the site.
@@ -77,6 +82,78 @@ page and the footer's practice-area list.
 
 Available `icon` values: `shield`, `heart`, `home`, `scale`, `receipt`,
 `briefcase`, `cart`, `users`, `car`, `lock`, `calculator`, `file`.
+
+---
+
+## Plans and billing
+
+Every advocate record carries a `listing` block. It is the only place the
+commercial state of a listing is recorded, and it never reaches the browser —
+`tools/sync.js` strips it out when it publishes the dataset.
+
+```json
+"listing": {
+  "plan": "yearly",          // monthly | halfyearly | yearly | none
+  "paidUntil": "2027-03-31", // YYYY-MM-DD, required unless plan is "none"
+  "active": true,            // false hides the advocate from the directory entirely
+  "onboardedOn": "2026-03-31"
+}
+```
+
+### Prices
+
+A **fixed technology and listing service fee**, billed in advance. It is not a
+per-enquiry charge, not a commission, and not a share of any fee the advocate
+charges a client — see the note under *Legal note* below, and keep it that way.
+
+| Plan | Total / month | Listing | Microsite |
+|---|---|---|---|
+| Monthly | ₹800 | ₹200 | ₹600 |
+| 6-month | ₹600 | ₹150 | ₹450 |
+| Yearly | ₹500 | ₹100 | ₹400 |
+
+These numbers live here and nowhere else in the codebase. Nothing user-facing
+quotes them yet.
+
+### Expiry
+
+`npm run sync` treats an advocate as **live** only while
+`listing.active !== false` **and** `listing.paidUntil` has not passed. Anyone
+who is not live is left out of `data/lawyers.public.json`,
+`data/lawyers.fallback.js`, `sitemap.xml` and microsite generation — but stays
+in `data/lawyers.json`, so the record survives a lapse and a renewal is a
+one-line edit.
+
+The same command prints who has already expired and who expires within fifteen
+days, sorted by date. That printout is the renewal reminder; read it every time
+you build.
+
+---
+
+## Microsites
+
+Every advocate record also carries a `microsite` block. `enabled` is only ever
+`true` for an advocate who has paid for one.
+
+```json
+"microsite": {
+  "enabled": true,
+  "slug": "ramesh",              // → ramesh.vakilsaabagra.in
+  "tagline": "Bail and sessions trials in Agra since 2002",
+  "longAbout": "…",              // a longer, richer bio — NOT a copy of "about"
+  "faqs": [{ "q": "…", "a": "…" }],
+  "accent": "navy"               // gold | navy | teal | maroon
+}
+```
+
+`slug` must be 3–30 characters of `a–z`, `0–9` and `-`, unique across all
+advocates, and not one of the reserved infrastructure labels (`www`, `api`,
+`admin`, `mail`, `stats`, …) that `tools/sync.js` refuses.
+
+`longAbout` is required when `enabled` is `true`, and `sync` will reject it if
+it is byte-identical to `about`. That is deliberate: Google treats a subdomain
+as a separate site, so a microsite that merely repeats the directory profile
+gets both pages treated as duplicates and neither ranks.
 
 ---
 
@@ -188,7 +265,9 @@ about.html  contact.html  faq.html  list-your-practice.html
 privacy.html  terms.html  404.html
 
 data/lawyers.json         ← the only file you edit to add advocates
-data/lawyers.fallback.js  generated; makes file:// work
+data/lawyers.public.json  generated; live listings only, no billing fields —
+                          this is what the pages actually fetch
+data/lawyers.fallback.js  generated; the same dataset, makes file:// work
 
 css/styles.css            authored — tokens, motion, components
 css/tailwind.css          compiled — the file the pages load

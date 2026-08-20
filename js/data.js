@@ -1,9 +1,13 @@
 /* ============================================================================
    Data access layer.
 
-   data/lawyers.json is the single source of truth. Browsers block fetch()
-   of local files when a page is opened straight from disk (file://), so we
-   fall back to data/lawyers.fallback.js, which tools/sync.js keeps in step.
+   data/lawyers.json is the single source of truth, but the browser never
+   reads it: tools/sync.js publishes data/lawyers.public.json from it —
+   live listings only, with the billing block stripped out.
+
+   Browsers block fetch() of local files when a page is opened straight from
+   disk (file://), so we fall back to data/lawyers.fallback.js, which carries
+   the same published dataset and which tools/sync.js keeps in step.
    ========================================================================= */
 (function (w) {
   'use strict';
@@ -61,7 +65,7 @@
       if (cache) return Promise.resolve(cache);
       if (inflight) return inflight;
 
-      inflight = fetch('data/lawyers.json', { cache: 'no-cache' })
+      inflight = fetch('data/lawyers.public.json', { cache: 'no-cache' })
         .then(function (r) {
           if (!r.ok) throw new Error('HTTP ' + r.status);
           return r.json();

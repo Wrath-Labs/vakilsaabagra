@@ -252,7 +252,22 @@
       "rating": 4.8,
       "reviewsCount": 146,
       "verified": true,
-      "featured": true
+      "featured": true,
+      "featuredUntil": null,
+      "listing": {
+        "plan": "none",
+        "paidUntil": null,
+        "active": true,
+        "onboardedOn": null
+      },
+      "microsite": {
+        "enabled": false,
+        "slug": null,
+        "tagline": null,
+        "longAbout": null,
+        "faqs": [],
+        "accent": "gold"
+      }
     },
     {
       "id": "neha-sharma",
@@ -305,7 +320,22 @@
       "rating": 4.9,
       "reviewsCount": 211,
       "verified": true,
-      "featured": true
+      "featured": true,
+      "featuredUntil": null,
+      "listing": {
+        "plan": "none",
+        "paidUntil": null,
+        "active": true,
+        "onboardedOn": null
+      },
+      "microsite": {
+        "enabled": false,
+        "slug": null,
+        "tagline": null,
+        "longAbout": null,
+        "faqs": [],
+        "accent": "gold"
+      }
     },
     {
       "id": "sanjay-kumar-agarwal",
@@ -360,7 +390,22 @@
       "rating": 4.7,
       "reviewsCount": 98,
       "verified": true,
-      "featured": true
+      "featured": true,
+      "featuredUntil": null,
+      "listing": {
+        "plan": "none",
+        "paidUntil": null,
+        "active": true,
+        "onboardedOn": null
+      },
+      "microsite": {
+        "enabled": false,
+        "slug": null,
+        "tagline": null,
+        "longAbout": null,
+        "faqs": [],
+        "accent": "gold"
+      }
     },
     {
       "id": "priya-mathur",
@@ -412,7 +457,22 @@
       "rating": 4.6,
       "reviewsCount": 64,
       "verified": true,
-      "featured": false
+      "featured": false,
+      "featuredUntil": null,
+      "listing": {
+        "plan": "none",
+        "paidUntil": null,
+        "active": true,
+        "onboardedOn": null
+      },
+      "microsite": {
+        "enabled": false,
+        "slug": null,
+        "tagline": null,
+        "longAbout": null,
+        "faqs": [],
+        "accent": "gold"
+      }
     },
     {
       "id": "mohd-irfan-qureshi",
@@ -466,7 +526,22 @@
       "rating": 4.7,
       "reviewsCount": 127,
       "verified": true,
-      "featured": true
+      "featured": true,
+      "featuredUntil": null,
+      "listing": {
+        "plan": "none",
+        "paidUntil": null,
+        "active": true,
+        "onboardedOn": null
+      },
+      "microsite": {
+        "enabled": false,
+        "slug": null,
+        "tagline": null,
+        "longAbout": null,
+        "faqs": [],
+        "accent": "gold"
+      }
     },
     {
       "id": "deepak-goyal",
@@ -520,7 +595,22 @@
       "rating": 4.8,
       "reviewsCount": 173,
       "verified": true,
-      "featured": true
+      "featured": true,
+      "featuredUntil": null,
+      "listing": {
+        "plan": "none",
+        "paidUntil": null,
+        "active": true,
+        "onboardedOn": null
+      },
+      "microsite": {
+        "enabled": false,
+        "slug": null,
+        "tagline": null,
+        "longAbout": null,
+        "faqs": [],
+        "accent": "gold"
+      }
     },
     {
       "id": "kavita-singhal",
@@ -573,7 +663,22 @@
       "rating": 4.7,
       "reviewsCount": 89,
       "verified": true,
-      "featured": false
+      "featured": false,
+      "featuredUntil": null,
+      "listing": {
+        "plan": "none",
+        "paidUntil": null,
+        "active": true,
+        "onboardedOn": null
+      },
+      "microsite": {
+        "enabled": false,
+        "slug": null,
+        "tagline": null,
+        "longAbout": null,
+        "faqs": [],
+        "accent": "gold"
+      }
     },
     {
       "id": "rajeev-upadhyay",
@@ -629,7 +734,22 @@
       "rating": 4.8,
       "reviewsCount": 76,
       "verified": true,
-      "featured": true
+      "featured": true,
+      "featuredUntil": null,
+      "listing": {
+        "plan": "none",
+        "paidUntil": null,
+        "active": true,
+        "onboardedOn": null
+      },
+      "microsite": {
+        "enabled": false,
+        "slug": null,
+        "tagline": null,
+        "longAbout": null,
+        "faqs": [],
+        "accent": "gold"
+      }
     },
     {
       "id": "sunita-verma",
@@ -682,7 +802,22 @@
       "rating": 4.6,
       "reviewsCount": 58,
       "verified": true,
-      "featured": false
+      "featured": false,
+      "featuredUntil": null,
+      "listing": {
+        "plan": "none",
+        "paidUntil": null,
+        "active": true,
+        "onboardedOn": null
+      },
+      "microsite": {
+        "enabled": false,
+        "slug": null,
+        "tagline": null,
+        "longAbout": null,
+        "faqs": [],
+        "accent": "gold"
+      }
     },
     {
       "id": "ankit-bansal",
@@ -735,7 +870,22 @@
       "rating": 4.9,
       "reviewsCount": 112,
       "verified": true,
-      "featured": true
+      "featured": true,
+      "featuredUntil": null,
+      "listing": {
+        "plan": "none",
+        "paidUntil": null,
+        "active": true,
+        "onboardedOn": null
+      },
+      "microsite": {
+        "enabled": false,
+        "slug": null,
+        "tagline": null,
+        "longAbout": null,
+        "faqs": [],
+        "accent": "gold"
+      }
     },
     {
       "id": "harish-chandra-gupta",
@@ -788,7 +938,22 @@
       "rating": 4.7,
       "reviewsCount": 67,
       "verified": true,
-      "featured": false
+      "featured": false,
+      "featuredUntil": null,
+      "listing": {
+        "plan": "none",
+        "paidUntil": null,
+        "active": true,
+        "onboardedOn": null
+      },
+      "microsite": {
+        "enabled": false,
+        "slug": null,
+        "tagline": null,
+        "longAbout": null,
+        "faqs": [],
+        "accent": "gold"
+      }
     },
     {
       "id": "farhan-siddiqui",
@@ -843,7 +1008,22 @@
       "rating": 4.8,
       "reviewsCount": 134,
       "verified": true,
-      "featured": true
+      "featured": true,
+      "featuredUntil": null,
+      "listing": {
+        "plan": "none",
+        "paidUntil": null,
+        "active": true,
+        "onboardedOn": null
+      },
+      "microsite": {
+        "enabled": false,
+        "slug": null,
+        "tagline": null,
+        "longAbout": null,
+        "faqs": [],
+        "accent": "gold"
+      }
     },
     {
       "id": "meenakshi-rathore",
@@ -897,7 +1077,22 @@
       "rating": 4.7,
       "reviewsCount": 93,
       "verified": true,
-      "featured": false
+      "featured": false,
+      "featuredUntil": null,
+      "listing": {
+        "plan": "none",
+        "paidUntil": null,
+        "active": true,
+        "onboardedOn": null
+      },
+      "microsite": {
+        "enabled": false,
+        "slug": null,
+        "tagline": null,
+        "longAbout": null,
+        "faqs": [],
+        "accent": "gold"
+      }
     },
     {
       "id": "vikram-pratap-singh",
@@ -951,7 +1146,22 @@
       "rating": 4.6,
       "reviewsCount": 81,
       "verified": true,
-      "featured": false
+      "featured": false,
+      "featuredUntil": null,
+      "listing": {
+        "plan": "none",
+        "paidUntil": null,
+        "active": true,
+        "onboardedOn": null
+      },
+      "microsite": {
+        "enabled": false,
+        "slug": null,
+        "tagline": null,
+        "longAbout": null,
+        "faqs": [],
+        "accent": "gold"
+      }
     },
     {
       "id": "shalini-dubey",
@@ -1004,7 +1214,22 @@
       "rating": 4.8,
       "reviewsCount": 145,
       "verified": true,
-      "featured": true
+      "featured": true,
+      "featuredUntil": null,
+      "listing": {
+        "plan": "none",
+        "paidUntil": null,
+        "active": true,
+        "onboardedOn": null
+      },
+      "microsite": {
+        "enabled": false,
+        "slug": null,
+        "tagline": null,
+        "longAbout": null,
+        "faqs": [],
+        "accent": "gold"
+      }
     },
     {
       "id": "naresh-kumar-yadav",
@@ -1059,7 +1284,22 @@
       "rating": 4.7,
       "reviewsCount": 72,
       "verified": true,
-      "featured": false
+      "featured": false,
+      "featuredUntil": null,
+      "listing": {
+        "plan": "none",
+        "paidUntil": null,
+        "active": true,
+        "onboardedOn": null
+      },
+      "microsite": {
+        "enabled": false,
+        "slug": null,
+        "tagline": null,
+        "longAbout": null,
+        "faqs": [],
+        "accent": "gold"
+      }
     },
     {
       "id": "ritu-agrawal",
@@ -1112,7 +1352,22 @@
       "rating": 4.9,
       "reviewsCount": 54,
       "verified": true,
-      "featured": true
+      "featured": true,
+      "featuredUntil": null,
+      "listing": {
+        "plan": "none",
+        "paidUntil": null,
+        "active": true,
+        "onboardedOn": null
+      },
+      "microsite": {
+        "enabled": false,
+        "slug": null,
+        "tagline": null,
+        "longAbout": null,
+        "faqs": [],
+        "accent": "gold"
+      }
     },
     {
       "id": "pankaj-tiwari",
@@ -1166,7 +1421,22 @@
       "rating": 4.5,
       "reviewsCount": 61,
       "verified": true,
-      "featured": false
+      "featured": false,
+      "featuredUntil": null,
+      "listing": {
+        "plan": "none",
+        "paidUntil": null,
+        "active": true,
+        "onboardedOn": null
+      },
+      "microsite": {
+        "enabled": false,
+        "slug": null,
+        "tagline": null,
+        "longAbout": null,
+        "faqs": [],
+        "accent": "gold"
+      }
     },
     {
       "id": "aisha-khan",
@@ -1220,7 +1490,22 @@
       "rating": 4.9,
       "reviewsCount": 88,
       "verified": true,
-      "featured": true
+      "featured": true,
+      "featuredUntil": null,
+      "listing": {
+        "plan": "none",
+        "paidUntil": null,
+        "active": true,
+        "onboardedOn": null
+      },
+      "microsite": {
+        "enabled": false,
+        "slug": null,
+        "tagline": null,
+        "longAbout": null,
+        "faqs": [],
+        "accent": "gold"
+      }
     },
     {
       "id": "brijmohan-sharma",
@@ -1275,7 +1560,22 @@
       "rating": 4.8,
       "reviewsCount": 103,
       "verified": true,
-      "featured": true
+      "featured": true,
+      "featuredUntil": null,
+      "listing": {
+        "plan": "none",
+        "paidUntil": null,
+        "active": true,
+        "onboardedOn": null
+      },
+      "microsite": {
+        "enabled": false,
+        "slug": null,
+        "tagline": null,
+        "longAbout": null,
+        "faqs": [],
+        "accent": "gold"
+      }
     }
   ]
 }

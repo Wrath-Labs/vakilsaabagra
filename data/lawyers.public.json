@@ -1,0 +1,1361 @@
+{
+  "meta": {
+    "city": "Agra",
+    "state": "Uttar Pradesh",
+    "lastUpdated": "2026-08-18",
+    "note": "Sample directory entries for demonstration. Replace with verified advocate details before going live."
+  },
+  "categories": [
+    {
+      "slug": "criminal",
+      "name": "Criminal Law",
+      "icon": "shield",
+      "blurb": "Bail, FIR quashing, trials and appeals before Agra's Sessions Courts.",
+      "topics": [
+        "Bail & Anticipatory Bail",
+        "FIR Quashing",
+        "Sessions Trial",
+        "Criminal Appeal",
+        "NDPS Matters",
+        "POCSO Defence",
+        "Cheating & Forgery (420/468)",
+        "Assault & Hurt (323/325)"
+      ]
+    },
+    {
+      "slug": "family",
+      "name": "Family & Divorce",
+      "icon": "heart",
+      "blurb": "Divorce, maintenance, custody and domestic violence matters.",
+      "topics": [
+        "Mutual Consent Divorce",
+        "Contested Divorce",
+        "Maintenance (125 CrPC)",
+        "Child Custody",
+        "Domestic Violence Act",
+        "Restitution of Conjugal Rights",
+        "Dowry Harassment (498A)",
+        "Adoption & Guardianship"
+      ]
+    },
+    {
+      "slug": "property",
+      "name": "Property & Real Estate",
+      "icon": "home",
+      "blurb": "Title checks, partition, builder disputes and land records in Agra.",
+      "topics": [
+        "Title Verification",
+        "Partition Suits",
+        "Sale Deed & Mutation",
+        "Builder & RERA Disputes",
+        "Tenant Eviction",
+        "Land Acquisition",
+        "Encroachment",
+        "Gift & Relinquishment Deeds"
+      ]
+    },
+    {
+      "slug": "civil",
+      "name": "Civil Litigation",
+      "icon": "scale",
+      "blurb": "Suits, injunctions, recovery and appeals in civil courts.",
+      "topics": [
+        "Injunction & Stay",
+        "Specific Performance",
+        "Money Recovery Suit",
+        "Declaration Suits",
+        "Civil Appeals & Revision",
+        "Succession Certificate",
+        "Will & Probate",
+        "Arbitration"
+      ]
+    },
+    {
+      "slug": "cheque-bounce",
+      "name": "Cheque Bounce",
+      "icon": "receipt",
+      "blurb": "Section 138 NI Act complaints and defence, start to finish.",
+      "topics": [
+        "Section 138 Complaint",
+        "Legal Demand Notice",
+        "Defence in 138 Cases",
+        "Summary Trial",
+        "Compounding & Settlement",
+        "Recovery of Cheque Amount",
+        "Interim Compensation (143A)",
+        "Appeal against Conviction"
+      ]
+    },
+    {
+      "slug": "corporate",
+      "name": "Corporate & Startup",
+      "icon": "briefcase",
+      "blurb": "Company setup, contracts, compliance and commercial disputes.",
+      "topics": [
+        "Company & LLP Incorporation",
+        "Founders & Shareholders Agreements",
+        "Contract Drafting & Vetting",
+        "MSME & Vendor Disputes",
+        "Trademark & Copyright",
+        "ROC Compliance",
+        "Employment Contracts",
+        "Due Diligence"
+      ]
+    },
+    {
+      "slug": "consumer",
+      "name": "Consumer Protection",
+      "icon": "cart",
+      "blurb": "Complaints before the Agra District Consumer Commission.",
+      "topics": [
+        "Deficiency in Service",
+        "Defective Goods",
+        "Insurance Claim Rejection",
+        "Builder Possession Delay",
+        "Medical Negligence",
+        "E-commerce Disputes",
+        "Banking Complaints",
+        "Appeals before State Commission"
+      ]
+    },
+    {
+      "slug": "labour",
+      "name": "Labour & Service",
+      "icon": "users",
+      "blurb": "Employee rights, wrongful termination and service matters.",
+      "topics": [
+        "Wrongful Termination",
+        "Provident Fund & ESI",
+        "Gratuity & Bonus",
+        "Industrial Disputes Act",
+        "Sexual Harassment (POSH)",
+        "Government Service Matters",
+        "Pension Disputes",
+        "Departmental Enquiry"
+      ]
+    },
+    {
+      "slug": "motor-accident",
+      "name": "Motor Accident Claims",
+      "icon": "car",
+      "blurb": "MACT compensation claims and insurance litigation.",
+      "topics": [
+        "MACT Compensation Claim",
+        "Hit and Run Cases",
+        "Insurance Company Defence",
+        "Third Party Claims",
+        "Disability Compensation",
+        "Death Claim Compensation",
+        "Enhancement Appeals",
+        "Own Damage Claims"
+      ]
+    },
+    {
+      "slug": "cyber",
+      "name": "Cyber Crime",
+      "icon": "lock",
+      "blurb": "Online fraud, defamation and IT Act matters.",
+      "topics": [
+        "Online Financial Fraud",
+        "Cyber Bullying & Stalking",
+        "Data Theft & Hacking",
+        "Social Media Defamation",
+        "Fake Profile Removal",
+        "IT Act Offences",
+        "Sextortion Cases",
+        "Cyber Cell Complaints"
+      ]
+    },
+    {
+      "slug": "tax-gst",
+      "name": "Taxation & GST",
+      "icon": "calculator",
+      "blurb": "Income tax, GST notices, appeals and assessments.",
+      "topics": [
+        "GST Notices & Show Cause",
+        "Income Tax Assessment",
+        "Appeals before CIT(A)",
+        "GST Registration & Cancellation",
+        "Tax Refund Disputes",
+        "Search & Seizure Matters",
+        "TDS Defaults",
+        "Penalty Proceedings"
+      ]
+    },
+    {
+      "slug": "documentation",
+      "name": "Documentation & Registration",
+      "icon": "file",
+      "blurb": "Agreements, affidavits, deeds and registry work in Agra.",
+      "topics": [
+        "Sale & Lease Deeds",
+        "Rent Agreements",
+        "Affidavits & Notary",
+        "Power of Attorney",
+        "Will Drafting",
+        "Partnership Deeds",
+        "Stamp Duty Advice",
+        "Sub-Registrar Registration"
+      ]
+    }
+  ],
+  "lawyers": [
+    {
+      "id": "ramesh-chandra-chauhan",
+      "name": "Adv. Ramesh Chandra Chauhan",
+      "photo": "assets/lawyers/ramesh-chandra-chauhan.svg",
+      "experienceYears": 24,
+      "primaryCategory": "criminal",
+      "categories": [
+        "criminal",
+        "civil"
+      ],
+      "topics": [
+        "Bail & Anticipatory Bail",
+        "FIR Quashing",
+        "Sessions Trial",
+        "Criminal Appeal",
+        "Cheating & Forgery (420/468)",
+        "Assault & Hurt (323/325)"
+      ],
+      "about": "Ramesh Chandra Chauhan has practised criminal law before the District and Sessions Court, Agra since 2002, appearing in over 900 sessions trials and bail matters. He is known for meticulous cross-examination and for taking urgent bail applications at short notice. He also handles criminal appeals and revisions before the Allahabad High Court.",
+      "highlights": [
+        "900+ criminal matters argued",
+        "Regular counsel at Sessions Court, Agra",
+        "Same-day urgent bail applications"
+      ],
+      "languages": [
+        "Hindi",
+        "English",
+        "Braj"
+      ],
+      "courts": [
+        "District & Sessions Court, Agra",
+        "Chief Judicial Magistrate, Agra",
+        "Allahabad High Court"
+      ],
+      "location": {
+        "area": "Civil Lines",
+        "address": "Chambers 14, Advocate Block, Civil Lines, Agra, Uttar Pradesh 282002"
+      },
+      "consultationFee": 1000,
+      "feeNote": "First consultation fee adjusted against case fee.",
+      "availability": "Mon-Sat, 10:00 AM - 7:00 PM",
+      "phone": "+919999000001",
+      "whatsapp": "+919999000001",
+      "email": "chambers@example.com",
+      "enrollment": "UP/02847/2002",
+      "education": [
+        "LL.B., Dr. B.R. Ambedkar University, Agra",
+        "B.A. (Hons.), St. John's College, Agra"
+      ],
+      "rating": 4.8,
+      "reviewsCount": 146,
+      "verified": true,
+      "featured": true,
+      "microsite": {
+        "enabled": false,
+        "slug": null
+      }
+    },
+    {
+      "id": "neha-sharma",
+      "name": "Adv. Neha Sharma",
+      "photo": "assets/lawyers/neha-sharma.svg",
+      "experienceYears": 12,
+      "primaryCategory": "family",
+      "categories": [
+        "family",
+        "consumer"
+      ],
+      "topics": [
+        "Mutual Consent Divorce",
+        "Contested Divorce",
+        "Maintenance (125 CrPC)",
+        "Child Custody",
+        "Domestic Violence Act",
+        "Dowry Harassment (498A)"
+      ],
+      "about": "Neha Sharma practises before the Family Court, Agra with a focus on matrimonial disputes, maintenance and child custody. She has settled over 300 mutual-consent divorces and is frequently briefed in contested custody matters. Clients note her emphasis on mediation before litigation, which often shortens proceedings considerably.",
+      "highlights": [
+        "300+ mutual consent divorces concluded",
+        "Trained mediator, Agra District Legal Services Authority",
+        "Women and child protection matters"
+      ],
+      "languages": [
+        "Hindi",
+        "English"
+      ],
+      "courts": [
+        "Family Court, Agra",
+        "District Court, Agra",
+        "Allahabad High Court"
+      ],
+      "location": {
+        "area": "Kamla Nagar",
+        "address": "Second Floor, Ashirwad Complex, Kamla Nagar, Agra, Uttar Pradesh 282005"
+      },
+      "consultationFee": 800,
+      "feeNote": "Free first call for maintenance and domestic violence matters.",
+      "availability": "Mon-Sat, 11:00 AM - 6:00 PM",
+      "phone": "+919999000002",
+      "whatsapp": "+919999000002",
+      "email": "chambers@example.com",
+      "enrollment": "UP/09114/2014",
+      "education": [
+        "LL.M. (Family Law), University of Lucknow",
+        "LL.B., Dr. B.R. Ambedkar University, Agra"
+      ],
+      "rating": 4.9,
+      "reviewsCount": 211,
+      "verified": true,
+      "featured": true,
+      "microsite": {
+        "enabled": false,
+        "slug": null
+      }
+    },
+    {
+      "id": "sanjay-kumar-agarwal",
+      "name": "Adv. Sanjay Kumar Agarwal",
+      "photo": "assets/lawyers/sanjay-kumar-agarwal.svg",
+      "experienceYears": 19,
+      "primaryCategory": "property",
+      "categories": [
+        "property",
+        "civil",
+        "documentation"
+      ],
+      "topics": [
+        "Title Verification",
+        "Partition Suits",
+        "Sale Deed & Mutation",
+        "Builder & RERA Disputes",
+        "Tenant Eviction",
+        "Encroachment"
+      ],
+      "about": "Sanjay Kumar Agarwal advises on property title, partition and land record disputes across Agra district. He handles due diligence for buyers on Fatehabad Road and Shamshabad Road projects, and represents families in partition and succession suits. He also appears in RERA complaints against delayed possession.",
+      "highlights": [
+        "Property title due diligence for 400+ transactions",
+        "RERA complaints and builder disputes",
+        "Revenue record and mutation corrections"
+      ],
+      "languages": [
+        "Hindi",
+        "English"
+      ],
+      "courts": [
+        "Civil Court, Agra",
+        "UP RERA",
+        "Revenue Courts, Agra",
+        "Allahabad High Court"
+      ],
+      "location": {
+        "area": "Sadar Bazaar",
+        "address": "Shop 7, Nehru Market, Sadar Bazaar, Agra, Uttar Pradesh 282001"
+      },
+      "consultationFee": 1200,
+      "feeNote": "Title search reports quoted separately after document review.",
+      "availability": "Mon-Sat, 10:30 AM - 7:30 PM",
+      "phone": "+919999000003",
+      "whatsapp": "+919999000003",
+      "email": "chambers@example.com",
+      "enrollment": "UP/04562/2007",
+      "education": [
+        "LL.B., Dr. B.R. Ambedkar University, Agra",
+        "B.Com., Agra College"
+      ],
+      "rating": 4.7,
+      "reviewsCount": 98,
+      "verified": true,
+      "featured": true,
+      "microsite": {
+        "enabled": false,
+        "slug": null
+      }
+    },
+    {
+      "id": "priya-mathur",
+      "name": "Adv. Priya Mathur",
+      "photo": "assets/lawyers/priya-mathur.svg",
+      "experienceYears": 9,
+      "primaryCategory": "civil",
+      "categories": [
+        "civil",
+        "consumer"
+      ],
+      "topics": [
+        "Injunction & Stay",
+        "Money Recovery Suit",
+        "Specific Performance",
+        "Succession Certificate",
+        "Will & Probate",
+        "Declaration Suits"
+      ],
+      "about": "Priya Mathur handles civil suits, injunctions and recovery matters before the Agra civil courts. She regularly obtains succession certificates and probate for families settling estates, and drafts detailed pleadings for specific-performance disputes arising from unexecuted sale agreements.",
+      "highlights": [
+        "Succession and probate specialist",
+        "Interim injunctions and stay applications",
+        "Detailed written pleadings and drafting"
+      ],
+      "languages": [
+        "Hindi",
+        "English"
+      ],
+      "courts": [
+        "Civil Judge (Senior Division), Agra",
+        "District Court, Agra"
+      ],
+      "location": {
+        "area": "Dayalbagh",
+        "address": "House 22-B, Prem Nagar, Dayalbagh, Agra, Uttar Pradesh 282005"
+      },
+      "consultationFee": 600,
+      "feeNote": "Document review included in first consultation.",
+      "availability": "Mon-Fri, 10:00 AM - 6:00 PM",
+      "phone": "+919999000004",
+      "whatsapp": "+919999000004",
+      "email": "chambers@example.com",
+      "enrollment": "UP/11238/2017",
+      "education": [
+        "LL.B., Dr. B.R. Ambedkar University, Agra",
+        "B.A. LL.B. coursework, Agra College"
+      ],
+      "rating": 4.6,
+      "reviewsCount": 64,
+      "verified": true,
+      "featured": false,
+      "microsite": {
+        "enabled": false,
+        "slug": null
+      }
+    },
+    {
+      "id": "mohd-irfan-qureshi",
+      "name": "Adv. Mohd. Irfan Qureshi",
+      "photo": "assets/lawyers/mohd-irfan-qureshi.svg",
+      "experienceYears": 16,
+      "primaryCategory": "criminal",
+      "categories": [
+        "criminal",
+        "motor-accident"
+      ],
+      "topics": [
+        "Bail & Anticipatory Bail",
+        "NDPS Matters",
+        "Sessions Trial",
+        "FIR Quashing",
+        "Criminal Appeal",
+        "MACT Compensation Claim"
+      ],
+      "about": "Mohd. Irfan Qureshi appears in criminal trials and bail matters at the Agra district courts, with substantial experience in NDPS and property-offence cases. He is available for night and holiday arrest assistance, and also files motor accident compensation claims before the MACT at Agra.",
+      "highlights": [
+        "24x7 arrest and bail assistance",
+        "NDPS and economic offence trials",
+        "MACT compensation claims"
+      ],
+      "languages": [
+        "Hindi",
+        "Urdu",
+        "English"
+      ],
+      "courts": [
+        "District & Sessions Court, Agra",
+        "MACT, Agra",
+        "Allahabad High Court"
+      ],
+      "location": {
+        "area": "Shahganj",
+        "address": "Near Shahganj Crossing, Bodla Road, Agra, Uttar Pradesh 282010"
+      },
+      "consultationFee": 700,
+      "feeNote": "Emergency arrest assistance charged separately.",
+      "availability": "Mon-Sun, 9:00 AM - 9:00 PM",
+      "phone": "+919999000005",
+      "whatsapp": "+919999000005",
+      "email": "chambers@example.com",
+      "enrollment": "UP/06920/2010",
+      "education": [
+        "LL.B., Aligarh Muslim University",
+        "B.A., Agra College"
+      ],
+      "rating": 4.7,
+      "reviewsCount": 127,
+      "verified": true,
+      "featured": true,
+      "microsite": {
+        "enabled": false,
+        "slug": null
+      }
+    },
+    {
+      "id": "deepak-goyal",
+      "name": "Adv. Deepak Goyal",
+      "photo": "assets/lawyers/deepak-goyal.svg",
+      "experienceYears": 14,
+      "primaryCategory": "cheque-bounce",
+      "categories": [
+        "cheque-bounce",
+        "civil",
+        "corporate"
+      ],
+      "topics": [
+        "Section 138 Complaint",
+        "Legal Demand Notice",
+        "Defence in 138 Cases",
+        "Compounding & Settlement",
+        "Money Recovery Suit",
+        "MSME & Vendor Disputes"
+      ],
+      "about": "Deepak Goyal handles cheque dishonour matters under Section 138 of the Negotiable Instruments Act for traders and small businesses across Agra's wholesale markets. He files complaints and demand notices within statutory timelines and also defends accused parties, with a strong record in negotiated compounding.",
+      "highlights": [
+        "500+ Section 138 complaints filed",
+        "Recovery-focused settlement negotiation",
+        "Panel counsel for local trade associations"
+      ],
+      "languages": [
+        "Hindi",
+        "English"
+      ],
+      "courts": [
+        "Judicial Magistrate, Agra",
+        "Civil Court, Agra",
+        "District Court, Agra"
+      ],
+      "location": {
+        "area": "Belanganj",
+        "address": "First Floor, Gupta Bhawan, Belanganj, Agra, Uttar Pradesh 282004"
+      },
+      "consultationFee": 500,
+      "feeNote": "Demand notice drafting quoted on the first call.",
+      "availability": "Mon-Sat, 10:00 AM - 8:00 PM",
+      "phone": "+919999000006",
+      "whatsapp": "+919999000006",
+      "email": "chambers@example.com",
+      "enrollment": "UP/08331/2012",
+      "education": [
+        "LL.B., Dr. B.R. Ambedkar University, Agra",
+        "B.Com. (Hons.), Agra College"
+      ],
+      "rating": 4.8,
+      "reviewsCount": 173,
+      "verified": true,
+      "featured": true,
+      "microsite": {
+        "enabled": false,
+        "slug": null
+      }
+    },
+    {
+      "id": "kavita-singhal",
+      "name": "Adv. Kavita Singhal",
+      "photo": "assets/lawyers/kavita-singhal.svg",
+      "experienceYears": 11,
+      "primaryCategory": "consumer",
+      "categories": [
+        "consumer",
+        "family"
+      ],
+      "topics": [
+        "Deficiency in Service",
+        "Insurance Claim Rejection",
+        "Builder Possession Delay",
+        "Medical Negligence",
+        "E-commerce Disputes",
+        "Banking Complaints"
+      ],
+      "about": "Kavita Singhal represents consumers before the District Consumer Disputes Redressal Commission at Agra and the State Commission at Lucknow. Much of her work involves rejected insurance claims, delayed flat possession and hospital negligence, and she handles matters on a documented, evidence-first basis.",
+      "highlights": [
+        "Insurance claim rejections reversed for 150+ clients",
+        "Practises before District and State Consumer Commissions",
+        "Written complaints drafted within 48 hours"
+      ],
+      "languages": [
+        "Hindi",
+        "English"
+      ],
+      "courts": [
+        "District Consumer Commission, Agra",
+        "State Consumer Commission, Lucknow",
+        "Family Court, Agra"
+      ],
+      "location": {
+        "area": "Sikandra",
+        "address": "Office 5, Sikandra Business Centre, NH-19, Agra, Uttar Pradesh 282007"
+      },
+      "consultationFee": 600,
+      "feeNote": "No consultation fee if the claim is found non-maintainable.",
+      "availability": "Mon-Sat, 10:00 AM - 6:30 PM",
+      "phone": "+919999000007",
+      "whatsapp": "+919999000007",
+      "email": "chambers@example.com",
+      "enrollment": "UP/09876/2015",
+      "education": [
+        "LL.B., Dr. B.R. Ambedkar University, Agra",
+        "B.Sc., Agra College"
+      ],
+      "rating": 4.7,
+      "reviewsCount": 89,
+      "verified": true,
+      "featured": false,
+      "microsite": {
+        "enabled": false,
+        "slug": null
+      }
+    },
+    {
+      "id": "rajeev-upadhyay",
+      "name": "Adv. Rajeev Upadhyay",
+      "photo": "assets/lawyers/rajeev-upadhyay.svg",
+      "experienceYears": 17,
+      "primaryCategory": "corporate",
+      "categories": [
+        "corporate",
+        "tax-gst",
+        "civil"
+      ],
+      "topics": [
+        "Company & LLP Incorporation",
+        "Contract Drafting & Vetting",
+        "Founders & Shareholders Agreements",
+        "Trademark & Copyright",
+        "ROC Compliance",
+        "Arbitration"
+      ],
+      "about": "Rajeev Upadhyay advises Agra's manufacturers, exporters and shoe-industry businesses on company structuring, commercial contracts and compliance. He drafts and vets vendor, distribution and employment agreements, and appears in commercial arbitrations and recovery matters arising from supply contracts.",
+      "highlights": [
+        "Counsel to 60+ MSMEs and exporters",
+        "Commercial contract drafting and arbitration",
+        "Trademark filings and oppositions"
+      ],
+      "languages": [
+        "Hindi",
+        "English"
+      ],
+      "courts": [
+        "Commercial Court, Agra",
+        "District Court, Agra",
+        "NCLT Allahabad",
+        "Allahabad High Court"
+      ],
+      "location": {
+        "area": "Fatehabad Road",
+        "address": "Suite 302, Corporate Tower, Fatehabad Road, Agra, Uttar Pradesh 282001"
+      },
+      "consultationFee": 1500,
+      "feeNote": "Retainer arrangements available for businesses.",
+      "availability": "Mon-Fri, 10:00 AM - 7:00 PM",
+      "phone": "+919999000008",
+      "whatsapp": "+919999000008",
+      "email": "chambers@example.com",
+      "enrollment": "UP/05108/2009",
+      "education": [
+        "LL.B., University of Delhi",
+        "B.Com., Agra College",
+        "Company Secretary (Executive)"
+      ],
+      "rating": 4.8,
+      "reviewsCount": 76,
+      "verified": true,
+      "featured": true,
+      "microsite": {
+        "enabled": false,
+        "slug": null
+      }
+    },
+    {
+      "id": "sunita-verma",
+      "name": "Adv. Sunita Verma",
+      "photo": "assets/lawyers/sunita-verma.svg",
+      "experienceYears": 21,
+      "primaryCategory": "labour",
+      "categories": [
+        "labour",
+        "civil"
+      ],
+      "topics": [
+        "Wrongful Termination",
+        "Provident Fund & ESI",
+        "Gratuity & Bonus",
+        "Industrial Disputes Act",
+        "Government Service Matters",
+        "Pension Disputes"
+      ],
+      "about": "Sunita Verma has appeared in labour and service matters at Agra since 2005, representing both workmen and employers before the Labour Court and in departmental proceedings. She handles pension and gratuity claims for retired government employees and conducts departmental enquiries for institutions.",
+      "highlights": [
+        "Labour Court and Industrial Tribunal practice",
+        "Pension and gratuity recovery for retirees",
+        "Departmental enquiry representation"
+      ],
+      "languages": [
+        "Hindi",
+        "English"
+      ],
+      "courts": [
+        "Labour Court, Agra",
+        "Industrial Tribunal, Agra",
+        "Allahabad High Court"
+      ],
+      "location": {
+        "area": "Rakabganj",
+        "address": "12/4, Rakabganj Crossing, Agra, Uttar Pradesh 282003"
+      },
+      "consultationFee": 700,
+      "feeNote": "Concessional fee for retired employees and workmen.",
+      "availability": "Mon-Sat, 10:30 AM - 6:00 PM",
+      "phone": "+919999000009",
+      "whatsapp": "+919999000009",
+      "email": "chambers@example.com",
+      "enrollment": "UP/03219/2005",
+      "education": [
+        "LL.M. (Labour Law), Dr. B.R. Ambedkar University, Agra",
+        "LL.B., Agra College"
+      ],
+      "rating": 4.6,
+      "reviewsCount": 58,
+      "verified": true,
+      "featured": false,
+      "microsite": {
+        "enabled": false,
+        "slug": null
+      }
+    },
+    {
+      "id": "ankit-bansal",
+      "name": "Adv. Ankit Bansal",
+      "photo": "assets/lawyers/ankit-bansal.svg",
+      "experienceYears": 8,
+      "primaryCategory": "cyber",
+      "categories": [
+        "cyber",
+        "criminal"
+      ],
+      "topics": [
+        "Online Financial Fraud",
+        "Data Theft & Hacking",
+        "Social Media Defamation",
+        "Sextortion Cases",
+        "Cyber Cell Complaints",
+        "IT Act Offences"
+      ],
+      "about": "Ankit Bansal works on cyber crime complaints and IT Act matters, coordinating with the Agra Cyber Cell on fraud reporting and account freezing. He assists victims of UPI and investment fraud with time-sensitive complaints, and defends clients accused in IT Act and online defamation proceedings.",
+      "highlights": [
+        "Rapid golden-hour fraud reporting support",
+        "Cyber Cell and NCRP complaint drafting",
+        "Content takedown and fake profile removal"
+      ],
+      "languages": [
+        "Hindi",
+        "English"
+      ],
+      "courts": [
+        "Judicial Magistrate, Agra",
+        "District & Sessions Court, Agra",
+        "Cyber Cell, Agra"
+      ],
+      "location": {
+        "area": "Khandari",
+        "address": "Unit 4, Khandari Crossing, Agra, Uttar Pradesh 282002"
+      },
+      "consultationFee": 900,
+      "feeNote": "Urgent fraud reporting handled same day.",
+      "availability": "Mon-Sun, 9:30 AM - 8:30 PM",
+      "phone": "+919999000010",
+      "whatsapp": "+919999000010",
+      "email": "chambers@example.com",
+      "enrollment": "UP/13440/2018",
+      "education": [
+        "LL.B., Dr. B.R. Ambedkar University, Agra",
+        "B.Tech. (Computer Science), GLA University"
+      ],
+      "rating": 4.9,
+      "reviewsCount": 112,
+      "verified": true,
+      "featured": true,
+      "microsite": {
+        "enabled": false,
+        "slug": null
+      }
+    },
+    {
+      "id": "harish-chandra-gupta",
+      "name": "Adv. Harish Chandra Gupta",
+      "photo": "assets/lawyers/harish-chandra-gupta.svg",
+      "experienceYears": 26,
+      "primaryCategory": "tax-gst",
+      "categories": [
+        "tax-gst",
+        "corporate"
+      ],
+      "topics": [
+        "GST Notices & Show Cause",
+        "Income Tax Assessment",
+        "Appeals before CIT(A)",
+        "Search & Seizure Matters",
+        "Penalty Proceedings",
+        "TDS Defaults"
+      ],
+      "about": "Harish Chandra Gupta represents traders and manufacturers in income tax and GST proceedings at Agra. He handles show-cause notices, assessments, penalty matters and first appeals, and has appeared in search and seizure proceedings for businesses in the leather and footwear sector.",
+      "highlights": [
+        "Income tax and GST litigation since 2000",
+        "Appeals before CIT(A) and GST Appellate Authority",
+        "Search and seizure representation"
+      ],
+      "languages": [
+        "Hindi",
+        "English"
+      ],
+      "courts": [
+        "Income Tax Appellate Tribunal, Agra",
+        "GST Appellate Authority, Agra",
+        "Allahabad High Court"
+      ],
+      "location": {
+        "area": "MG Road",
+        "address": "204, Sanjay Place Extension, MG Road, Agra, Uttar Pradesh 282002"
+      },
+      "consultationFee": 1500,
+      "feeNote": "Notice review quoted after examining the department's file.",
+      "availability": "Mon-Sat, 11:00 AM - 7:00 PM",
+      "phone": "+919999000011",
+      "whatsapp": "+919999000011",
+      "email": "chambers@example.com",
+      "enrollment": "UP/01755/2000",
+      "education": [
+        "LL.B., Dr. B.R. Ambedkar University, Agra",
+        "M.Com., Agra College"
+      ],
+      "rating": 4.7,
+      "reviewsCount": 67,
+      "verified": true,
+      "featured": false,
+      "microsite": {
+        "enabled": false,
+        "slug": null
+      }
+    },
+    {
+      "id": "farhan-siddiqui",
+      "name": "Adv. Farhan Siddiqui",
+      "photo": "assets/lawyers/farhan-siddiqui.svg",
+      "experienceYears": 13,
+      "primaryCategory": "motor-accident",
+      "categories": [
+        "motor-accident",
+        "consumer",
+        "criminal"
+      ],
+      "topics": [
+        "MACT Compensation Claim",
+        "Hit and Run Cases",
+        "Death Claim Compensation",
+        "Disability Compensation",
+        "Third Party Claims",
+        "Enhancement Appeals"
+      ],
+      "about": "Farhan Siddiqui files and argues motor accident compensation claims before the Motor Accident Claims Tribunal at Agra, including claims arising on the Yamuna Expressway and NH-19. He assists families with documentation for death and permanent disability claims and files enhancement appeals where awards are inadequate.",
+      "highlights": [
+        "Compensation recovered in 250+ MACT claims",
+        "Yamuna Expressway and NH-19 accident matters",
+        "Assistance with claim documentation end to end"
+      ],
+      "languages": [
+        "Hindi",
+        "Urdu",
+        "English"
+      ],
+      "courts": [
+        "MACT, Agra",
+        "District Court, Agra",
+        "Allahabad High Court"
+      ],
+      "location": {
+        "area": "Trans Yamuna Colony",
+        "address": "B-118, Trans Yamuna Colony, Agra, Uttar Pradesh 282006"
+      },
+      "consultationFee": 500,
+      "feeNote": "No advance fee for death claim cases; fee on recovery basis.",
+      "availability": "Mon-Sat, 10:00 AM - 7:00 PM",
+      "phone": "+919999000012",
+      "whatsapp": "+919999000012",
+      "email": "chambers@example.com",
+      "enrollment": "UP/07602/2013",
+      "education": [
+        "LL.B., Dr. B.R. Ambedkar University, Agra",
+        "B.A., Aligarh Muslim University"
+      ],
+      "rating": 4.8,
+      "reviewsCount": 134,
+      "verified": true,
+      "featured": true,
+      "microsite": {
+        "enabled": false,
+        "slug": null
+      }
+    },
+    {
+      "id": "meenakshi-rathore",
+      "name": "Adv. Meenakshi Rathore",
+      "photo": "assets/lawyers/meenakshi-rathore.svg",
+      "experienceYears": 15,
+      "primaryCategory": "family",
+      "categories": [
+        "family",
+        "civil",
+        "documentation"
+      ],
+      "topics": [
+        "Contested Divorce",
+        "Child Custody",
+        "Restitution of Conjugal Rights",
+        "Adoption & Guardianship",
+        "Will Drafting",
+        "Succession Certificate"
+      ],
+      "about": "Meenakshi Rathore practises in matrimonial and guardianship matters before the Family Court at Agra. She handles contested divorce, custody and adoption cases, and advises families on succession planning including wills and guardianship certificates for dependants.",
+      "highlights": [
+        "Contested custody and guardianship matters",
+        "Adoption and guardianship certificates",
+        "Succession planning and will drafting"
+      ],
+      "languages": [
+        "Hindi",
+        "English"
+      ],
+      "courts": [
+        "Family Court, Agra",
+        "District Court, Agra",
+        "Allahabad High Court"
+      ],
+      "location": {
+        "area": "Balkeshwar",
+        "address": "9, Balkeshwar Road, near Yamuna Bridge, Agra, Uttar Pradesh 282004"
+      },
+      "consultationFee": 900,
+      "feeNote": "Separate quote for custody matters requiring multiple appearances.",
+      "availability": "Mon-Sat, 10:30 AM - 6:30 PM",
+      "phone": "+919999000013",
+      "whatsapp": "+919999000013",
+      "email": "chambers@example.com",
+      "enrollment": "UP/06044/2011",
+      "education": [
+        "LL.B., Dr. B.R. Ambedkar University, Agra",
+        "B.A. (Hons.), Agra College"
+      ],
+      "rating": 4.7,
+      "reviewsCount": 93,
+      "verified": true,
+      "featured": false,
+      "microsite": {
+        "enabled": false,
+        "slug": null
+      }
+    },
+    {
+      "id": "vikram-pratap-singh",
+      "name": "Adv. Vikram Pratap Singh",
+      "photo": "assets/lawyers/vikram-pratap-singh.svg",
+      "experienceYears": 20,
+      "primaryCategory": "criminal",
+      "categories": [
+        "criminal",
+        "property"
+      ],
+      "topics": [
+        "Sessions Trial",
+        "Bail & Anticipatory Bail",
+        "Criminal Appeal",
+        "POCSO Defence",
+        "Encroachment",
+        "FIR Quashing"
+      ],
+      "about": "Vikram Pratap Singh is a trial lawyer handling sessions cases, appeals and revisions at Agra. He also acts in property-related criminal complaints involving forged documents and encroachment, and regularly appears in quashing petitions before the Allahabad High Court.",
+      "highlights": [
+        "Sessions trials and criminal appeals since 2006",
+        "Quashing petitions before the High Court",
+        "Forged document and encroachment complaints"
+      ],
+      "languages": [
+        "Hindi",
+        "English",
+        "Braj"
+      ],
+      "courts": [
+        "District & Sessions Court, Agra",
+        "Special POCSO Court, Agra",
+        "Allahabad High Court"
+      ],
+      "location": {
+        "area": "Tajganj",
+        "address": "Near Purani Mandi Crossing, Tajganj, Agra, Uttar Pradesh 282001"
+      },
+      "consultationFee": 1000,
+      "feeNote": "Case fee quoted after reading the chargesheet.",
+      "availability": "Mon-Sat, 9:30 AM - 7:00 PM",
+      "phone": "+919999000014",
+      "whatsapp": "+919999000014",
+      "email": "chambers@example.com",
+      "enrollment": "UP/03980/2006",
+      "education": [
+        "LL.B., Dr. B.R. Ambedkar University, Agra",
+        "B.A., St. John's College, Agra"
+      ],
+      "rating": 4.6,
+      "reviewsCount": 81,
+      "verified": true,
+      "featured": false,
+      "microsite": {
+        "enabled": false,
+        "slug": null
+      }
+    },
+    {
+      "id": "shalini-dubey",
+      "name": "Adv. Shalini Dubey",
+      "photo": "assets/lawyers/shalini-dubey.svg",
+      "experienceYears": 10,
+      "primaryCategory": "documentation",
+      "categories": [
+        "documentation",
+        "property",
+        "civil"
+      ],
+      "topics": [
+        "Sale & Lease Deeds",
+        "Rent Agreements",
+        "Power of Attorney",
+        "Affidavits & Notary",
+        "Stamp Duty Advice",
+        "Sub-Registrar Registration"
+      ],
+      "about": "Shalini Dubey handles drafting and registration work at the Agra Sub-Registrar offices, covering sale deeds, lease and rent agreements, powers of attorney and partnership deeds. She advises on stamp duty and circle rates before execution so that documents are not held up at registration.",
+      "highlights": [
+        "Same-week drafting and registration turnaround",
+        "Stamp duty and circle rate advisory",
+        "Registration support at Agra Sub-Registrar offices"
+      ],
+      "languages": [
+        "Hindi",
+        "English"
+      ],
+      "courts": [
+        "Sub-Registrar Offices, Agra",
+        "Civil Court, Agra"
+      ],
+      "location": {
+        "area": "Bodla",
+        "address": "Shop 3, Bodla Main Road, Agra, Uttar Pradesh 282007"
+      },
+      "consultationFee": 400,
+      "feeNote": "Drafting charges depend on document type and stamp value.",
+      "availability": "Mon-Sat, 10:00 AM - 6:00 PM",
+      "phone": "+919999000015",
+      "whatsapp": "+919999000015",
+      "email": "chambers@example.com",
+      "enrollment": "UP/10877/2016",
+      "education": [
+        "LL.B., Dr. B.R. Ambedkar University, Agra",
+        "B.A., Agra College"
+      ],
+      "rating": 4.8,
+      "reviewsCount": 145,
+      "verified": true,
+      "featured": true,
+      "microsite": {
+        "enabled": false,
+        "slug": null
+      }
+    },
+    {
+      "id": "naresh-kumar-yadav",
+      "name": "Adv. Naresh Kumar Yadav",
+      "photo": "assets/lawyers/naresh-kumar-yadav.svg",
+      "experienceYears": 28,
+      "primaryCategory": "civil",
+      "categories": [
+        "civil",
+        "property"
+      ],
+      "topics": [
+        "Partition Suits",
+        "Land Acquisition",
+        "Declaration Suits",
+        "Civil Appeals & Revision",
+        "Specific Performance",
+        "Injunction & Stay"
+      ],
+      "about": "Naresh Kumar Yadav is a senior civil practitioner with a long record in partition, declaration and land acquisition matters across Agra district. He appears in revenue courts on agricultural land disputes and argues civil appeals and revisions arising from district court decrees.",
+      "highlights": [
+        "Civil practice at Agra since 1998",
+        "Land acquisition compensation matters",
+        "Revenue court and agricultural land disputes"
+      ],
+      "languages": [
+        "Hindi",
+        "Braj",
+        "English"
+      ],
+      "courts": [
+        "Civil Court, Agra",
+        "Revenue Courts, Agra",
+        "District Court, Agra",
+        "Allahabad High Court"
+      ],
+      "location": {
+        "area": "Collectorate",
+        "address": "Chamber 3, Collectorate Compound, Agra, Uttar Pradesh 282001"
+      },
+      "consultationFee": 1200,
+      "feeNote": "Senior counsel rates; junior assistance available at lower cost.",
+      "availability": "Mon-Sat, 10:00 AM - 5:30 PM",
+      "phone": "+919999000016",
+      "whatsapp": "+919999000016",
+      "email": "chambers@example.com",
+      "enrollment": "UP/00912/1998",
+      "education": [
+        "LL.B., Dr. B.R. Ambedkar University, Agra",
+        "B.A., Agra College"
+      ],
+      "rating": 4.7,
+      "reviewsCount": 72,
+      "verified": true,
+      "featured": false,
+      "microsite": {
+        "enabled": false,
+        "slug": null
+      }
+    },
+    {
+      "id": "ritu-agrawal",
+      "name": "Adv. Ritu Agrawal",
+      "photo": "assets/lawyers/ritu-agrawal.svg",
+      "experienceYears": 7,
+      "primaryCategory": "corporate",
+      "categories": [
+        "corporate",
+        "cyber",
+        "documentation"
+      ],
+      "topics": [
+        "Company & LLP Incorporation",
+        "Founders & Shareholders Agreements",
+        "Trademark & Copyright",
+        "Employment Contracts",
+        "Contract Drafting & Vetting",
+        "Partnership Deeds"
+      ],
+      "about": "Ritu Agrawal advises early-stage businesses and startups in Agra on incorporation, founder agreements and intellectual property. She drafts employment and vendor contracts, files trademark applications and handles routine ROC compliance for small companies and LLPs.",
+      "highlights": [
+        "Startup incorporation and founder agreements",
+        "Trademark filings and responses to objections",
+        "Fixed-fee packages for small businesses"
+      ],
+      "languages": [
+        "Hindi",
+        "English"
+      ],
+      "courts": [
+        "NCLT Allahabad",
+        "Commercial Court, Agra",
+        "Trade Marks Registry"
+      ],
+      "location": {
+        "area": "Shamshabad Road",
+        "address": "Workspace 11, Vibhav Nagar Extension, Shamshabad Road, Agra, Uttar Pradesh 282001"
+      },
+      "consultationFee": 800,
+      "feeNote": "Fixed-fee packages available for incorporation and trademarks.",
+      "availability": "Mon-Fri, 10:00 AM - 6:30 PM",
+      "phone": "+919999000017",
+      "whatsapp": "+919999000017",
+      "email": "chambers@example.com",
+      "enrollment": "UP/14192/2019",
+      "education": [
+        "B.A. LL.B. (Hons.), Symbiosis Law School, Pune"
+      ],
+      "rating": 4.9,
+      "reviewsCount": 54,
+      "verified": true,
+      "featured": true,
+      "microsite": {
+        "enabled": false,
+        "slug": null
+      }
+    },
+    {
+      "id": "pankaj-tiwari",
+      "name": "Adv. Pankaj Tiwari",
+      "photo": "assets/lawyers/pankaj-tiwari.svg",
+      "experienceYears": 12,
+      "primaryCategory": "consumer",
+      "categories": [
+        "consumer",
+        "cheque-bounce",
+        "civil"
+      ],
+      "topics": [
+        "Defective Goods",
+        "E-commerce Disputes",
+        "Banking Complaints",
+        "Section 138 Complaint",
+        "Money Recovery Suit",
+        "Appeals before State Commission"
+      ],
+      "about": "Pankaj Tiwari acts for traders and consumers in the wholesale markets around Loha Mandi, handling defective goods complaints, banking disputes and cheque dishonour matters. He focuses on quick documentary cases where recovery can be pursued without prolonged trial.",
+      "highlights": [
+        "Consumer complaints for traders and buyers",
+        "Banking and NBFC dispute representation",
+        "Fast-track documentary recovery matters"
+      ],
+      "languages": [
+        "Hindi",
+        "English"
+      ],
+      "courts": [
+        "District Consumer Commission, Agra",
+        "Judicial Magistrate, Agra",
+        "Civil Court, Agra"
+      ],
+      "location": {
+        "area": "Loha Mandi",
+        "address": "Gali No. 4, Loha Mandi, Agra, Uttar Pradesh 282002"
+      },
+      "consultationFee": 500,
+      "feeNote": "Bulk arrangement available for trade associations.",
+      "availability": "Mon-Sat, 10:30 AM - 7:30 PM",
+      "phone": "+919999000018",
+      "whatsapp": "+919999000018",
+      "email": "chambers@example.com",
+      "enrollment": "UP/08745/2014",
+      "education": [
+        "LL.B., Dr. B.R. Ambedkar University, Agra",
+        "B.Com., Agra College"
+      ],
+      "rating": 4.5,
+      "reviewsCount": 61,
+      "verified": true,
+      "featured": false,
+      "microsite": {
+        "enabled": false,
+        "slug": null
+      }
+    },
+    {
+      "id": "aisha-khan",
+      "name": "Adv. Aisha Khan",
+      "photo": "assets/lawyers/aisha-khan.svg",
+      "experienceYears": 6,
+      "primaryCategory": "family",
+      "categories": [
+        "family",
+        "criminal",
+        "cyber"
+      ],
+      "topics": [
+        "Domestic Violence Act",
+        "Maintenance (125 CrPC)",
+        "Dowry Harassment (498A)",
+        "Mutual Consent Divorce",
+        "Cyber Bullying & Stalking",
+        "Sextortion Cases"
+      ],
+      "about": "Aisha Khan works on domestic violence, maintenance and harassment matters, and assists women facing online stalking and image-based abuse. She coordinates with protection officers and the Agra Cyber Cell, and takes on matters through legal aid where clients cannot afford fees.",
+      "highlights": [
+        "Domestic violence and protection order applications",
+        "Legal aid matters through DLSA Agra",
+        "Online harassment and takedown support"
+      ],
+      "languages": [
+        "Hindi",
+        "Urdu",
+        "English"
+      ],
+      "courts": [
+        "Family Court, Agra",
+        "Judicial Magistrate, Agra",
+        "District Court, Agra"
+      ],
+      "location": {
+        "area": "Nai Ki Mandi",
+        "address": "24, Nai Ki Mandi, near Rawatpara, Agra, Uttar Pradesh 282003"
+      },
+      "consultationFee": 0,
+      "feeNote": "First consultation free for domestic violence and harassment matters.",
+      "availability": "Mon-Sat, 11:00 AM - 6:00 PM",
+      "phone": "+919999000019",
+      "whatsapp": "+919999000019",
+      "email": "chambers@example.com",
+      "enrollment": "UP/15003/2020",
+      "education": [
+        "B.A. LL.B., Aligarh Muslim University"
+      ],
+      "rating": 4.9,
+      "reviewsCount": 88,
+      "verified": true,
+      "featured": true,
+      "microsite": {
+        "enabled": false,
+        "slug": null
+      }
+    },
+    {
+      "id": "brijmohan-sharma",
+      "name": "Adv. Brijmohan Sharma",
+      "photo": "assets/lawyers/brijmohan-sharma.svg",
+      "experienceYears": 31,
+      "primaryCategory": "civil",
+      "categories": [
+        "civil",
+        "property",
+        "labour"
+      ],
+      "topics": [
+        "Civil Appeals & Revision",
+        "Arbitration",
+        "Declaration Suits",
+        "Partition Suits",
+        "Will & Probate",
+        "Industrial Disputes Act"
+      ],
+      "about": "Brijmohan Sharma is among the longest-practising civil advocates in the directory, appearing at Agra since 1995. He argues appeals, revisions and arbitration matters, and is often engaged as senior counsel to lead arguments in complex civil disputes alongside instructing advocates.",
+      "highlights": [
+        "Civil practice at Agra since 1995",
+        "Arbitration and commercial dispute resolution",
+        "Engaged as leading counsel in complex appeals"
+      ],
+      "languages": [
+        "Hindi",
+        "English",
+        "Braj"
+      ],
+      "courts": [
+        "District Court, Agra",
+        "Commercial Court, Agra",
+        "Allahabad High Court"
+      ],
+      "location": {
+        "area": "Civil Lines",
+        "address": "Chamber 2, Bar Association Building, Civil Lines, Agra, Uttar Pradesh 282002"
+      },
+      "consultationFee": 2000,
+      "feeNote": "Appearance fee quoted per hearing for appellate matters.",
+      "availability": "Mon-Fri, 10:00 AM - 5:00 PM",
+      "phone": "+919999000020",
+      "whatsapp": "+919999000020",
+      "email": "chambers@example.com",
+      "enrollment": "UP/00341/1995",
+      "education": [
+        "LL.M., Dr. B.R. Ambedkar University, Agra",
+        "LL.B., Agra College"
+      ],
+      "rating": 4.8,
+      "reviewsCount": 103,
+      "verified": true,
+      "featured": true,
+      "microsite": {
+        "enabled": false,
+        "slug": null
+      }
+    }
+  ]
+}
