@@ -1,22 +1,48 @@
 # Vakil Saab Agra
 
-A static, light-theme directory of advocates practising in **Agra, Uttar Pradesh**.
-Plain HTML + Tailwind CSS + vanilla JavaScript. No backend, no authentication,
-no build step required to *run* it — advocates are added by editing one JSON file.
+A static, light-theme directory of advocates practising in **Agra, Uttar Pradesh**,
+readable in Hindi or English. Plain HTML + Tailwind CSS + vanilla JavaScript —
+no framework, no bundler, no runtime dependency. Advocates are added by editing
+one JSON file.
+
+Three things run at the edge on Cloudflare Pages Functions, and only those
+three: an anonymous click counter, its admin read-out, and the host routing that
+serves each paying advocate's microsite on its own subdomain.
+
+| I want to… | Go to |
+|---|---|
+| add or renew an advocate | [Adding an advocate](#adding-an-advocate), then [docs/DEPLOY.md](docs/DEPLOY.md#part-2--onboarding-a-new-advocate) |
+| understand what it costs an advocate | [Plans and billing](#plans-and-billing) |
+| set the whole thing up from scratch | [docs/DEPLOY.md](docs/DEPLOY.md#part-1--one-time-setup) |
+| send someone their monthly numbers | [Reading a month back](#reading-a-month-back) |
+| edit the Hindi | [Hindi and English](#hindi-and-english) |
+| know why it is built this way | [Decisions](#decisions-and-why) |
 
 ---
 
 ## Quick start
 
 ```bash
-# any static server works; the site needs one because it fetches a JSON file
+npm install            # tailwindcss, the only dependency, and it is dev-only
+npm run build          # validate data → publish → generate microsites → CSS
 npm run serve          # → http://localhost:5173
-# or: python3 -m http.server 5173
 ```
 
+Any static server works; the site needs one because it fetches a JSON file.
 Opening `index.html` straight off disk (`file://`) also works — the data layer
 falls back to `data/lawyers.fallback.js` when `fetch()` is blocked by the
-browser's file:// security rules.
+browser's file:// security rules, and the Hindi arrives the same way.
+
+Two things do **not** work under a plain static server, because they are
+Cloudflare Pages Functions: `/api/track` (you will see a 501 in the console,
+which is harmless) and microsite host routing. To exercise those locally:
+
+```bash
+npx wrangler pages dev .
+```
+
+Otherwise open a generated microsite directly at
+`http://localhost:5173/sites/<slug>/index.html`.
 
 ---
 
@@ -52,14 +78,38 @@ renewal reminder for anyone expiring soon.
 | `location.address` | ✅ | full chamber address |
 | `consultationFee` | ✅ | number; `0` renders as "Free first consult" |
 | `highlights`, `courts`, `languages`, `education`, `feeNote`, `availability`, `email` | | optional but they make the profile far stronger |
-| `rating`, `reviewsCount` | | shown as stars; feed real feedback only |
-| `verified`, `featured` | | booleans. `featured: true` puts them on the home page |
+| `rating`, `reviewsCount` | | **`null` on every record on purpose.** There is no review pipeline, so the star row and the count render nothing at all rather than an empty five-star row. Set them only from real, verified feedback |
+| `verified`, `featured` | | booleans. `featured: true` puts them on the home page. Maximum **two per practice area** — `sync` refuses a third |
 | `featuredUntil` | | `YYYY-MM-DD` or `null`. Once it passes, the featured slot stops showing — the record is not touched |
 | `listing` | ✅ | billing block, see *Plans and billing* below |
 | `microsite` | ✅ | microsite block, see *Microsites* below |
 
 `sync` will refuse to write if an `id` is duplicated, a category slug is
 unknown, or a required field is missing — so a typo can't quietly break the site.
+
+### The loop, every time
+
+```bash
+# 1. edit data/lawyers.json
+# 2. build — validates, publishes, regenerates microsites, compiles CSS
+npm run build
+# 3. read the output: who is live, who expires soon, what was generated
+# 4. commit and push; Cloudflare Pages redeploys on its own
+git add -A && git commit -m "Add Adv. …" && git push
+```
+
+`npm run build` is `npm run sync` followed by `npm run build:css`. Run the whole
+thing — `sync` alone leaves the stylesheet behind when you have added a class,
+and `build:css` alone leaves the data behind.
+
+If validation fails, nothing is written. The error names the field and the
+advocate, so fix and run again.
+
+Commit the generated files (`data/lawyers.public.json`,
+`data/lawyers.fallback.js`, `data/i18n/hi.js`, `css/tailwind.css`, `sites/`,
+`sitemap.xml`, `functions/_ids.js`, `functions/_slugs.js`). Cloudflare does run
+the build, but committing them keeps `file://` and `npm run serve` working
+without one, and keeps the diff honest about what changed.
 
 ### Photos
 
@@ -164,19 +214,31 @@ Change them there and every page updates — header, footer, contact page and th
 structured data Google reads.
 
 ```js
-phone: '+919876543210',
+phone: '+919876543210',          // TODO(subroto): stock example number, not real
 phoneDisplay: '+91 98765 43210',
-demoNotice: true,   // ← set to false once the listings are real
+email: 'hello@vakilsaabagra.in', // TODO(subroto): confirm the mailbox exists
+micrositeDomain: 'vakilsaabagra.in',
+social: { facebook: '', instagram: '', linkedin: '', youtube: '' },
+demoNotice: true,                // ← set to false once the listings are real
 ```
 
-> **`demoNotice`** puts a line in the footer saying the listings are samples.
-> The 20 advocates currently in `data/lawyers.json` are **placeholder entries**
-> with placeholder phone numbers (`+9199990000xx`). Replace them with real,
-> consented advocate details and set `demoNotice: false` before going live.
+**The phone number is not real.** `+919876543210` is the stock Indian example
+number. Worse, it is not only in this file: the header, footer, mobile drawer,
+contact page, FAQ answers and WhatsApp prefill links each write it into the HTML
+directly. `grep -rn 9876543210` finds every one — about fifty-five across twelve
+files. Nothing dials until they are all replaced.
 
-Some copy is written directly into the HTML (the FAQ answers, the WhatsApp
-prefill links). Search the repo for `9876543210` to catch them all when you
-change the number.
+**The social links are intentionally empty.** They are published as schema.org
+`sameAs`, which is a claim about who we are; pointing them at `facebook.com`'s
+own home page told Google our brand's profile *is* Facebook. `js/home.js` omits
+`sameAs` entirely while they are empty. Fill in the profiles that exist and
+delete the rest.
+
+**`demoNotice: true`** puts a "sample listings" line in the footer of the
+directory *and* of every microsite. The 20 advocates in `data/lawyers.json` are
+placeholders — `+9199990000xx` numbers, `chambers@example.com` addresses, and
+four demo microsites whose bios were written to exercise the pipeline. Replace
+them with real, consented details and set this to `false`.
 
 ---
 
@@ -412,9 +474,11 @@ sips -c 380 1400 assets/logo.png      # crop the square render to the band
 Built to rank for “lawyers in Agra” and the practice-area variants.
 
 - **Structured data (JSON-LD)** — `LegalService` + `LocalBusiness` and `WebSite`
-  with `SearchAction` on the home page; `Attorney` with `AggregateRating` and
-  `BreadcrumbList` on every profile; `ItemList` on the directory; `FAQPage` on
-  the home and FAQ pages; `CollectionPage` on practice areas.
+  with `SearchAction` on the home page; `Attorney` + `BreadcrumbList` on every
+  profile; `ItemList` on the directory; `FAQPage` on the home and FAQ pages;
+  `CollectionPage` on practice areas; `Attorney` + `LegalService` + `FAQPage` on
+  each microsite. **No `AggregateRating` anywhere** — see the ratings note under
+  *Adding an advocate*.
 - **Local signals** — `geo.region`, `geo.placename`, `ICBM` meta tags, Agra
   coordinates, `areaServed`, and internal links for 18 Agra localities.
 - **Per-page meta** — unique title, description, canonical, Open Graph and
@@ -428,12 +492,28 @@ Built to rank for “lawyers in Agra” and the practice-area variants.
 
 ### Before you launch
 
-1. Replace the placeholder advocate data and set `demoNotice: false`.
-2. Update the domain — it is `https://www.vakilsaabagra.com` in `js/config.js`,
-   `tools/sync.js` (the `SITE` constant), `robots.txt` and every page's
-   canonical/OG tags. Re-run `npm run sync` afterwards.
-3. Serve over HTTPS and point `404.html` at your host's not-found handler.
-4. Submit `sitemap.xml` in Google Search Console and set up a Google Business
+The domain is already set to `https://vakilsaabagra.in`. To change it, use
+`npm run set-domain -- https://your-domain.in` and then `npm run build` — it
+rewrites the canonical, OG, Twitter and JSON-LD URLs, `robots.txt`, the
+sitemap, the microsite hosts and the string tables in one pass. Getting this
+wrong is the quiet mistake: a canonical pointing at a domain that does not serve
+the site tells Google to index that other address instead.
+
+Still outstanding before this is a real, public site:
+
+1. **Replace the placeholder phone number.** `+919876543210` is the stock
+   example number. It is in `js/config.js` *and* written directly into the
+   header, footer, drawer, contact page, FAQ answers and WhatsApp prefill links
+   of every page — `grep -rn 9876543210` finds all of them.
+2. **Confirm `hello@vakilsaabagra.in` exists** and forwards somewhere read.
+3. **Fill in or delete the social links.** They are empty in `js/config.js`;
+   empty means no `sameAs` is published, which is correct until real profiles
+   exist.
+4. **Replace the twenty sample advocates** with real, consented details, then
+   set `demoNotice: false` — that removes the "sample listings" line from the
+   footer of the directory and of every microsite. The sample records also carry
+   `chambers@example.com` and `+9199990000xx` numbers.
+5. Submit `sitemap.xml` in Google Search Console, and set up a Google Business
    Profile for Agra — for local search that matters more than anything on-page.
 
 ---
@@ -448,25 +528,52 @@ practice-areas.html       all 12 areas and 96 case types
 about.html  contact.html  faq.html  list-your-practice.html
 privacy.html  terms.html  404.html
 
+admin/stats.html          internal read-out for /api/stats — unlinked, noindex
+
 data/lawyers.json         ← the only file you edit to add advocates
-data/lawyers.public.json  generated; live listings only, no billing fields —
+data/lawyers.public.json  generated; live listings only, billing stripped —
                           this is what the pages actually fetch
 data/lawyers.fallback.js  generated; the same dataset, makes file:// work
+data/i18n/en.json         generated; every translatable string, in English
+data/i18n/hi.json         ← the Hindi, edited by hand
+data/i18n/hi.js           generated; the Hindi as a script tag
 
 css/styles.css            authored — tokens, motion, components
 css/tailwind.css          compiled — the file the pages load
 
 js/config.js              business details
+js/i18n.js                language resolution, string swapping, the toggle
 js/data.js                loading, search, sort, formatting helpers
 js/ui.js                  header, drawer, reveals, counters, lawyer card
+js/track.js               anonymous click and view beacons
 js/home.js                home page
 js/directory.js           directory filtering and URL state
 js/profile.js             profile rendering and JSON-LD
 
-tools/sync.js             validate data → avatars, fallback, sitemap
+templates/microsite.html  the microsite design, with {{…}} tokens
+sites/<slug>/             generated microsites, one folder per advocate
+sites/_map.json           generated; slug → advocate id
+
+functions/_middleware.js  host routing: subdomain → sites/<slug>/
+functions/_slugs.js       generated; the slug map the middleware imports
+functions/_ids.js         generated; valid advocate ids for /api/track
+functions/api/track.js    POST — counts a view or a contact click
+functions/api/stats.js    GET  — reads it back, behind ADMIN_TOKEN
+schema.sql                the D1 table and its indexes
+
+tools/sync.js             validate → publish, avatars, sitemap, microsites, i18n
+tools/i18n-extract.js     stamp data-i18n keys, refresh en.json
 tools/build-css.js        compile styles.css + Tailwind
+tools/set-domain.js       point every URL at a different domain
 tools/*.svg               logo sources
+
+docs/DEPLOY.md            click-by-click hosting, onboarding, renewals
 ```
+
+**Generated files, never edited by hand:** `data/lawyers.public.json`,
+`data/lawyers.fallback.js`, `data/i18n/en.json`, `data/i18n/hi.js`,
+`css/tailwind.css`, `sitemap.xml`, `sites/**`, `functions/_ids.js`,
+`functions/_slugs.js`. Each carries a header saying so.
 
 ---
 
@@ -480,116 +587,222 @@ every image. All animation is disabled under `prefers-reduced-motion: reduce`.
 
 ## Legal note
 
-This is a directory, not a law firm. The footer carries a disclaimer stating
-that no advocate–client relationship is created and that listings are factual
-entries published at the advocate's request — worded to sit within Rule 36 of
-the Bar Council of India Rules on advertising. Keep it. Publish an advocate's
-details only with their consent, and honour removal requests promptly.
+This is a directory, not a law firm — and the wording across the site is doing
+real work, so treat it as load-bearing rather than as filler.
+
+- **Listings stay factual.** Name, enrolment, practice areas, the matters an
+  advocate actually takes on, address, contact details. No success rates, no
+  claims of being better than anyone else, no ratings. That is the register
+  Rule 36 of the Bar Council of India Rules contemplates.
+- **The fee is a fixed service fee.** Never per enquiry, never a commission,
+  never a referral cut, never a share of what an advocate charges a client — see
+  *[A fixed fee, never a share](#a-fixed-fee-never-a-share)*.
+- **We do not refer or recommend.** We can narrow a search; we do not send
+  clients to a particular advocate.
+- **The disclaimer stays.** Every page footer, and every microsite footer, says
+  that no advocate–client relationship is created and that the listing is
+  published at the advocate's request. Keep it.
+- **Consent, and removal.** Publish an advocate's details only with their
+  consent, and honour a removal request within one working day — both the site
+  and the terms promise that.
+
+None of this is legal advice about your own business. If the offering changes
+shape — anything that starts to look like being paid for outcomes — get it
+looked at before shipping the copy.
 
 ---
 
-## Hosting on GitHub Pages
+## Hosting
 
-The site is pure static files with the CSS already compiled, so GitHub Pages can
-serve it straight from a branch — no Actions workflow, no build step.
+**Cloudflare Pages, free plan.** Full click-by-click setup, onboarding,
+renewals, the monthly report and troubleshooting live in
+**[docs/DEPLOY.md](docs/DEPLOY.md)** — that file is the runbook, written to be
+handed to somebody else.
 
-### 1. Set the domain first
+The short version:
 
-This is the step people skip, and it quietly costs you the ranking. Every page
-carries a `<link rel="canonical">`. If it points at a domain that is not the one
-actually serving the site, Google indexes that other address instead — so your
-live pages never rank.
+| | |
+|---|---|
+| Registrar | Hostinger — the domain stays there, only the nameservers move to Cloudflare |
+| Host | Cloudflare Pages, connected to this GitHub repo |
+| Build command | `npm run build` |
+| Output directory | `.` (the repository root) |
+| Custom domains | `vakilsaabagra.in`, `www.vakilsaabagra.in`, and one per microsite advocate |
+| Database | Cloudflare D1, bound as `DB` |
+| Secret | `ADMIN_TOKEN`, set in the dashboard, never committed |
 
-```bash
-# a project site, served from https://<user>.github.io/<repo>/
-npm run set-domain https://<your-username>.github.io/vakilsaabagra
+`vakilsaabagra.in` is canonical. `www` serves the same site and the middleware
+passes both through untouched. `*.pages.dev` preview deployments and `localhost`
+are treated as the directory host too, so previews and `wrangler pages dev` work.
 
-# …or your own domain, once DNS is pointed at GitHub (see step 4)
-npm run set-domain https://www.vakilsaabagra.com
+### Where the secrets and bindings live
 
-npm run sync          # regenerate sitemap.xml with the new URLs
-```
+Cloudflare dashboard → your Pages project:
 
-All internal links are relative, so the site works at a `/repo/` sub-path
-without any other change.
+- **Settings → Bindings → D1** — variable name `DB`, database `vakilsaabagra`.
+  Without it `/api/track` still returns `204` and no page breaks; you simply
+  record nothing.
+- **Settings → Environment variables** — `ADMIN_TOKEN`, marked as a Secret. It
+  is the only thing protecting `/api/stats`.
+- Optional, previews only — `ALLOW_LOCAL_ORIGIN = 1` lets `localhost` post
+  events while testing. Leave it unset in production.
 
-### 2. Push it
+Nothing else is configured anywhere. There is no `.env`, and no secret belongs
+in this repository.
 
-```bash
-git init -b main
-git add -A
-git commit -m "Vakil Saab Agra — advocate directory for Agra"
-git remote add origin https://github.com/<your-username>/vakilsaabagra.git
-git push -u origin main
-```
+### Adding an advocate, end to end
 
-### 3. Turn Pages on
+The numbered checklist is in
+[docs/DEPLOY.md → Onboarding a new advocate](docs/DEPLOY.md#part-2--onboarding-a-new-advocate):
+add the record → set plan and `paidUntil` → fill in the microsite block if they
+bought one → `npm run build` → commit and push → add
+`<slug>.vakilsaabagra.in` as a custom domain → check it renders styled with the
+subdomain still in the address bar → send them the link.
 
-Repository → **Settings** → **Pages** → *Build and deployment*
-→ Source: **Deploy from a branch** → Branch: **main**, folder: **/ (root)** → Save.
+### Renewals, expiry and reactivation
 
-First deploy takes a minute or two. Your site appears at
-`https://<your-username>.github.io/vakilsaabagra/`.
+`npm run build` prints who has expired and who expires within fifteen days.
+That printout **is** the renewal reminder — read it every build, and build at
+least monthly even when nothing else changed, because a listing goes offline on
+the next build rather than on the date itself.
 
-Tick **Enforce HTTPS** on the same page once it is available.
-
-> Naming the repo `<your-username>.github.io` instead publishes it at the domain
-> root (`https://<your-username>.github.io/`) — then use that as your
-> `set-domain` value.
-
-### 4. Custom domain (recommended)
-
-A real domain ranks better than a `github.io` sub-path and is what people expect
-from a professional directory.
-
-At your DNS provider:
-
-| Type | Name | Value |
+| To… | Change | Then |
 |---|---|---|
-| `A` | `@` | `185.199.108.153` |
-| `A` | `@` | `185.199.109.153` |
-| `A` | `@` | `185.199.110.153` |
-| `A` | `@` | `185.199.111.153` |
-| `CNAME` | `www` | `<your-username>.github.io` |
+| renew | `listing.paidUntil` to the new date | `npm run build && git push` |
+| take someone down | `listing.active: false` | `npm run build && git push` |
+| bring them back | `listing.active: true`, new `paidUntil` | `npm run build && git push` |
 
-*(Confirm the current apex IPs against GitHub's Pages documentation — they have
-changed before.)*
+Nothing is ever deleted. An advocate who lapses disappears from the directory,
+the sitemap, the tracking id list and — if they had one — their microsite
+subdomain starts returning a real 404. Renewing restores all of it at the same
+URLs, because the record never left `data/lawyers.json`.
 
-Then in **Settings → Pages → Custom domain**, enter `www.vakilsaabagra.com` and
-save. GitHub commits a `CNAME` file to the repo for you. Wait for the TLS
-certificate to be issued, then tick **Enforce HTTPS**.
+### Sending the monthly numbers
 
-Finally, re-run step 1 with the custom domain and push again:
+Open `/admin/stats.html`, paste the `ADMIN_TOKEN`, pick the advocate and the
+month, and press **Fetch report**. It shows views, calls, WhatsApp taps, number
+copies and impressions, the conversion rates, a day-by-day table and the top
+searches for the period. **Copy message** produces the Hindi WhatsApp message
+ready to paste. Send it a week or two before `paidUntil`.
+
+### Growing past about fifty microsites
+
+Adding a custom domain by hand is the right trade for now: no wildcard DNS to
+reason about, no extra Worker, and Cloudflare issues each certificate itself.
+Past roughly fifty it becomes tedious, and the migration is a wildcard
+`*.vakilsaabagra.in` DNS record, a paid Cloudflare **Advanced Certificate**
+covering the wildcard (Universal SSL does not), and a Worker on
+`*.vakilsaabagra.in/*` doing what `functions/_middleware.js` does today, reading
+the same generated slug map. The routing logic itself does not change. Details
+in [docs/DEPLOY.md](docs/DEPLOY.md#scaling-past-about-50-advocates).
+
+---
+
+## Decisions, and why
+
+Short notes on the choices that are expensive to reverse, so nobody has to
+re-litigate them from scratch.
+
+### Microsites on subdomains, not paths
+
+`ramesh.vakilsaabagra.in`, not `vakilsaabagra.in/ramesh`. The subdomain is the
+product: an advocate paying for their own site can print it on a card, send it on
+WhatsApp and see their own name in the address bar. A path under our domain
+reads as our page, which is what they already get for free in the directory.
+
+The cost is real and worth knowing. Google treats a subdomain as a separate
+site, so a microsite has to *earn* its ranking rather than inherit ours, and it
+must not duplicate the directory profile — which is why `sync` refuses a
+`longAbout` identical to `about`, and why the microsite carries expanded
+practice sections and FAQs the profile does not have. Each page canonicalises to
+itself; the apex `robots.txt` disallows `/sites/` so the same HTML is not also
+reachable under our own domain.
+
+It must be a **rewrite, never a redirect**. If the subdomain 301s to
+`vakilsaabagra.in/lawyer.html?id=…`, the advocate has been sold something they
+did not buy.
+
+### D1, not KV
+
+The monthly report asks "how many views did this advocate get last month" — a
+query grouped by advocate and by day. KV can only fetch by key, so answering
+that means either one key per advocate per day and a lot of reads, or reading
+everything and aggregating in the Function. D1 answers it in one `GROUP BY`.
+
+KV also writes eventually-consistently with a per-key rate limit, which is the
+wrong shape for many small appends from many visitors. D1's free tier covers our
+volume comfortably.
+
+### Client-side Hindi on one URL, no hreflang
+
+The language toggle swaps strings in the browser. There is one URL per page, so
+**Hindi is not separately indexed** — we do not rank for Hindi queries.
+
+That is a deliberate v1 trade-off. Doing it properly means duplicating every
+page under `/hi/`, maintaining `hreflang` pairs both ways, and doubling the
+pages to keep in step — for a directory that has not yet proven demand in either
+language. Half a hreflang implementation is worse than none, so there is none.
+
+The consequence to remember: `<title>` and `<meta name="description">` stay
+English on purpose, because what Google reads is the English head. If Hindi
+search traffic ever justifies it, the migration is real work, not a flag.
+
+### No ratings, no reviews, no testimonials
+
+There is no review pipeline, so there are no numbers. `rating` and
+`reviewsCount` are `null`, the star row renders nothing, `AggregateRating` is
+absent from the structured data, and the home page carries no testimonials.
+
+This is not squeamishness. Invented review counts and quotes attributed to
+people who do not exist are the kind of thing a competitor screenshots, and on
+a **legal** directory that is a reputation problem rather than a marketing one.
+Structured data claiming ratings we cannot substantiate is also how sites earn
+manual actions from Google. If reviews are added later they should be tied to
+confirmed consultations, and advocates must not be able to edit or delete them.
+
+### A fixed fee, never a share
+
+Advocates pay a fixed technology and listing service fee, billed in advance.
+Nothing in the product or the copy may read as pay-per-lead, commission, a
+referral cut or a share of any fee an advocate charges a client — that is what
+Bar Council of India Rule 36 and the bar on fee-sharing with non-advocates turn
+on. Keep the wording on `list-your-practice.html` and `terms.html` in that
+register, and keep the listing to factual particulars.
+
+### Counting clicks without tracking people
+
+We need to prove a listing delivers leads. We do not need to know who anybody
+is. So: no IP, no user-agent, no referrer, no cookie, no third-party analytics;
+a random `sessionStorage` id used only to ignore a double-click within thirty
+seconds; search text stripped of long digit runs before storage; Do Not Track
+honoured completely.
+
+The contact links are never rewritten or redirected. `tel:` behaves badly behind
+a 302 and the links must keep working with JavaScript off, so the beacon fires
+alongside the navigation and its failure is swallowed.
+
+---
+
+## Updating the site later
 
 ```bash
-npm run set-domain https://www.vakilsaabagra.com
-npm run sync
-git commit -am "Point canonical URLs at the custom domain"
-git push
+# after editing data/lawyers.json (or data/i18n/hi.json)
+npm run build
+
+# after adding a page or new copy, to pick up new translatable strings
+node tools/i18n-extract.js
+
+git commit -am "…"
+git push          # Cloudflare Pages redeploys automatically
 ```
-
-### Updating the site later
-
-```bash
-# after editing data/lawyers.json
-npm run sync
-# after editing css/styles.css or adding Tailwind classes
-npm run build:css
-
-git commit -am "Add Adv. …"
-git push          # Pages redeploys automatically
-```
-
-Commit `css/tailwind.css` and `data/lawyers.fallback.js` — both are generated,
-but GitHub Pages does not run your build, so they must be in the repo.
 
 ### Notes
 
-- `.nojekyll` is included so Pages serves the files verbatim rather than running
-  them through Jekyll.
-- `404.html` is picked up automatically as the custom not-found page.
-- `data/lawyers.json` is fetched over HTTPS at runtime, which works fine on
-  Pages. The `file://` fallback is only for opening the files locally.
-- GitHub Pages cannot do server-side redirects, so there is no apex → `www`
-  redirect. Pick one hostname, set it as the custom domain, and keep the
-  canonical URLs pointing at it.
+- `.nojekyll` is a leftover from GitHub Pages and harmless on Cloudflare.
+- `404.html` is served by Cloudflare Pages for unknown paths on the apex.
+  Unknown *subdomains* get their own 404 from `functions/_middleware.js`.
+- `data/lawyers.json` is blocked at the edge on every host, because it carries
+  the billing fields. What the browser reads is `data/lawyers.public.json`.
+- Local `npm run serve` has no Functions, so `/api/track` will 501 in the
+  console and no microsite routing happens — visit `sites/<slug>/index.html`
+  directly, or use `npx wrangler pages dev .` for the real thing.
