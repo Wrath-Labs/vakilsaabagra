@@ -395,6 +395,19 @@ const GENERATOR_FRAGMENTS = {
   'microsite.about-name': '(Hindi only) follows the name: "<name> के बारे में"',
   'microsite.speak-to-name': '(Hindi only) follows the name: "<name> से बात कीजिए"',
   'microsite.what-name-takes-on': '(Hindi only) follows the name: "<name> किस तरह के केस लेते हैं"',
+
+  /* VS.languageName() builds these keys from the language in the data, so the
+     scan above cannot see them. Declared here so they are neither missing from
+     en.json nor pruned out of it. Keep in step with LANG_HI in tools/sync.js,
+     which the microsites use. */
+  'js.language.hindi': 'Hindi',
+  'js.language.english': 'English',
+  'js.language.braj': 'Braj',
+  'js.language.urdu': 'Urdu',
+  'js.language.punjabi': 'Punjabi',
+  'js.language.bengali': 'Bengali',
+  'js.language.marathi': 'Marathi',
+  'js.language.sanskrit': 'Sanskrit',
 };
 let jsKeys = 0;
 const codeKeys = new Set();

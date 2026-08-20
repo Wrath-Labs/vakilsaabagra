@@ -187,7 +187,8 @@
         section(T('js.profile.practiceDetails', 'Practice details'),
           '<dl>' +
             row(T('js.profile.courts', 'Courts &amp; forums'), '<div class="flex flex-wrap gap-1.5">' + pills(l.courts) + '</div>') +
-            row(T('js.profile.languages', 'Languages'), '<div class="flex flex-wrap gap-1.5">' + pills(l.languages) + '</div>') +
+            row(T('js.profile.languages', 'Languages'), '<div class="flex flex-wrap gap-1.5">' +
+              pills((l.languages || []).map(VS.languageName)) + '</div>') +
             row(T('js.profile.education', 'Education'), '<ul class="space-y-1">' + (l.education || []).map(function (x) {
               return '<li>' + e(x) + '</li>'; }).join('') + '</ul>') +
             row(T('js.profile.barEnrolment', 'Bar enrolment'), e(l.enrollment)) +

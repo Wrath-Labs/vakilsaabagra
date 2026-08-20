@@ -203,7 +203,9 @@
       db.areas.map(function (a) { return '<option value="' + e(a) + '">' + e(a) + '</option>'; }).join('');
 
     el.lang.innerHTML = '<option value="">' + e(T('js.dir.anyLanguage', 'Any language')) + '</option>' +
-      db.languages.map(function (l) { return '<option value="' + e(l) + '">' + e(l) + '</option>'; }).join('');
+      db.languages.map(function (l) {
+        return '<option value="' + e(l) + '">' + e(VS.languageName(l)) + '</option>';
+      }).join('');
   }
 
   function syncControls() {

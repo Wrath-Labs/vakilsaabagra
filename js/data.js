@@ -138,6 +138,18 @@
       return '₹' + n.toLocaleString(i18n ? i18n.locale() : 'en-IN');
     },
 
+    /**
+     * A spoken-language name in the language being read. The value used for
+     * filtering stays English — only the label changes — so the filter keeps
+     * matching what is in the data.
+     */
+    languageName: function (name) {
+      var i18n = w.VS && w.VS.i18n;
+      if (!i18n || !i18n.isHindi()) return name;
+      var key = 'js.language.' + String(name).toLowerCase().replace(/[^a-z0-9]+/g, '-');
+      return i18n.t(key, name);
+    },
+
     telHref: function (num) { return 'tel:' + String(num).replace(/[^\d+]/g, ''); },
 
     waHref: function (num, text) {
