@@ -6,6 +6,13 @@
   'use strict';
   var e = VS.escape;
 
+  function T(key, english) {
+    return w.VS && w.VS.i18n ? w.VS.i18n.t(key, english) : english;
+  }
+  function P(obj, field) {
+    return w.VS && w.VS.i18n ? w.VS.i18n.pick(obj, field) : obj[field];
+  }
+
   var ICONS = {
     shield: '<path d="M12 3l7 3v5c0 4.5-3 8.4-7 10-4-1.6-7-5.5-7-10V6z"/>',
     heart: '<path d="M12 20s-7-4.4-7-9.1A4 4 0 0112 8a4 4 0 017 2.9C19 15.6 12 20 12 20z"/>',
@@ -21,6 +28,9 @@
     file: '<path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>'
   };
 
+  /* set by searchBox() once it has built its pool */
+  var refillSuggestions = null;
+
   function icon(name) {
     return '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" ' +
            'stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
@@ -34,10 +44,12 @@
       '<span class="mb-4 inline-grid h-12 w-12 place-items-center rounded-xl bg-[var(--paper-3)] text-[var(--ink)] ' +
             'transition-all duration-500 group-hover:bg-[var(--ink)] group-hover:text-[var(--gold-2)] group-hover:rotate-[-6deg]">' +
         icon(c.icon) + '</span>' +
-      '<h3 class="font-display text-lg font-bold text-[var(--ink)]">' + e(c.name) + '</h3>' +
-      '<p class="mt-2 flex-1 text-sm leading-relaxed text-[var(--muted)] pretty">' + e(c.blurb) + '</p>' +
+      '<h3 class="font-display text-lg font-bold text-[var(--ink)]">' + e(P(c, 'name')) + '</h3>' +
+      '<p class="mt-2 flex-1 text-sm leading-relaxed text-[var(--muted)] pretty">' + e(P(c, 'blurb')) + '</p>' +
       '<span class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--gold)]">' +
-        c.count + ' advocate' + (c.count === 1 ? '' : 's') +
+        c.count + ' ' + (c.count === 1
+          ? T('js.home.advocate', 'advocate')
+          : T('js.home.advocates', 'advocates')) +
         '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" ' +
              'class="transition-transform duration-300 group-hover:translate-x-1"><path d="M5 12h14M13 6l6 6-6 6"/></svg>' +
       '</span>' +
@@ -52,18 +64,40 @@
     var list = d.getElementById('search-suggest');
 
     var pool = [];
+
+    /* Rebuilt on a language switch: the labels people see follow the language,
+       while the query behind each suggestion stays English so it still matches
+       the search index. */
+    function fill() {
+    pool.length = 0;
+    var kinds = {
+      area: T('js.home.kindPracticeArea', 'Practice area'),
+      issue: T('js.home.kindLegalIssue', 'Legal issue'),
+      locality: T('js.home.kindArea', 'Area'),
+      advocate: T('js.home.kindAdvocate', 'Advocate')
+    };
     db.categories.forEach(function (c) {
-      pool.push({ label: c.name, kind: 'Practice area', href: 'lawyers.html?category=' + c.slug });
-      c.topics.forEach(function (t) {
-        pool.push({ label: t, kind: 'Legal issue', href: 'lawyers.html?q=' + encodeURIComponent(t) });
+      pool.push({ label: P(c, 'name'), kind: kinds.area, href: 'lawyers.html?category=' + c.slug });
+      /* the English topic drives the query so the search still matches, but the
+         label follows the language being read */
+      c.topics.forEach(function (t, i) {
+        var hi = (c.topicsHi || [])[i];
+        pool.push({
+          label: (w.VS.i18n && w.VS.i18n.isHindi() && hi) ? hi : t,
+          kind: kinds.issue,
+          href: 'lawyers.html?q=' + encodeURIComponent(t)
+        });
       });
     });
     db.areas.forEach(function (a) {
-      pool.push({ label: a + ', Agra', kind: 'Area', href: 'lawyers.html?area=' + encodeURIComponent(a) });
+      pool.push({ label: a + ', Agra', kind: kinds.locality, href: 'lawyers.html?area=' + encodeURIComponent(a) });
     });
     db.lawyers.forEach(function (l) {
-      pool.push({ label: l.name, kind: 'Advocate', href: 'lawyer.html?id=' + l.id });
+      pool.push({ label: l.name, kind: kinds.advocate, href: 'lawyer.html?id=' + l.id });
     });
+    }
+    fill();
+    refillSuggestions = fill;
 
     var active = -1;
     var shown = [];
@@ -176,7 +210,7 @@
   }
 
   /* --------------------------------------------------------------- render */
-  VS.load().then(function (db) {
+  function grids(db) {
     var cats = d.getElementById('category-grid');
     if (cats) {
       cats.innerHTML = db.categories.map(categoryCard).join('');
@@ -189,6 +223,10 @@
       feat.innerHTML = top.map(function (l) { return VS.lawyerCard(l); }).join('');
       VS.stagger(feat, 80);
     }
+  }
+
+  VS.load().then(function (db) {
+    grids(db);
 
     /* stats read straight from the data so they can never go stale */
     var totalTopics = new Set(db.categories.flatMap(function (c) { return c.topics; })).size;
@@ -202,12 +240,19 @@
     searchBox(db);
     seo(db);
     VS.reveal();
+
+    /* the practice-area cards and the featured advocates are built in JS */
+    d.addEventListener('vs:lang', function () {
+      grids(db);
+      if (refillSuggestions) refillSuggestions();
+      VS.reveal();
+    });
   }).catch(function (err) {
     console.error('[Vakil Saab Agra] data load failed:', err);
     ['category-grid', 'featured-grid'].forEach(function (id) {
       var n = d.getElementById(id);
       if (n) n.innerHTML = '<p class="col-span-full rounded-xl border border-[var(--line)] bg-[var(--paper-2)] p-6 text-center text-sm text-[var(--muted)]">' +
-        'Listings could not be loaded. Please refresh the page.</p>';
+        T('js.loadFailed', 'Listings could not be loaded. Please refresh the page.') + '</p>';
     });
   });
 })(window, document);

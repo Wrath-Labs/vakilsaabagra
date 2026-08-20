@@ -41,13 +41,13 @@ html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 body {
   background: var(--paper);
   color: var(--ink);
-  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-family: 'Inter', 'Noto Sans Devanagari', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   font-feature-settings: 'cv02', 'cv03', 'cv04', 'ss01';
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
 h1, h2, h3, h4, .font-display {
-  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-family: 'Playfair Display', 'Noto Sans Devanagari', Georgia, 'Times New Roman', serif;
   letter-spacing: -.015em;
 }
 ::selection { background: var(--gold-3); color: var(--ink); }
@@ -332,6 +332,54 @@ input[type='range'] { accent-color: var(--gold); }
   background: #0e7a4a; color: #fff; border-radius: 999px;
   display: inline-grid; place-items: center;
 }
+
+/* ============================================================ language ====
+   The EN / हिं pill, and the two mechanisms that make Hindi work.
+   ========================================================================= */
+.lang-toggle {
+  display: inline-flex; align-items: center; gap: 2px;
+  border: 1px solid var(--line); border-radius: 999px;
+  background: var(--paper); padding: 2px; box-shadow: var(--shadow-sm);
+}
+.lang-toggle button {
+  border-radius: 999px; padding: .28rem .6rem;
+  font-size: .74rem; font-weight: 700; line-height: 1.25;
+  color: var(--muted-2); transition: all .2s var(--ease-soft);
+}
+.lang-toggle button:hover { color: var(--ink); }
+.lang-toggle button.is-on { background: var(--ink); color: #fff; }
+
+/* on the dark footer */
+.lang-toggle-dark {
+  background: transparent; border-color: rgba(255, 255, 255, .18); box-shadow: none;
+}
+.lang-toggle-dark button { color: #8ea6c2; }
+.lang-toggle-dark button:hover { color: #fff; }
+.lang-toggle-dark button.is-on { background: var(--gold-2); color: var(--ink-3); }
+
+/* Pre-rendered bilingual blocks. A microsite cannot fetch its Hindi later, so
+   both languages are in the HTML and one is shown. English is what is visible
+   with no JavaScript and what a crawler reads first. Content with no Hindi is
+   emitted without either class, so it always shows. */
+.i18n-hi { display: none; }
+html[lang='hi-IN'] span.i18n-en,
+html[lang='hi-IN'] div.i18n-en  { display: none; }
+html[lang='hi-IN'] span.i18n-hi { display: inline; }
+html[lang='hi-IN'] div.i18n-hi  { display: block; }
+
+/* Devanagari needs more vertical room than Latin: the matras sit above the
+   line and the conjuncts hang below it, so anything set with leading-tight or
+   leading-none clips. Letter-spacing, which flatters small-caps Latin labels,
+   only pulls Devanagari conjuncts apart. */
+html[lang='hi-IN'] body { line-height: 1.72; }
+html[lang='hi-IN'] h1,
+html[lang='hi-IN'] h2,
+html[lang='hi-IN'] h3,
+html[lang='hi-IN'] h4,
+html[lang='hi-IN'] .font-display { line-height: 1.45; letter-spacing: 0; }
+html[lang='hi-IN'] [class*='tracking-'] { letter-spacing: normal; }
+html[lang='hi-IN'] .chip,
+html[lang='hi-IN'] .btn { line-height: 1.4; }
 
 /* --------------------------------------------------------- back to top */
 #to-top {

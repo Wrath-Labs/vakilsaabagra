@@ -43,45 +43,52 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap"></noscript>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap"></noscript>
 
 <link rel="stylesheet" href="css/tailwind.css">
 <script>document.documentElement.classList.add('js');</script>
+<script src="data/i18n/hi.js" defer></script>
+<script src="js/i18n.js" defer></script>
 </head>
 <body class="bg-white antialiased">
-<a href="#main" class="skip-link">Skip to main content</a>
+<a href="#main" class="skip-link" data-i18n="common.skip-to-main-content">Skip to main content</a>
 <header class="site-header sticky top-0 z-50 border-b border-transparent bg-white/95">
   <div id="read-progress" class="absolute inset-x-0 bottom-0 h-[2px] bg-gradient-to-r from-[var(--gold)] to-[var(--gold-2)]" aria-hidden="true"></div>
   <div class="mx-auto flex max-w-7xl items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
 
-    <a href="index.html" class="group flex shrink-0 items-center gap-2.5" aria-label="Vakil Saab Agra — home">
+    <a href="index.html" class="group flex shrink-0 items-center gap-2.5" aria-label="Vakil Saab Agra — home" data-i18n-attr="aria-label:common.label.vakil-saab-agra-home">
       <img src="assets/logo-mark.png" alt="" width="40" height="40" aria-hidden="true"
            class="h-9 w-9 rounded-lg transition-transform duration-500 group-hover:rotate-[-8deg] sm:h-10 sm:w-10">
       <span class="leading-none">
-        <span class="block font-display text-[17px] font-bold text-[var(--ink)] sm:text-lg">Vakil Saab</span>
-        <span class="mt-0.5 block text-[9px] font-bold uppercase tracking-[.24em] text-[var(--gold)] sm:text-[10px]">Agra</span>
+        <span class="block font-display text-[17px] font-bold text-[var(--ink)] sm:text-lg" data-i18n="common.vakil-saab">Vakil Saab</span>
+        <span class="mt-0.5 block text-[9px] font-bold uppercase tracking-[.24em] text-[var(--gold)] sm:text-[10px]" data-i18n="common.agra">Agra</span>
       </span>
     </a>
 
-    <nav aria-label="Primary" class="ml-auto hidden items-center gap-6 text-[15px] text-[var(--muted)] lg:flex xl:gap-7">
-        <a href="index.html" class="nav-link transition-colors hover:text-[var(--ink)]">Home</a>
-        <a href="lawyers.html" class="nav-link transition-colors hover:text-[var(--ink)]" aria-current="page">Find a Lawyer</a>
-        <a href="practice-areas.html" class="nav-link transition-colors hover:text-[var(--ink)]">Practice Areas</a>
-        <a href="about.html" class="nav-link transition-colors hover:text-[var(--ink)]">About</a>
-        <a href="faq.html" class="nav-link transition-colors hover:text-[var(--ink)]">FAQ</a>
-        <a href="contact.html" class="nav-link transition-colors hover:text-[var(--ink)]">Contact</a>
+    <div class="lang-toggle shrink-0" role="group" aria-label="Language / भाषा" data-i18n-attr="aria-label:common.label.language">
+      <button type="button" data-lang="en" aria-pressed="true" title="English">EN</button>
+      <button type="button" data-lang="hi" aria-pressed="false" title="हिन्दी" lang="hi">हिं</button>
+    </div>
+
+    <nav aria-label="Primary" class="ml-auto hidden items-center gap-6 text-[15px] text-[var(--muted)] lg:flex xl:gap-7" data-i18n-attr="aria-label:common.label.primary">
+        <a href="index.html" class="nav-link transition-colors hover:text-[var(--ink)]" data-i18n="common.home">Home</a>
+        <a href="lawyers.html" class="nav-link transition-colors hover:text-[var(--ink)]" aria-current="page" data-i18n="common.find-a-lawyer">Find a Lawyer</a>
+        <a href="practice-areas.html" class="nav-link transition-colors hover:text-[var(--ink)]" data-i18n="common.practice-areas">Practice Areas</a>
+        <a href="about.html" class="nav-link transition-colors hover:text-[var(--ink)]" data-i18n="common.about">About</a>
+        <a href="faq.html" class="nav-link transition-colors hover:text-[var(--ink)]" data-i18n="common.faq">FAQ</a>
+        <a href="contact.html" class="nav-link transition-colors hover:text-[var(--ink)]" data-i18n="common.contact">Contact</a>
     </nav>
 
-    <a href="list-your-practice.html" class="btn btn-ghost ml-auto hidden px-4 py-2 text-sm lg:ml-6 lg:inline-flex">List your practice</a>
-    <a href="tel:+919876543210" class="btn btn-gold hidden whitespace-nowrap px-4 py-2 text-sm xl:inline-flex" aria-label="Call Vakil Saab Agra on +91 98765 43210">
+    <a href="list-your-practice.html" class="btn btn-ghost ml-auto hidden px-4 py-2 text-sm lg:ml-6 lg:inline-flex" data-i18n="common.list-your-practice">List your practice</a>
+    <a href="tel:+919876543210" class="btn btn-gold hidden whitespace-nowrap px-4 py-2 text-sm xl:inline-flex" aria-label="Call Vakil Saab Agra on +91 98765 43210" data-i18n-attr="aria-label:common.label.call-vakil-saab-agra-on-91-98765-43210">
       <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .4 1.9.7 2.8a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.3-1.2a2 2 0 012.1-.5c.9.3 1.8.6 2.8.7a2 2 0 011.7 2z"/></svg>
       +91 98765 43210
     </a>
 
     <button id="menu-open" type="button" aria-expanded="false" aria-controls="mobile-menu"
-            class="btn btn-ghost ml-auto h-10 w-10 p-0 lg:hidden" aria-label="Open menu">
+            class="btn btn-ghost ml-auto h-10 w-10 p-0 lg:hidden" aria-label="Open menu" data-i18n-attr="aria-label:common.label.open-menu">
       <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
     </button>
   </div>
@@ -90,14 +97,14 @@
 <div id="mobile-menu" aria-hidden="true" class="invisible fixed inset-0 z-[60] opacity-0 lg:hidden [&.is-open]:visible [&.is-open]:opacity-100">
   <div data-close-menu class="absolute inset-0 bg-[var(--ink)]/45 backdrop-blur-sm"></div>
   <div id="mobile-panel" role="dialog" aria-modal="true" aria-label="Site menu"
-       class="absolute right-0 top-0 flex h-full w-[86%] max-w-sm flex-col overflow-y-auto bg-white shadow-2xl">
+       class="absolute right-0 top-0 flex h-full w-[86%] max-w-sm flex-col overflow-y-auto bg-white shadow-2xl" data-i18n-attr="aria-label:common.label.site-menu">
     <div class="flex items-center justify-between border-b border-[var(--line)] px-5 py-4">
       <span class="font-display text-lg font-bold text-[var(--ink)]">Menu</span>
-      <button type="button" data-close-menu class="btn btn-ghost h-9 w-9 p-0" aria-label="Close menu">
+      <button type="button" data-close-menu class="btn btn-ghost h-9 w-9 p-0" aria-label="Close menu" data-i18n-attr="aria-label:common.label.close-menu">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
       </button>
     </div>
-    <nav aria-label="Mobile" class="flex flex-col px-5 pt-2">
+    <nav aria-label="Mobile" class="flex flex-col px-5 pt-2" data-i18n-attr="aria-label:common.label.mobile">
         <a href="index.html" style="--i:0" class="drawer-item border-b border-[var(--line-2)] py-3.5 text-lg font-medium text-[var(--ink)]">Home</a>
         <a href="lawyers.html" style="--i:1" class="drawer-item border-b border-[var(--line-2)] py-3.5 text-lg font-medium text-[var(--ink)]" aria-current="page">Find a Lawyer</a>
         <a href="practice-areas.html" style="--i:2" class="drawer-item border-b border-[var(--line-2)] py-3.5 text-lg font-medium text-[var(--ink)]">Practice Areas</a>
@@ -118,10 +125,10 @@
   <section class="relative overflow-hidden border-b border-[var(--line)] bg-[var(--paper-2)] py-10 sm:py-14">
     <div class="hero-grid absolute inset-0" aria-hidden="true"></div>
     <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <nav aria-label="Breadcrumb" class="flex flex-wrap items-center gap-1.5 text-sm text-[var(--muted)]">
-        <a href="index.html" class="transition-colors hover:text-[var(--gold)]">Home</a>
+      <nav aria-label="Breadcrumb" class="flex flex-wrap items-center gap-1.5 text-sm text-[var(--muted)]" data-i18n-attr="aria-label:common.label.breadcrumb">
+        <a href="index.html" class="transition-colors hover:text-[var(--gold)]" data-i18n="common.home">Home</a>
         <span aria-hidden="true">/</span>
-        <span class="font-medium text-[var(--ink)]">Lawyers in Agra</span>
+        <span class="font-medium text-[var(--ink)]" data-i18n="directory.lawyers-in-agra">Lawyers in Agra</span>
       </nav>
 
       <h1 id="dir-title" class="balance mt-4 font-display text-3xl font-bold text-[var(--ink)] sm:text-4xl lg:text-[2.75rem]">
@@ -132,13 +139,13 @@
       </p>
 
       <form id="dir-search-form" role="search" class="mt-7 max-w-2xl">
-        <label for="dir-q" class="sr-only">Search advocates in Agra</label>
+        <label for="dir-q" class="sr-only" data-i18n="directory.search-advocates-in-agra">Search advocates in Agra</label>
         <div class="flex items-center gap-2 rounded-full border border-[var(--line)] bg-white p-1.5 shadow-md">
           <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" class="ml-3 shrink-0 text-[var(--muted-2)]" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
           <input id="dir-q" name="q" type="search" autocomplete="off"
                  placeholder="Name, practice area or legal issue…"
-                 class="w-full bg-transparent py-2.5 text-[15px] text-[var(--ink)] outline-none placeholder:text-[var(--muted-2)]">
-          <button type="submit" class="btn btn-primary shrink-0 rounded-full px-6 py-2.5 text-sm">Search</button>
+                 class="w-full bg-transparent py-2.5 text-[15px] text-[var(--ink)] outline-none placeholder:text-[var(--muted-2)]" data-i18n-attr="placeholder:directory.placeholder.name-practice-area-or-legal-issue">
+          <button type="submit" class="btn btn-primary shrink-0 rounded-full px-6 py-2.5 text-sm" data-i18n="directory.search">Search</button>
         </div>
       </form>
     </div>
@@ -153,8 +160,8 @@
            class="fixed inset-0 z-[60] hidden flex-col bg-white lg:static lg:z-auto lg:flex lg:bg-transparent">
 
         <div class="flex items-center justify-between border-b border-[var(--line)] px-5 py-4 lg:hidden">
-          <span class="font-display text-lg font-bold text-[var(--ink)]">Filters</span>
-          <button type="button" data-close-filters class="btn btn-ghost h-9 w-9 p-0" aria-label="Close filters">
+          <span class="font-display text-lg font-bold text-[var(--ink)]" data-i18n="directory.filters">Filters</span>
+          <button type="button" data-close-filters class="btn btn-ghost h-9 w-9 p-0" aria-label="Close filters" data-i18n-attr="aria-label:directory.label.close-filters">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
           </button>
         </div>
@@ -163,14 +170,14 @@
           <div class="card filter-bar space-y-6 p-5 lg:sticky lg:top-28">
 
             <div class="flex items-center justify-between">
-              <h2 class="font-display text-base font-bold text-[var(--ink)]">Refine results</h2>
+              <h2 class="font-display text-base font-bold text-[var(--ink)]" data-i18n="directory.refine-results">Refine results</h2>
               <button type="button" id="reset-filters"
-                      class="text-xs font-semibold text-[var(--gold)] underline-offset-2 hover:underline">Reset</button>
+                      class="text-xs font-semibold text-[var(--gold)] underline-offset-2 hover:underline" data-i18n="directory.reset">Reset</button>
             </div>
 
             <fieldset>
-              <legend class="mb-3 text-xs font-bold uppercase tracking-[.14em] text-[var(--muted-2)]">Practice area</legend>
-              <div id="filter-categories" role="group" aria-label="Practice area" class="grid gap-1.5">
+              <legend class="mb-3 text-xs font-bold uppercase tracking-[.14em] text-[var(--muted-2)]" data-i18n="directory.practice-area">Practice area</legend>
+              <div id="filter-categories" role="group" aria-label="Practice area" class="grid gap-1.5" data-i18n-attr="aria-label:directory.practice-area">
                 <div class="skeleton h-8"></div><div class="skeleton h-8"></div><div class="skeleton h-8"></div>
               </div>
             </fieldset>
@@ -178,14 +185,14 @@
             <div class="divider-fade"></div>
 
             <div>
-              <label for="filter-area" class="mb-2 block text-xs font-bold uppercase tracking-[.14em] text-[var(--muted-2)]">Area of Agra</label>
+              <label for="filter-area" class="mb-2 block text-xs font-bold uppercase tracking-[.14em] text-[var(--muted-2)]" data-i18n="directory.area-of-agra">Area of Agra</label>
               <select id="filter-area" class="select-field w-full px-3 py-2.5 text-sm text-[var(--ink)]">
                 <option value="">All areas of Agra</option>
               </select>
             </div>
 
             <div>
-              <label for="filter-language" class="mb-2 block text-xs font-bold uppercase tracking-[.14em] text-[var(--muted-2)]">Language</label>
+              <label for="filter-language" class="mb-2 block text-xs font-bold uppercase tracking-[.14em] text-[var(--muted-2)]" data-i18n="directory.language">Language</label>
               <select id="filter-language" class="select-field w-full px-3 py-2.5 text-sm text-[var(--ink)]">
                 <option value="">Any language</option>
               </select>
@@ -193,38 +200,38 @@
 
             <div>
               <div class="mb-2 flex items-baseline justify-between">
-                <label for="filter-exp" class="text-xs font-bold uppercase tracking-[.14em] text-[var(--muted-2)]">Experience</label>
+                <label for="filter-exp" class="text-xs font-bold uppercase tracking-[.14em] text-[var(--muted-2)]" data-i18n="directory.experience">Experience</label>
                 <output id="filter-exp-out" for="filter-exp" class="text-xs font-semibold text-[var(--ink)]">Any experience</output>
               </div>
               <input id="filter-exp" type="range" min="0" max="30" step="5" value="0" class="w-full">
               <div class="mt-1 flex justify-between text-[10px] text-[var(--muted-2)]">
-                <span>Any</span><span>15 yrs</span><span>30 yrs</span>
+                <span data-i18n="directory.any">Any</span><span data-i18n="directory.15-yrs">15 yrs</span><span data-i18n="directory.30-yrs">30 yrs</span>
               </div>
             </div>
 
             <div>
-              <label for="filter-fee" class="mb-2 block text-xs font-bold uppercase tracking-[.14em] text-[var(--muted-2)]">Consultation fee</label>
+              <label for="filter-fee" class="mb-2 block text-xs font-bold uppercase tracking-[.14em] text-[var(--muted-2)]" data-i18n="directory.consultation-fee">Consultation fee</label>
               <select id="filter-fee" class="select-field w-full px-3 py-2.5 text-sm text-[var(--ink)]">
-                <option value="0">Any fee</option>
-                <option value="500">Up to ₹500</option>
-                <option value="1000">Up to ₹1,000</option>
-                <option value="1500">Up to ₹1,500</option>
-                <option value="2000">Up to ₹2,000</option>
+                <option value="0" data-i18n="directory.any-fee">Any fee</option>
+                <option value="500" data-i18n="directory.up-to-500">Up to ₹500</option>
+                <option value="1000" data-i18n="directory.up-to-1-000">Up to ₹1,000</option>
+                <option value="1500" data-i18n="directory.up-to-1-500">Up to ₹1,500</option>
+                <option value="2000" data-i18n="directory.up-to-2-000">Up to ₹2,000</option>
               </select>
             </div>
 
             <div class="divider-fade"></div>
 
             <div class="rounded-xl bg-[var(--paper-2)] p-4">
-              <p class="text-sm font-semibold text-[var(--ink)]">Need help choosing?</p>
-              <p class="mt-1.5 text-xs leading-relaxed text-[var(--muted)]">Describe your matter and we will suggest the right advocate in Agra — free.</p>
-              <a href="contact.html" class="btn btn-gold mt-3 w-full px-4 py-2 text-xs">Ask us</a>
+              <p class="text-sm font-semibold text-[var(--ink)]" data-i18n="directory.need-help-choosing">Need help choosing?</p>
+              <p class="mt-1.5 text-xs leading-relaxed text-[var(--muted)]" data-i18n="directory.describe-your-matter-and-we-will-suggest-the">Describe your matter and we will suggest the right advocate in Agra — free.</p>
+              <a href="contact.html" class="btn btn-gold mt-3 w-full px-4 py-2 text-xs" data-i18n="directory.ask-us">Ask us</a>
             </div>
           </div>
         </div>
 
         <div class="border-t border-[var(--line)] p-4 lg:hidden">
-          <button type="button" data-close-filters class="btn btn-primary w-full px-5 py-3">Show results</button>
+          <button type="button" data-close-filters class="btn btn-primary w-full px-5 py-3" data-i18n="directory.show-results">Show results</button>
         </div>
       </div>
 
@@ -236,16 +243,16 @@
           <div class="flex min-w-0 flex-wrap items-center gap-2">
             <button type="button" id="filters-open" class="btn btn-ghost px-4 py-2 text-sm lg:hidden">
               <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
-              Filters
+              <span data-i18n="directory.filters">Filters</span>
             </button>
-            <label for="dir-sort" class="sr-only">Sort advocates</label>
+            <label for="dir-sort" class="sr-only" data-i18n="directory.sort-advocates">Sort advocates</label>
             <select id="dir-sort" class="select-field min-w-0 max-w-full px-3 py-2 text-sm text-[var(--ink)]">
-              <option value="relevance">Sort: Recommended</option>
-              <option value="experience">Most experienced</option>
-              <option value="rating">Highest rated</option>
-              <option value="reviews">Most reviewed</option>
-              <option value="feeLow">Lowest consultation fee</option>
-              <option value="name">Name (A–Z)</option>
+              <option value="relevance" data-i18n="directory.sort-recommended">Sort: Recommended</option>
+              <option value="experience" data-i18n="directory.most-experienced">Most experienced</option>
+              <option value="rating" data-i18n="directory.highest-rated">Highest rated</option>
+              <option value="reviews" data-i18n="directory.most-reviewed">Most reviewed</option>
+              <option value="feeLow" data-i18n="directory.lowest-consultation-fee">Lowest consultation fee</option>
+              <option value="name" data-i18n="directory.name-a-z">Name (A–Z)</option>
             </select>
           </div>
         </div>
@@ -259,20 +266,20 @@
 
         <div id="empty-state" class="hidden py-20 text-center">
           <svg viewBox="0 0 24 24" width="52" height="52" fill="none" stroke="currentColor" stroke-width="1.2" class="mx-auto text-[var(--line)]" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
-          <h2 class="mt-5 font-display text-2xl font-bold text-[var(--ink)]">No advocates matched those filters</h2>
-          <p class="pretty mx-auto mt-3 max-w-md text-sm leading-relaxed text-[var(--muted)]">
+          <h2 class="mt-5 font-display text-2xl font-bold text-[var(--ink)]" data-i18n="directory.no-advocates-matched-those-filters">No advocates matched those filters</h2>
+          <p class="pretty mx-auto mt-3 max-w-md text-sm leading-relaxed text-[var(--muted)]" data-i18n="directory.try-widening-the-experience-range-or">
             Try widening the experience range or removing a practice area. You can also tell us about your
             matter and we will find the right advocate in Agra for you.
           </p>
           <div class="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
-            <button type="button" onclick="document.getElementById('reset-filters').click()" class="btn btn-primary px-6 py-3">Clear all filters</button>
-            <a href="contact.html" class="btn btn-ghost px-6 py-3">Ask us for a recommendation</a>
+            <button type="button" onclick="document.getElementById('reset-filters').click()" class="btn btn-primary px-6 py-3" data-i18n="directory.clear-all-filters">Clear all filters</button>
+            <a href="contact.html" class="btn btn-ghost px-6 py-3" data-i18n="directory.ask-us-for-a-recommendation">Ask us for a recommendation</a>
           </div>
         </div>
 
         <div class="mt-10 text-center">
           <button type="button" id="load-more" class="btn btn-ghost hidden px-7 py-3">
-            Load <span id="load-more-count">9</span> more advocates
+            <span data-i18n="directory.load">Load</span> <span id="load-more-count">9</span> <span data-i18n="directory.more-advocates">more advocates</span>
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
           </button>
         </div>
@@ -283,50 +290,50 @@
   <!-- local SEO block: real, useful internal links -->
   <section class="border-t border-[var(--line)] bg-[var(--paper-2)] py-16">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <h2 class="font-display text-2xl font-bold text-[var(--ink)]" data-reveal>Looking for a lawyer in a specific part of Agra?</h2>
-      <p class="pretty mt-3 max-w-3xl text-[15px] leading-relaxed text-[var(--muted)]" data-reveal>
+      <h2 class="font-display text-2xl font-bold text-[var(--ink)]" data-reveal data-i18n="directory.looking-for-a-lawyer-in-a-specific-part-of">Looking for a lawyer in a specific part of Agra?</h2>
+      <p class="pretty mt-3 max-w-3xl text-[15px] leading-relaxed text-[var(--muted)]" data-reveal data-i18n="directory.most-people-prefer-an-advocate-whose-chamber">
         Most people prefer an advocate whose chamber is close to home or to the court complex where their
         matter is listed. Browse advocates by locality below, or by the type of case you are facing.
       </p>
 
       <div class="mt-8 grid gap-8 lg:grid-cols-2">
         <div data-reveal>
-          <h3 class="text-xs font-bold uppercase tracking-[.18em] text-[var(--gold)]">By locality in Agra</h3>
+          <h3 class="text-xs font-bold uppercase tracking-[.18em] text-[var(--gold)]" data-i18n="directory.by-locality-in-agra">By locality in Agra</h3>
           <ul class="mt-4 flex flex-wrap gap-2">
-            <li><a href="lawyers.html?area=Civil%20Lines" class="chip">Civil Lines</a></li>
-            <li><a href="lawyers.html?area=Sadar%20Bazaar" class="chip">Sadar Bazaar</a></li>
-            <li><a href="lawyers.html?area=Kamla%20Nagar" class="chip">Kamla Nagar</a></li>
-            <li><a href="lawyers.html?area=Dayalbagh" class="chip">Dayalbagh</a></li>
-            <li><a href="lawyers.html?area=Sikandra" class="chip">Sikandra</a></li>
-            <li><a href="lawyers.html?area=Tajganj" class="chip">Tajganj</a></li>
-            <li><a href="lawyers.html?area=Shahganj" class="chip">Shahganj</a></li>
-            <li><a href="lawyers.html?area=Belanganj" class="chip">Belanganj</a></li>
-            <li><a href="lawyers.html?area=Balkeshwar" class="chip">Balkeshwar</a></li>
-            <li><a href="lawyers.html?area=Fatehabad%20Road" class="chip">Fatehabad Road</a></li>
-            <li><a href="lawyers.html?area=Trans%20Yamuna%20Colony" class="chip">Trans Yamuna Colony</a></li>
-            <li><a href="lawyers.html?area=Loha%20Mandi" class="chip">Loha Mandi</a></li>
-            <li><a href="lawyers.html?area=Khandari" class="chip">Khandari</a></li>
-            <li><a href="lawyers.html?area=Bodla" class="chip">Bodla</a></li>
-            <li><a href="lawyers.html?area=Rakabganj" class="chip">Rakabganj</a></li>
-            <li><a href="lawyers.html?area=Collectorate" class="chip">Collectorate</a></li>
+            <li><a href="lawyers.html?area=Civil%20Lines" class="chip" data-i18n="common.civil-lines">Civil Lines</a></li>
+            <li><a href="lawyers.html?area=Sadar%20Bazaar" class="chip" data-i18n="common.sadar-bazaar">Sadar Bazaar</a></li>
+            <li><a href="lawyers.html?area=Kamla%20Nagar" class="chip" data-i18n="common.kamla-nagar">Kamla Nagar</a></li>
+            <li><a href="lawyers.html?area=Dayalbagh" class="chip" data-i18n="common.dayalbagh">Dayalbagh</a></li>
+            <li><a href="lawyers.html?area=Sikandra" class="chip" data-i18n="common.sikandra">Sikandra</a></li>
+            <li><a href="lawyers.html?area=Tajganj" class="chip" data-i18n="common.tajganj">Tajganj</a></li>
+            <li><a href="lawyers.html?area=Shahganj" class="chip" data-i18n="common.shahganj">Shahganj</a></li>
+            <li><a href="lawyers.html?area=Belanganj" class="chip" data-i18n="common.belanganj">Belanganj</a></li>
+            <li><a href="lawyers.html?area=Balkeshwar" class="chip" data-i18n="common.balkeshwar">Balkeshwar</a></li>
+            <li><a href="lawyers.html?area=Fatehabad%20Road" class="chip" data-i18n="common.fatehabad-road">Fatehabad Road</a></li>
+            <li><a href="lawyers.html?area=Trans%20Yamuna%20Colony" class="chip" data-i18n="common.trans-yamuna-colony">Trans Yamuna Colony</a></li>
+            <li><a href="lawyers.html?area=Loha%20Mandi" class="chip" data-i18n="common.loha-mandi">Loha Mandi</a></li>
+            <li><a href="lawyers.html?area=Khandari" class="chip" data-i18n="common.khandari">Khandari</a></li>
+            <li><a href="lawyers.html?area=Bodla" class="chip" data-i18n="common.bodla">Bodla</a></li>
+            <li><a href="lawyers.html?area=Rakabganj" class="chip" data-i18n="common.rakabganj">Rakabganj</a></li>
+            <li><a href="lawyers.html?area=Collectorate" class="chip" data-i18n="common.collectorate">Collectorate</a></li>
           </ul>
         </div>
 
         <div data-reveal>
-          <h3 class="text-xs font-bold uppercase tracking-[.18em] text-[var(--gold)]">By type of case</h3>
+          <h3 class="text-xs font-bold uppercase tracking-[.18em] text-[var(--gold)]" data-i18n="directory.by-type-of-case">By type of case</h3>
           <ul class="mt-4 flex flex-wrap gap-2">
-            <li><a href="lawyers.html?category=criminal" class="chip">Criminal &amp; bail lawyers</a></li>
-            <li><a href="lawyers.html?category=family" class="chip">Divorce &amp; family lawyers</a></li>
-            <li><a href="lawyers.html?category=property" class="chip">Property lawyers</a></li>
-            <li><a href="lawyers.html?category=civil" class="chip">Civil lawyers</a></li>
-            <li><a href="lawyers.html?category=cheque-bounce" class="chip">Cheque bounce lawyers</a></li>
-            <li><a href="lawyers.html?category=corporate" class="chip">Corporate lawyers</a></li>
-            <li><a href="lawyers.html?category=consumer" class="chip">Consumer case lawyers</a></li>
-            <li><a href="lawyers.html?category=labour" class="chip">Labour &amp; service lawyers</a></li>
-            <li><a href="lawyers.html?category=motor-accident" class="chip">Accident claim lawyers</a></li>
-            <li><a href="lawyers.html?category=cyber" class="chip">Cyber crime lawyers</a></li>
-            <li><a href="lawyers.html?category=tax-gst" class="chip">GST &amp; tax lawyers</a></li>
-            <li><a href="lawyers.html?category=documentation" class="chip">Documentation &amp; registry</a></li>
+            <li><a href="lawyers.html?category=criminal" class="chip" data-i18n="directory.criminal-bail-lawyers">Criminal &amp; bail lawyers</a></li>
+            <li><a href="lawyers.html?category=family" class="chip" data-i18n="directory.divorce-family-lawyers">Divorce &amp; family lawyers</a></li>
+            <li><a href="lawyers.html?category=property" class="chip" data-i18n="directory.property-lawyers">Property lawyers</a></li>
+            <li><a href="lawyers.html?category=civil" class="chip" data-i18n="directory.civil-lawyers">Civil lawyers</a></li>
+            <li><a href="lawyers.html?category=cheque-bounce" class="chip" data-i18n="directory.cheque-bounce-lawyers">Cheque bounce lawyers</a></li>
+            <li><a href="lawyers.html?category=corporate" class="chip" data-i18n="directory.corporate-lawyers">Corporate lawyers</a></li>
+            <li><a href="lawyers.html?category=consumer" class="chip" data-i18n="directory.consumer-case-lawyers">Consumer case lawyers</a></li>
+            <li><a href="lawyers.html?category=labour" class="chip" data-i18n="directory.labour-service-lawyers">Labour &amp; service lawyers</a></li>
+            <li><a href="lawyers.html?category=motor-accident" class="chip" data-i18n="directory.accident-claim-lawyers">Accident claim lawyers</a></li>
+            <li><a href="lawyers.html?category=cyber" class="chip" data-i18n="directory.cyber-crime-lawyers">Cyber crime lawyers</a></li>
+            <li><a href="lawyers.html?category=tax-gst" class="chip" data-i18n="directory.gst-tax-lawyers">GST &amp; tax lawyers</a></li>
+            <li><a href="lawyers.html?category=documentation" class="chip" data-i18n="directory.documentation-registry">Documentation &amp; registry</a></li>
           </ul>
         </div>
       </div>
@@ -341,8 +348,8 @@
     <div class="grid gap-10 lg:grid-cols-12">
 
       <div class="lg:col-span-4">
-        <img src="assets/logo-light.png" alt="Vakil Saab Agra" width="280" height="76" loading="lazy" class="h-14 w-auto">
-        <p class="mt-5 max-w-sm text-sm leading-relaxed pretty">
+        <img src="assets/logo-light.png" alt="Vakil Saab Agra" width="280" height="76" loading="lazy" class="h-14 w-auto" data-i18n-attr="alt:common.alt.vakil-saab-agra">
+        <p class="mt-5 max-w-sm text-sm leading-relaxed pretty" data-i18n="common.an-independent-directory-of-practising">
           An independent directory of practising advocates in Agra, Uttar Pradesh. Search by practice area,
           experience and locality, then contact the advocate directly — we never charge you a referral fee.
         </p>
@@ -353,90 +360,94 @@
           </a>
           <a href="https://wa.me/919876543210" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-lg border border-white/15 px-3.5 py-2 text-sm font-medium text-white transition-colors hover:border-[#25D366] hover:text-[#25D366]">
             <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 00-8.6 15l-1.3 4.8 4.9-1.3A10 10 0 1012 2zm0 18.2a8.2 8.2 0 01-4.2-1.2l-.3-.2-2.9.8.8-2.8-.2-.3A8.2 8.2 0 1112 20.2z"/></svg>
-            WhatsApp
+            <span data-i18n="common.whatsapp">WhatsApp</span>
           </a>
         </div>
       </div>
 
-      <nav aria-label="Practice areas" class="lg:col-span-3">
-        <h2 class="text-xs font-bold uppercase tracking-[.2em] text-[var(--gold-2)]">Practice Areas</h2>
+      <nav aria-label="Practice areas" class="lg:col-span-3" data-i18n-attr="aria-label:common.practice-areas-2">
+        <h2 class="text-xs font-bold uppercase tracking-[.2em] text-[var(--gold-2)]" data-i18n="common.practice-areas">Practice Areas</h2>
         <ul class="mt-5 grid grid-cols-1 gap-2.5 text-sm sm:grid-cols-2 lg:grid-cols-1">
-          <li><a href="lawyers.html?category=criminal" class="transition-colors hover:text-[var(--gold-2)]">Criminal Law Lawyers</a></li>
-          <li><a href="lawyers.html?category=family" class="transition-colors hover:text-[var(--gold-2)]">Family & Divorce Lawyers</a></li>
-          <li><a href="lawyers.html?category=property" class="transition-colors hover:text-[var(--gold-2)]">Property & Real Estate Lawyers</a></li>
-          <li><a href="lawyers.html?category=civil" class="transition-colors hover:text-[var(--gold-2)]">Civil Litigation Lawyers</a></li>
-          <li><a href="lawyers.html?category=cheque-bounce" class="transition-colors hover:text-[var(--gold-2)]">Cheque Bounce Lawyers</a></li>
-          <li><a href="lawyers.html?category=corporate" class="transition-colors hover:text-[var(--gold-2)]">Corporate & Startup Lawyers</a></li>
-          <li><a href="lawyers.html?category=consumer" class="transition-colors hover:text-[var(--gold-2)]">Consumer Protection Lawyers</a></li>
-          <li><a href="lawyers.html?category=labour" class="transition-colors hover:text-[var(--gold-2)]">Labour & Service Lawyers</a></li>
-          <li><a href="lawyers.html?category=motor-accident" class="transition-colors hover:text-[var(--gold-2)]">Motor Accident Claims Lawyers</a></li>
-          <li><a href="lawyers.html?category=cyber" class="transition-colors hover:text-[var(--gold-2)]">Cyber Crime Lawyers</a></li>
-          <li><a href="lawyers.html?category=tax-gst" class="transition-colors hover:text-[var(--gold-2)]">Taxation & GST Lawyers</a></li>
-          <li><a href="lawyers.html?category=documentation" class="transition-colors hover:text-[var(--gold-2)]">Documentation & Registration Lawyers</a></li>
+          <li><a href="lawyers.html?category=criminal" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.criminal-law-lawyers">Criminal Law Lawyers</a></li>
+          <li><a href="lawyers.html?category=family" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.family-divorce-lawyers">Family & Divorce Lawyers</a></li>
+          <li><a href="lawyers.html?category=property" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.property-real-estate-lawyers">Property & Real Estate Lawyers</a></li>
+          <li><a href="lawyers.html?category=civil" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.civil-litigation-lawyers">Civil Litigation Lawyers</a></li>
+          <li><a href="lawyers.html?category=cheque-bounce" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.cheque-bounce-lawyers">Cheque Bounce Lawyers</a></li>
+          <li><a href="lawyers.html?category=corporate" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.corporate-startup-lawyers">Corporate & Startup Lawyers</a></li>
+          <li><a href="lawyers.html?category=consumer" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.consumer-protection-lawyers">Consumer Protection Lawyers</a></li>
+          <li><a href="lawyers.html?category=labour" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.labour-service-lawyers">Labour & Service Lawyers</a></li>
+          <li><a href="lawyers.html?category=motor-accident" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.motor-accident-claims-lawyers">Motor Accident Claims Lawyers</a></li>
+          <li><a href="lawyers.html?category=cyber" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.cyber-crime-lawyers">Cyber Crime Lawyers</a></li>
+          <li><a href="lawyers.html?category=tax-gst" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.taxation-gst-lawyers">Taxation & GST Lawyers</a></li>
+          <li><a href="lawyers.html?category=documentation" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.documentation-registration-lawyers">Documentation & Registration Lawyers</a></li>
         </ul>
       </nav>
 
-      <nav aria-label="Quick links" class="lg:col-span-2">
-        <h2 class="text-xs font-bold uppercase tracking-[.2em] text-[var(--gold-2)]">Quick Links</h2>
+      <nav aria-label="Quick links" class="lg:col-span-2" data-i18n-attr="aria-label:common.label.quick-links">
+        <h2 class="text-xs font-bold uppercase tracking-[.2em] text-[var(--gold-2)]" data-i18n="common.quick-links">Quick Links</h2>
         <ul class="mt-5 space-y-2.5 text-sm">
-          <li><a href="lawyers.html" class="transition-colors hover:text-[var(--gold-2)]">All Advocates</a></li>
-          <li><a href="practice-areas.html" class="transition-colors hover:text-[var(--gold-2)]">Practice Areas</a></li>
-          <li><a href="list-your-practice.html" class="transition-colors hover:text-[var(--gold-2)]">List Your Practice</a></li>
-          <li><a href="about.html" class="transition-colors hover:text-[var(--gold-2)]">About Us</a></li>
-          <li><a href="faq.html" class="transition-colors hover:text-[var(--gold-2)]">FAQ</a></li>
-          <li><a href="contact.html" class="transition-colors hover:text-[var(--gold-2)]">Contact</a></li>
-          <li><a href="privacy.html" class="transition-colors hover:text-[var(--gold-2)]">Privacy Policy</a></li>
-          <li><a href="terms.html" class="transition-colors hover:text-[var(--gold-2)]">Terms of Use</a></li>
+          <li><a href="lawyers.html" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.all-advocates">All Advocates</a></li>
+          <li><a href="practice-areas.html" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.practice-areas">Practice Areas</a></li>
+          <li><a href="list-your-practice.html" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.list-your-practice-2">List Your Practice</a></li>
+          <li><a href="about.html" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.about-us">About Us</a></li>
+          <li><a href="faq.html" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.faq">FAQ</a></li>
+          <li><a href="contact.html" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.contact">Contact</a></li>
+          <li><a href="privacy.html" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.privacy-policy">Privacy Policy</a></li>
+          <li><a href="terms.html" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.terms-of-use">Terms of Use</a></li>
         </ul>
       </nav>
 
-      <nav aria-label="Areas served in Agra" class="lg:col-span-3">
-        <h2 class="text-xs font-bold uppercase tracking-[.2em] text-[var(--gold-2)]">Advocates by Area</h2>
+      <nav aria-label="Areas served in Agra" class="lg:col-span-3" data-i18n-attr="aria-label:common.label.areas-served-in-agra">
+        <h2 class="text-xs font-bold uppercase tracking-[.2em] text-[var(--gold-2)]" data-i18n="common.advocates-by-area">Advocates by Area</h2>
         <ul class="mt-5 flex flex-wrap gap-1.5 text-[13px]">
-          <li><a href="lawyers.html?area=Civil%20Lines" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]">Civil Lines</a></li>
-          <li><a href="lawyers.html?area=Sadar%20Bazaar" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]">Sadar Bazaar</a></li>
-          <li><a href="lawyers.html?area=Kamla%20Nagar" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]">Kamla Nagar</a></li>
-          <li><a href="lawyers.html?area=Dayalbagh" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]">Dayalbagh</a></li>
-          <li><a href="lawyers.html?area=Sikandra" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]">Sikandra</a></li>
-          <li><a href="lawyers.html?area=Tajganj" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]">Tajganj</a></li>
-          <li><a href="lawyers.html?area=Shahganj" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]">Shahganj</a></li>
-          <li><a href="lawyers.html?area=Belanganj" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]">Belanganj</a></li>
-          <li><a href="lawyers.html?area=Balkeshwar" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]">Balkeshwar</a></li>
-          <li><a href="lawyers.html?area=Fatehabad%20Road" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]">Fatehabad Road</a></li>
-          <li><a href="lawyers.html?area=Trans%20Yamuna%20Colony" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]">Trans Yamuna Colony</a></li>
-          <li><a href="lawyers.html?area=Loha%20Mandi" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]">Loha Mandi</a></li>
-          <li><a href="lawyers.html?area=Khandari" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]">Khandari</a></li>
-          <li><a href="lawyers.html?area=Bodla" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]">Bodla</a></li>
-          <li><a href="lawyers.html?area=Rakabganj" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]">Rakabganj</a></li>
-          <li><a href="lawyers.html?area=Shamshabad%20Road" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]">Shamshabad Road</a></li>
-          <li><a href="lawyers.html?area=Nai%20Ki%20Mandi" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]">Nai Ki Mandi</a></li>
-          <li><a href="lawyers.html?area=Collectorate" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]">Collectorate</a></li>
+          <li><a href="lawyers.html?area=Civil%20Lines" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]" data-i18n="common.civil-lines">Civil Lines</a></li>
+          <li><a href="lawyers.html?area=Sadar%20Bazaar" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]" data-i18n="common.sadar-bazaar">Sadar Bazaar</a></li>
+          <li><a href="lawyers.html?area=Kamla%20Nagar" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]" data-i18n="common.kamla-nagar">Kamla Nagar</a></li>
+          <li><a href="lawyers.html?area=Dayalbagh" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]" data-i18n="common.dayalbagh">Dayalbagh</a></li>
+          <li><a href="lawyers.html?area=Sikandra" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]" data-i18n="common.sikandra">Sikandra</a></li>
+          <li><a href="lawyers.html?area=Tajganj" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]" data-i18n="common.tajganj">Tajganj</a></li>
+          <li><a href="lawyers.html?area=Shahganj" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]" data-i18n="common.shahganj">Shahganj</a></li>
+          <li><a href="lawyers.html?area=Belanganj" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]" data-i18n="common.belanganj">Belanganj</a></li>
+          <li><a href="lawyers.html?area=Balkeshwar" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]" data-i18n="common.balkeshwar">Balkeshwar</a></li>
+          <li><a href="lawyers.html?area=Fatehabad%20Road" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]" data-i18n="common.fatehabad-road">Fatehabad Road</a></li>
+          <li><a href="lawyers.html?area=Trans%20Yamuna%20Colony" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]" data-i18n="common.trans-yamuna-colony">Trans Yamuna Colony</a></li>
+          <li><a href="lawyers.html?area=Loha%20Mandi" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]" data-i18n="common.loha-mandi">Loha Mandi</a></li>
+          <li><a href="lawyers.html?area=Khandari" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]" data-i18n="common.khandari">Khandari</a></li>
+          <li><a href="lawyers.html?area=Bodla" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]" data-i18n="common.bodla">Bodla</a></li>
+          <li><a href="lawyers.html?area=Rakabganj" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]" data-i18n="common.rakabganj">Rakabganj</a></li>
+          <li><a href="lawyers.html?area=Shamshabad%20Road" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]" data-i18n="common.shamshabad-road">Shamshabad Road</a></li>
+          <li><a href="lawyers.html?area=Nai%20Ki%20Mandi" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]" data-i18n="common.nai-ki-mandi">Nai Ki Mandi</a></li>
+          <li><a href="lawyers.html?area=Collectorate" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]" data-i18n="common.collectorate">Collectorate</a></li>
         </ul>
       </nav>
     </div>
 
     <div class="mt-12 rounded-xl border border-white/10 bg-white/[.03] p-5">
       <p class="text-xs leading-relaxed text-[#8ea6c2]">
-        <strong class="text-white">Disclaimer.</strong> Vakil Saab Agra is an information directory and is not a law firm.
+        <strong class="text-white" data-i18n="common.disclaimer">Disclaimer.</strong> <span data-i18n="common.vakil-saab-agra-is-an-information-directory">Vakil Saab Agra is an information directory and is not a law firm.
         We do not provide legal advice, and no advocate–client relationship is created by using this website. Listings are
         published at the request of the advocate concerned and are not an advertisement or solicitation within the meaning
-        of the Bar Council of India Rules. Please verify an advocate's credentials independently before engaging them.
-        <span data-demo-notice> Listings currently shown are sample entries for demonstration.</span>
+        of the Bar Council of India Rules. Please verify an advocate's credentials independently before engaging them.</span>
+        <span data-demo-notice data-i18n="common.listings-currently-shown-are-sample-entries"> Listings currently shown are sample entries for demonstration.</span>
       </p>
     </div>
 
     <div class="mt-8 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 text-xs sm:flex-row">
-      <p>&copy; <span data-year>2026</span> Vakil Saab Agra. Serving Agra, Uttar Pradesh.</p>
+      <div class="lang-toggle lang-toggle-dark order-first sm:order-none shrink-0" role="group" aria-label="Language / भाषा" data-i18n-attr="aria-label:common.label.language">
+        <button type="button" data-lang="en" aria-pressed="true" title="English">EN</button>
+        <button type="button" data-lang="hi" aria-pressed="false" title="हिन्दी" lang="hi">हिं</button>
+      </div>
+      <p>&copy; <span data-year>2026</span> <span data-i18n="common.vakil-saab-agra-serving-agra-uttar-pradesh">Vakil Saab Agra. Serving Agra, Uttar Pradesh.</span></p>
       <p class="flex items-center gap-1.5">
         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21s-7-5.6-7-11a7 7 0 1114 0c0 5.4-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
-        Agra &middot; Uttar Pradesh &middot; India
+        <span data-i18n="common.agra-uttar-pradesh-india">Agra &middot; Uttar Pradesh &middot; India</span>
       </p>
     </div>
   </div>
 </footer>
 
 <button id="to-top" type="button" aria-label="Back to top"
-        class="fixed bottom-6 right-5 z-40 grid h-11 w-11 place-items-center rounded-full bg-[var(--ink)] text-white shadow-lg transition-transform hover:scale-110">
+        class="fixed bottom-6 right-5 z-40 grid h-11 w-11 place-items-center rounded-full bg-[var(--ink)] text-white shadow-lg transition-transform hover:scale-110" data-i18n-attr="aria-label:common.label.back-to-top">
   <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
 </button>
 

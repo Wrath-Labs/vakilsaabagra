@@ -8,6 +8,15 @@
   var CFG = w.VS_CONFIG || {};
   var reduced = w.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* Translation helpers. The English is always passed in as the fallback, so
+     these render real words even if the dictionary never loads. */
+  function T(key, english) {
+    return w.VS && w.VS.i18n ? w.VS.i18n.t(key, english) : english;
+  }
+  function P(obj, field) {
+    return w.VS && w.VS.i18n ? w.VS.i18n.pick(obj, field) : obj[field];
+  }
+
   /* --------------------------------------------------------------- header */
   function header() {
     var el = d.querySelector('.site-header');
@@ -211,20 +220,25 @@
   function lawyerCard(l, opts) {
     opts = opts || {};
     var e = w.VS.escape;
-    var topics = l.topics.slice(0, 3).map(function (t) {
+    var topicList = P(l, 'topics') || [];
+    var catName = P(l, 'primaryCategoryName');
+    var topics = topicList.slice(0, 3).map(function (t) {
       return '<span class="chip max-w-full">' + e(t) + '</span>';
     }).join('');
-    var more = l.topics.length > 3
-      ? '<span class="chip border-dashed">+' + (l.topics.length - 3) + ' more</span>' : '';
+    var more = topicList.length > 3
+      ? '<span class="chip border-dashed">+' + (topicList.length - 3) + ' ' +
+        T('js.card.more', 'more') + '</span>' : '';
 
+    var verifiedLabel = T('js.card.verified', 'Verified listing');
     var badge = l.verified
-      ? '<span class="verified-dot mt-1.5 h-4 w-4 shrink-0" title="Verified listing" aria-label="Verified listing">' +
+      ? '<span class="verified-dot mt-1.5 h-4 w-4 shrink-0" title="' + e(verifiedLabel) + '" aria-label="' + e(verifiedLabel) + '">' +
         '<svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>'
       : '';
 
     var isFeatured = l.featured && !opts.hideFeatured;
     var featured = isFeatured
-      ? '<span class="rounded-full bg-[#fdf6e3] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[var(--gold)] ring-1 ring-[#e8d9ac]">Top rated</span>'
+      ? '<span class="rounded-full bg-[#fdf6e3] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[var(--gold)] ring-1 ring-[#e8d9ac]">' +
+        T('js.card.featured', 'Top rated') + '</span>'
       : '';
 
     return '' +
@@ -235,14 +249,15 @@
       '<div class="flex min-w-0 items-start gap-4">' +
         '<div class="avatar-ring h-[68px] w-[68px] shrink-0 transition-transform duration-500 group-hover:scale-[1.04] sm:h-[76px] sm:w-[76px]">' +
           '<img src="' + e(l.photo) + '" width="76" height="76" loading="lazy" decoding="async" ' +
-               'alt="' + e(l.name) + ' — ' + e(l.primaryCategoryName) + ' advocate in ' + e(l.area) + ', Agra">' +
+               'alt="' + e(l.name) + ' — ' + e(catName) + ' ' +
+               e(T('js.card.advocateIn', 'advocate in')) + ' ' + e(l.area) + ', Agra">' +
         '</div>' +
         '<div class="min-w-0 flex-1">' +
           '<h3 class="flex items-start gap-1.5 font-display text-[17px] font-bold leading-snug text-[var(--ink)]">' +
             '<a href="lawyer.html?id=' + e(l.id) + '" class="stretch-link min-w-0 transition-colors hover:text-[var(--gold)]">' + e(l.name) + '</a>' +
             badge +
           '</h3>' +
-          '<p class="mt-1 text-sm font-medium leading-snug text-[var(--gold)]">' + e(l.primaryCategoryName) + '</p>' +
+          '<p class="mt-1 text-sm font-medium leading-snug text-[var(--gold)]">' + e(catName) + '</p>' +
           '<div class="mt-2 flex flex-wrap items-center gap-x-1.5 gap-y-1.5 text-xs text-[var(--muted)]">' +
             VS.stars(l.rating) +
             '<span class="tabular font-semibold text-[var(--ink)]">' + l.rating.toFixed(1) + '</span>' +
@@ -254,27 +269,29 @@
 
       '<div class="mt-4 grid grid-cols-2 gap-3 rounded-xl bg-[var(--paper-2)] p-3 text-center">' +
         '<div class="min-w-0"><p class="tabular font-display text-xl font-bold text-[var(--ink)]">' + l.experienceYears + '</p>' +
-             '<p class="text-[11px] uppercase tracking-wide text-[var(--muted-2)]">Years exp.</p></div>' +
+             '<p class="text-[11px] uppercase tracking-wide text-[var(--muted-2)]">' + T('js.card.yearsExp', 'Years exp.') + '</p></div>' +
         '<div class="min-w-0 border-l border-[var(--line)]"><p class="tabular font-display text-xl font-bold text-[var(--ink)]">' + w.VS.money(l.consultationFee) + '</p>' +
-             '<p class="text-[11px] uppercase tracking-wide text-[var(--muted-2)]">Consultation</p></div>' +
+             '<p class="text-[11px] uppercase tracking-wide text-[var(--muted-2)]">' + T('js.card.consultation', 'Consultation') + '</p></div>' +
       '</div>' +
 
-      '<p class="mt-4 line-clamp-3 text-sm leading-relaxed text-[var(--muted)] pretty">' + e(l.about) + '</p>' +
+      '<p class="mt-4 line-clamp-3 text-sm leading-relaxed text-[var(--muted)] pretty">' + e(P(l, 'about')) + '</p>' +
 
       '<div class="mt-4 flex flex-wrap gap-1.5">' + topics + more + '</div>' +
 
       '<div class="mt-auto pt-5">' +
         '<div class="flex min-w-0 items-center gap-1.5 border-t border-[var(--line-2)] pt-4 text-xs text-[var(--muted)]">' +
           '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" class="shrink-0 text-[var(--gold)]"><path d="M12 21s-7-5.6-7-11a7 7 0 1114 0c0 5.4-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>' +
-          '<span class="truncate">' + e(l.area) + ', Agra</span>' +
-          '<span class="ml-auto shrink-0 whitespace-nowrap">' + e(l.enrollment.split("/")[0]) + ' enrolled</span>' +
+          '<span class="truncate">' + e(P(l, 'area')) + ', ' + T('js.card.agra', 'Agra') + '</span>' +
+          '<span class="ml-auto shrink-0 whitespace-nowrap">' + e(l.enrollment.split("/")[0]) + ' ' +
+            T('js.card.enrolled', 'enrolled') + '</span>' +
         '</div>' +
         '<div class="mt-3 grid grid-cols-2 gap-2">' +
-          '<a href="lawyer.html?id=' + e(l.id) + '" class="btn btn-ghost relative z-10 px-3 py-2.5 text-xs">View profile</a>' +
+          '<a href="lawyer.html?id=' + e(l.id) + '" class="btn btn-ghost relative z-10 px-3 py-2.5 text-xs">' +
+            T('js.card.viewProfile', 'View profile') + '</a>' +
           '<a href="' + w.VS.telHref(l.phone) + '" class="btn btn-gold relative z-10 px-3 py-2.5 text-xs" ' +
-             'aria-label="Call ' + e(l.name) + '">' +
+             'aria-label="' + e(T('js.card.call', 'Call')) + ' ' + e(l.name) + '">' +
             '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .4 1.9.7 2.8a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.3-1.2a2 2 0 012.1-.5c.9.3 1.8.6 2.8.7a2 2 0 011.7 2z"/></svg>' +
-            'Call' +
+            T('js.card.call', 'Call') +
           '</a>' +
         '</div>' +
       '</div>' +

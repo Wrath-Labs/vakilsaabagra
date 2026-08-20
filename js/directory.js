@@ -8,6 +8,15 @@
   var e = VS.escape;
   var PAGE = 9;
 
+  function T(key, english) {
+    return w.VS && w.VS.i18n ? w.VS.i18n.t(key, english) : english;
+  }
+  /** A category's name in the language being read. */
+  function catName(cat) {
+    if (!cat) return '';
+    return w.VS && w.VS.i18n ? w.VS.i18n.pick(cat, 'name') : cat.name;
+  }
+
   var state = {
     q: '', categories: [], area: '', language: '',
     minExp: 0, maxFee: 0, sort: 'relevance', page: 1
@@ -62,12 +71,12 @@
     var out = [];
     if (state.q) out.push(['q', '“' + state.q + '”']);
     state.categories.forEach(function (c) {
-      out.push(['category:' + c, db.byCategory[c] ? db.byCategory[c].name : c]);
+      out.push(['category:' + c, db.byCategory[c] ? catName(db.byCategory[c]) : c]);
     });
     if (state.area) out.push(['area', state.area]);
     if (state.language) out.push(['lang', state.language]);
-    if (state.minExp) out.push(['exp', state.minExp + '+ years']);
-    if (state.maxFee) out.push(['fee', 'Under ' + VS.money(state.maxFee)]);
+    if (state.minExp) out.push(['exp', state.minExp + T('js.dir.plusYears', '+ years')]);
+    if (state.maxFee) out.push(['fee', T('js.dir.under', 'Under') + ' ' + VS.money(state.maxFee)]);
 
     el.active.innerHTML = out.length
       ? out.map(function (pair) {
@@ -76,7 +85,7 @@
                  '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" ' +
                  'stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>';
         }).join('') +
-        '<button type="button" data-clear="all" class="chip border-transparent text-[var(--gold)] underline underline-offset-2 hover:bg-transparent">Clear all</button>'
+        '<button type="button" data-clear="all" class="chip border-transparent text-[var(--gold)] underline underline-offset-2 hover:bg-transparent">' + T('js.dir.clearAll', 'Clear all') + '</button>'
       : '';
     el.active.classList.toggle('hidden', !out.length);
   }
@@ -89,10 +98,25 @@
     if (state.page > pages) state.page = pages;
     var slice = results.slice(0, state.page * PAGE);
 
+    /* One sentence with the number as a placeholder, not a number glued to a
+       label: Hindi puts "आगरा में" in front, where English puts "in Agra" at
+       the end. */
+    var strong = '<strong class="font-semibold text-[var(--ink)]">' + total + '</strong>';
+    var onlyCat = state.categories.length === 1 ? catName(db.byCategory[state.categories[0]]) : null;
+    var phrase;
+    if (onlyCat) {
+      phrase = (total === 1
+        ? T('js.dir.countCatOne', '{n} advocate in Agra for {cat}')
+        : T('js.dir.countCatMany', '{n} advocates in Agra for {cat}'))
+        .replace('{cat}', e(onlyCat));
+    } else {
+      phrase = total === 1
+        ? T('js.dir.countOne', '{n} advocate in Agra')
+        : T('js.dir.countMany', '{n} advocates in Agra');
+    }
     el.count.innerHTML = total
-      ? '<strong class="font-semibold text-[var(--ink)]">' + total + '</strong> advocate' + (total === 1 ? '' : 's') +
-        ' in Agra' + (state.categories.length === 1 ? ' for ' + e(db.byCategory[state.categories[0]].name) : '')
-      : 'No advocates matched';
+      ? phrase.replace('{n}', strong)
+      : T('js.dir.noMatch', 'No advocates matched');
 
     el.grid.innerHTML = slice.map(function (l) { return VS.lawyerCard(l); }).join('');
     VS.stagger(el.grid, 55);
@@ -121,19 +145,34 @@
     var lede = d.getElementById('dir-lede');
     var cat = state.categories.length === 1 ? db.byCategory[state.categories[0]] : null;
 
-    var heading = cat ? cat.name + ' Lawyers in Agra' : 'Lawyers &amp; Advocates in Agra';
-    if (state.area && !cat) heading = 'Lawyers in ' + e(state.area) + ', Agra';
+    var heading = cat
+      ? T('js.dir.h1Category', '{cat} Lawyers in Agra').replace('{cat}', catName(cat))
+      : T('js.dir.h1All', 'Lawyers &amp; Advocates in Agra');
+    if (state.area && !cat) {
+      heading = T('js.dir.h1Area', 'Lawyers in {area}, Agra').replace('{area}', e(state.area));
+    }
     if (h1) h1.innerHTML = heading;
 
+    var blurb = cat ? (w.VS.i18n ? w.VS.i18n.pick(cat, 'blurb') : cat.blurb) : '';
     var desc = cat
+      ? blurb + ' ' + T('js.dir.ledeCategory',
+          'Compare {n} verified {cat} advocates in Agra by experience, fees and location.')
+          .replace('{n}', total).replace('{cat}', catName(cat).toLowerCase())
+      : T('js.dir.ledeAll',
+          'Compare {n} verified advocates across Agra by practice area, experience, consultation fee and locality.')
+          .replace('{n}', total);
+    if (lede) lede.textContent = desc;
+
+    /* The <title> and meta description are what Google indexes, and this page
+       has one URL for both languages — so they stay English. */
+    var enDesc = cat
       ? cat.blurb + ' Compare ' + total + ' verified ' + cat.name.toLowerCase() + ' advocates in Agra by experience, fees and location.'
       : 'Compare ' + total + ' verified advocates across Agra by practice area, experience, consultation fee and locality.';
-    if (lede) lede.textContent = desc;
 
     d.title = (cat ? cat.name + ' Lawyers in Agra' : 'Lawyers in Agra') +
               ' — Verified Advocates | Vakil Saab Agra';
     var m = d.querySelector('meta[name="description"]');
-    if (m) m.setAttribute('content', desc.slice(0, 158));
+    if (m) m.setAttribute('content', enDesc.slice(0, 158));
   }
 
   /* ------------------------------------------------------------- controls */
@@ -141,15 +180,15 @@
     el.cats.innerHTML = db.categories.map(function (c) {
       return '<button type="button" role="checkbox" aria-checked="false" data-cat="' + e(c.slug) + '" ' +
              'class="chip w-full justify-between text-left">' +
-               '<span class="truncate">' + e(c.name) + '</span>' +
+               '<span class="truncate">' + e(catName(c)) + '</span>' +
                '<span class="tabular shrink-0 text-[11px] opacity-60">' + c.count + '</span>' +
              '</button>';
     }).join('');
 
-    el.area.innerHTML = '<option value="">All areas of Agra</option>' +
+    el.area.innerHTML = '<option value="">' + e(T('js.dir.allAreas', 'All areas of Agra')) + '</option>' +
       db.areas.map(function (a) { return '<option value="' + e(a) + '">' + e(a) + '</option>'; }).join('');
 
-    el.lang.innerHTML = '<option value="">Any language</option>' +
+    el.lang.innerHTML = '<option value="">' + e(T('js.dir.anyLanguage', 'Any language')) + '</option>' +
       db.languages.map(function (l) { return '<option value="' + e(l) + '">' + e(l) + '</option>'; }).join('');
   }
 
@@ -163,7 +202,9 @@
     el.area.value = state.area;
     el.lang.value = state.language;
     el.exp.value = state.minExp;
-    el.expOut.textContent = state.minExp ? state.minExp + '+ years' : 'Any experience';
+    el.expOut.textContent = state.minExp
+      ? state.minExp + T('js.dir.plusYears', '+ years')
+      : T('js.dir.anyExperience', 'Any experience');
     el.fee.value = state.maxFee;
     el.sort.value = state.sort;
   }
@@ -198,7 +239,9 @@
 
     el.exp.addEventListener('input', function () {
       state.minExp = +el.exp.value;
-      el.expOut.textContent = state.minExp ? state.minExp + '+ years' : 'Any experience';
+      el.expOut.textContent = state.minExp
+        ? state.minExp + T('js.dir.plusYears', '+ years')
+        : T('js.dir.anyExperience', 'Any experience');
     });
     el.exp.addEventListener('change', function () { state.page = 1; render(); });
 
@@ -309,10 +352,17 @@
     bind();
     render();
     seo();
+
+    /* the cards, chips, counts and headings are all built in JS, so a language
+       switch has to rebuild them — data-i18n alone cannot reach them */
+    d.addEventListener('vs:lang', function () {
+      buildControls();
+      render();
+    });
   }).catch(function (err) {
     console.error('[Vakil Saab Agra] data load failed:', err);
     var g = d.getElementById('results-grid');
     if (g) g.innerHTML = '<p class="col-span-full rounded-xl border border-[var(--line)] bg-[var(--paper-2)] p-8 text-center text-[var(--muted)]">' +
-      'Listings could not be loaded. Please refresh the page.</p>';
+      T('js.loadFailed', 'Listings could not be loaded. Please refresh the page.') + '</p>';
   });
 })(window, document);

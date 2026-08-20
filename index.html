@@ -43,46 +43,53 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap"></noscript>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap"></noscript>
 
 <link rel="stylesheet" href="css/tailwind.css">
 <script>document.documentElement.classList.add('js');</script>
+<script src="data/i18n/hi.js" defer></script>
+<script src="js/i18n.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is it free to find a lawyer on Vakil Saab Agra?","acceptedAnswer":{"@type":"Answer","text":"Yes, completely free. We do not charge users anything, we do not take a commission from the advocate’s fee, and you are never required to register. You call the advocate directly using the number on their profile."}},{"@type":"Question","name":"How are the advocates on this site verified?","acceptedAnswer":{"@type":"Answer","text":"Before a profile goes live we check the advocate’s Bar Council of Uttar Pradesh enrolment number, confirm the chamber address in Agra and speak to them on the phone. We still recommend you verify credentials yourself at the first consultation."}},{"@type":"Question","name":"What does a lawyer in Agra usually charge?","acceptedAnswer":{"@type":"Answer","text":"A first consultation in Agra typically ranges from about ₹400 to ₹2,000 depending on the advocate’s seniority and the complexity of the matter. Case fees are agreed separately. Every profile in this directory shows the consultation fee upfront."}},{"@type":"Question","name":"I am an advocate in Agra. How do I get listed?","acceptedAnswer":{"@type":"Answer","text":"Send us a WhatsApp message on +91 98765 43210 with your name, enrolment number, practice areas and chamber address. We verify the details and publish your profile, usually within two working days."}},{"@type":"Question","name":"Do you cover courts outside Agra?","acceptedAnswer":{"@type":"Answer","text":"No. We deliberately cover Agra and Agra district only. Several listed advocates also appear before the Allahabad High Court for appeals and quashing petitions arising out of Agra matters, and that is noted on their individual profiles."}}]}</script>
 </head>
 <body class="bg-white antialiased">
-<a href="#main" class="skip-link">Skip to main content</a>
+<a href="#main" class="skip-link" data-i18n="common.skip-to-main-content">Skip to main content</a>
 <header class="site-header sticky top-0 z-50 border-b border-transparent bg-white/95">
   <div id="read-progress" class="absolute inset-x-0 bottom-0 h-[2px] bg-gradient-to-r from-[var(--gold)] to-[var(--gold-2)]" aria-hidden="true"></div>
   <div class="mx-auto flex max-w-7xl items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
 
-    <a href="index.html" class="group flex shrink-0 items-center gap-2.5" aria-label="Vakil Saab Agra — home">
+    <a href="index.html" class="group flex shrink-0 items-center gap-2.5" aria-label="Vakil Saab Agra — home" data-i18n-attr="aria-label:common.label.vakil-saab-agra-home">
       <img src="assets/logo-mark.png" alt="" width="40" height="40" aria-hidden="true"
            class="h-9 w-9 rounded-lg transition-transform duration-500 group-hover:rotate-[-8deg] sm:h-10 sm:w-10">
       <span class="leading-none">
-        <span class="block font-display text-[17px] font-bold text-[var(--ink)] sm:text-lg">Vakil Saab</span>
-        <span class="mt-0.5 block text-[9px] font-bold uppercase tracking-[.24em] text-[var(--gold)] sm:text-[10px]">Agra</span>
+        <span class="block font-display text-[17px] font-bold text-[var(--ink)] sm:text-lg" data-i18n="common.vakil-saab">Vakil Saab</span>
+        <span class="mt-0.5 block text-[9px] font-bold uppercase tracking-[.24em] text-[var(--gold)] sm:text-[10px]" data-i18n="common.agra">Agra</span>
       </span>
     </a>
 
-    <nav aria-label="Primary" class="ml-auto hidden items-center gap-6 text-[15px] text-[var(--muted)] lg:flex xl:gap-7">
-        <a href="index.html" class="nav-link transition-colors hover:text-[var(--ink)]" aria-current="page">Home</a>
-        <a href="lawyers.html" class="nav-link transition-colors hover:text-[var(--ink)]">Find a Lawyer</a>
-        <a href="practice-areas.html" class="nav-link transition-colors hover:text-[var(--ink)]">Practice Areas</a>
-        <a href="about.html" class="nav-link transition-colors hover:text-[var(--ink)]">About</a>
-        <a href="faq.html" class="nav-link transition-colors hover:text-[var(--ink)]">FAQ</a>
-        <a href="contact.html" class="nav-link transition-colors hover:text-[var(--ink)]">Contact</a>
+    <div class="lang-toggle shrink-0" role="group" aria-label="Language / भाषा" data-i18n-attr="aria-label:common.label.language">
+      <button type="button" data-lang="en" aria-pressed="true" title="English">EN</button>
+      <button type="button" data-lang="hi" aria-pressed="false" title="हिन्दी" lang="hi">हिं</button>
+    </div>
+
+    <nav aria-label="Primary" class="ml-auto hidden items-center gap-6 text-[15px] text-[var(--muted)] lg:flex xl:gap-7" data-i18n-attr="aria-label:common.label.primary">
+        <a href="index.html" class="nav-link transition-colors hover:text-[var(--ink)]" aria-current="page" data-i18n="common.home">Home</a>
+        <a href="lawyers.html" class="nav-link transition-colors hover:text-[var(--ink)]" data-i18n="common.find-a-lawyer">Find a Lawyer</a>
+        <a href="practice-areas.html" class="nav-link transition-colors hover:text-[var(--ink)]" data-i18n="common.practice-areas">Practice Areas</a>
+        <a href="about.html" class="nav-link transition-colors hover:text-[var(--ink)]" data-i18n="common.about">About</a>
+        <a href="faq.html" class="nav-link transition-colors hover:text-[var(--ink)]" data-i18n="common.faq">FAQ</a>
+        <a href="contact.html" class="nav-link transition-colors hover:text-[var(--ink)]" data-i18n="common.contact">Contact</a>
     </nav>
 
-    <a href="list-your-practice.html" class="btn btn-ghost ml-auto hidden px-4 py-2 text-sm lg:ml-6 lg:inline-flex">List your practice</a>
-    <a href="tel:+919876543210" class="btn btn-gold hidden whitespace-nowrap px-4 py-2 text-sm xl:inline-flex" aria-label="Call Vakil Saab Agra on +91 98765 43210">
+    <a href="list-your-practice.html" class="btn btn-ghost ml-auto hidden px-4 py-2 text-sm lg:ml-6 lg:inline-flex" data-i18n="common.list-your-practice">List your practice</a>
+    <a href="tel:+919876543210" class="btn btn-gold hidden whitespace-nowrap px-4 py-2 text-sm xl:inline-flex" aria-label="Call Vakil Saab Agra on +91 98765 43210" data-i18n-attr="aria-label:common.label.call-vakil-saab-agra-on-91-98765-43210">
       <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .4 1.9.7 2.8a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.3-1.2a2 2 0 012.1-.5c.9.3 1.8.6 2.8.7a2 2 0 011.7 2z"/></svg>
       +91 98765 43210
     </a>
 
     <button id="menu-open" type="button" aria-expanded="false" aria-controls="mobile-menu"
-            class="btn btn-ghost ml-auto h-10 w-10 p-0 lg:hidden" aria-label="Open menu">
+            class="btn btn-ghost ml-auto h-10 w-10 p-0 lg:hidden" aria-label="Open menu" data-i18n-attr="aria-label:common.label.open-menu">
       <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
     </button>
   </div>
@@ -91,14 +98,14 @@
 <div id="mobile-menu" aria-hidden="true" class="invisible fixed inset-0 z-[60] opacity-0 lg:hidden [&.is-open]:visible [&.is-open]:opacity-100">
   <div data-close-menu class="absolute inset-0 bg-[var(--ink)]/45 backdrop-blur-sm"></div>
   <div id="mobile-panel" role="dialog" aria-modal="true" aria-label="Site menu"
-       class="absolute right-0 top-0 flex h-full w-[86%] max-w-sm flex-col overflow-y-auto bg-white shadow-2xl">
+       class="absolute right-0 top-0 flex h-full w-[86%] max-w-sm flex-col overflow-y-auto bg-white shadow-2xl" data-i18n-attr="aria-label:common.label.site-menu">
     <div class="flex items-center justify-between border-b border-[var(--line)] px-5 py-4">
       <span class="font-display text-lg font-bold text-[var(--ink)]">Menu</span>
-      <button type="button" data-close-menu class="btn btn-ghost h-9 w-9 p-0" aria-label="Close menu">
+      <button type="button" data-close-menu class="btn btn-ghost h-9 w-9 p-0" aria-label="Close menu" data-i18n-attr="aria-label:common.label.close-menu">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
       </button>
     </div>
-    <nav aria-label="Mobile" class="flex flex-col px-5 pt-2">
+    <nav aria-label="Mobile" class="flex flex-col px-5 pt-2" data-i18n-attr="aria-label:common.label.mobile">
         <a href="index.html" style="--i:0" class="drawer-item border-b border-[var(--line-2)] py-3.5 text-lg font-medium text-[var(--ink)]" aria-current="page">Home</a>
         <a href="lawyers.html" style="--i:1" class="drawer-item border-b border-[var(--line-2)] py-3.5 text-lg font-medium text-[var(--ink)]">Find a Lawyer</a>
         <a href="practice-areas.html" style="--i:2" class="drawer-item border-b border-[var(--line-2)] py-3.5 text-lg font-medium text-[var(--ink)]">Practice Areas</a>
@@ -129,14 +136,14 @@
             <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--gold)] opacity-70"></span>
             <span class="relative inline-flex h-2 w-2 rounded-full bg-[var(--gold)]"></span>
           </span>
-          Serving Agra &amp; Agra district only
+          <span data-i18n="home.serving-agra-agra-district-only">Serving Agra &amp; Agra district only</span>
         </p>
 
         <h1 class="animate-fade-up balance mt-6 font-display text-[2.1rem] font-bold leading-[1.12] tracking-tight text-[var(--ink)] sm:text-5xl lg:text-6xl" style="animation-delay:.08s">
-          Find the right <span class="text-gold-grad">advocate in Agra</span> — without the guesswork
+          <span data-i18n="home.find-the-right">Find the right</span> <span class="text-gold-grad" data-i18n="home.advocate-in-agra">advocate in Agra</span> <span data-i18n="home.without-the-guesswork">— without the guesswork</span>
         </h1>
 
-        <p class="animate-fade-up pretty mx-auto mt-5 max-w-2xl text-base leading-relaxed text-[var(--muted)] sm:text-lg" style="animation-delay:.16s">
+        <p class="animate-fade-up pretty mx-auto mt-5 max-w-2xl text-base leading-relaxed text-[var(--muted)] sm:text-lg" style="animation-delay:.16s" data-i18n="home.search-verified-lawyers-practising-at-the">
           Search verified lawyers practising at the Agra District Court, Family Court, Consumer Commission
           and allied forums. Compare experience, practice areas and consultation fees, then call them directly.
         </p>
@@ -144,30 +151,30 @@
         <!-- search -->
         <form id="hero-search" action="lawyers.html" method="get" role="search"
               class="animate-fade-up relative mx-auto mt-9 max-w-2xl" style="animation-delay:.24s">
-          <label for="hero-q" class="sr-only">Search lawyers in Agra by name, practice area or legal issue</label>
+          <label for="hero-q" class="sr-only" data-i18n="home.search-lawyers-in-agra-by-name-practice-area">Search lawyers in Agra by name, practice area or legal issue</label>
           <div class="flex flex-col gap-2 rounded-2xl border border-[var(--line)] bg-white p-2 shadow-lg sm:flex-row sm:rounded-full sm:p-1.5">
             <div class="flex flex-1 items-center gap-2.5 px-3">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" class="shrink-0 text-[var(--muted-2)]" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
               <input id="hero-q" name="q" type="search" autocomplete="off" role="combobox"
                      aria-expanded="false" aria-controls="search-suggest" aria-autocomplete="list"
                      placeholder="Try “divorce”, “bail”, “cheque bounce”, “property”…"
-                     class="w-full bg-transparent py-3 text-[15px] text-[var(--ink)] outline-none placeholder:text-[var(--muted-2)]">
+                     class="w-full bg-transparent py-3 text-[15px] text-[var(--ink)] outline-none placeholder:text-[var(--muted-2)]" data-i18n-attr="placeholder:home.placeholder.try-divorce-bail-cheque-bounce-property">
             </div>
-            <button type="submit" class="btn btn-primary shrink-0 px-7 py-3 text-[15px] sm:rounded-full">
+            <button type="submit" class="btn btn-primary shrink-0 px-7 py-3 text-[15px] sm:rounded-full" data-i18n="home.search-advocates">
               Search advocates
             </button>
           </div>
           <ul id="search-suggest" role="listbox" aria-label="Search suggestions"
-              class="absolute left-0 right-0 top-full z-30 mt-2 hidden overflow-hidden rounded-xl border border-[var(--line)] bg-white py-1 text-left shadow-lg"></ul>
+              class="absolute left-0 right-0 top-full z-30 mt-2 hidden overflow-hidden rounded-xl border border-[var(--line)] bg-white py-1 text-left shadow-lg" data-i18n-attr="aria-label:home.label.search-suggestions"></ul>
         </form>
 
         <div class="animate-fade-up mt-5 flex flex-wrap items-center justify-center gap-2 text-sm" style="animation-delay:.32s">
-          <span class="text-[var(--muted-2)]">Popular:</span>
-          <a href="lawyers.html?category=criminal" class="chip">Bail &amp; criminal</a>
-          <a href="lawyers.html?category=family" class="chip">Divorce</a>
-          <a href="lawyers.html?category=property" class="chip">Property dispute</a>
-          <a href="lawyers.html?category=cheque-bounce" class="chip">Cheque bounce</a>
-          <a href="lawyers.html?category=motor-accident" class="chip hidden sm:inline-flex">Accident claim</a>
+          <span class="text-[var(--muted-2)]" data-i18n="home.popular">Popular:</span>
+          <a href="lawyers.html?category=criminal" class="chip" data-i18n="home.bail-criminal">Bail &amp; criminal</a>
+          <a href="lawyers.html?category=family" class="chip" data-i18n="home.divorce">Divorce</a>
+          <a href="lawyers.html?category=property" class="chip" data-i18n="home.property-dispute">Property dispute</a>
+          <a href="lawyers.html?category=cheque-bounce" class="chip" data-i18n="home.cheque-bounce">Cheque bounce</a>
+          <a href="lawyers.html?category=motor-accident" class="chip hidden sm:inline-flex" data-i18n="home.accident-claim">Accident claim</a>
         </div>
       </div>
 
@@ -175,37 +182,37 @@
       <dl class="mx-auto mt-14 grid max-w-4xl grid-cols-2 gap-px overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--line)] shadow-sm sm:mt-16 lg:grid-cols-4" data-reveal>
         <div class="bg-white px-4 py-6 text-center">
           <dd class="tabular font-display text-3xl font-bold text-[var(--ink)] sm:text-4xl"><span id="stat-lawyers" data-count="20" data-suffix="+">20+</span></dd>
-          <dt class="mt-1 text-xs font-medium uppercase tracking-wide text-[var(--muted-2)]">Advocates listed</dt>
+          <dt class="mt-1 text-xs font-medium uppercase tracking-wide text-[var(--muted-2)]" data-i18n="home.advocates-listed">Advocates listed</dt>
         </div>
         <div class="bg-white px-4 py-6 text-center">
           <dd class="tabular font-display text-3xl font-bold text-[var(--ink)] sm:text-4xl"><span id="stat-areas" data-count="12">12</span></dd>
-          <dt class="mt-1 text-xs font-medium uppercase tracking-wide text-[var(--muted-2)]">Practice areas</dt>
+          <dt class="mt-1 text-xs font-medium uppercase tracking-wide text-[var(--muted-2)]" data-i18n="common.practice-areas-2">Practice areas</dt>
         </div>
         <div class="bg-white px-4 py-6 text-center">
           <dd class="tabular font-display text-3xl font-bold text-[var(--ink)] sm:text-4xl"><span id="stat-topics" data-count="96" data-suffix="+">96+</span></dd>
-          <dt class="mt-1 text-xs font-medium uppercase tracking-wide text-[var(--muted-2)]">Case types covered</dt>
+          <dt class="mt-1 text-xs font-medium uppercase tracking-wide text-[var(--muted-2)]" data-i18n="home.case-types-covered">Case types covered</dt>
         </div>
         <div class="bg-white px-4 py-6 text-center">
           <dd class="tabular font-display text-3xl font-bold text-[var(--ink)] sm:text-4xl"><span id="stat-exp" data-count="31">31</span></dd>
-          <dt class="mt-1 text-xs font-medium uppercase tracking-wide text-[var(--muted-2)]">Years max. experience</dt>
+          <dt class="mt-1 text-xs font-medium uppercase tracking-wide text-[var(--muted-2)]" data-i18n="home.years-max-experience">Years max. experience</dt>
         </div>
       </dl>
     </div>
   </section>
 
   <!-- ═══════════════════════════════════════════════════ COURTS BAR ═══ -->
-  <section aria-label="Courts and forums covered" class="border-y border-[var(--line)] bg-white py-6">
-    <p class="mb-4 text-center text-xs font-semibold uppercase tracking-[.2em] text-[var(--muted-2)]">
+  <section aria-label="Courts and forums covered" class="border-y border-[var(--line)] bg-white py-6" data-i18n-attr="aria-label:home.label.courts-and-forums-covered">
+    <p class="mb-4 text-center text-xs font-semibold uppercase tracking-[.2em] text-[var(--muted-2)]" data-i18n="home.advocates-practising-before">
       Advocates practising before
     </p>
     <div class="marquee">
       <div class="marquee-track gap-10 pr-10 text-sm font-medium text-[var(--muted)] sm:gap-14 sm:pr-14">
         <span class="flex shrink-0 gap-10 sm:gap-14">
-          <span>District &amp; Sessions Court, Agra</span><span>Family Court, Agra</span>
-          <span>Chief Judicial Magistrate, Agra</span><span>District Consumer Commission, Agra</span>
-          <span>Motor Accident Claims Tribunal, Agra</span><span>Labour Court, Agra</span>
-          <span>Commercial Court, Agra</span><span>Revenue Courts, Agra</span>
-          <span>Allahabad High Court</span><span>UP RERA</span>
+          <span data-i18n="home.district-sessions-court-agra">District &amp; Sessions Court, Agra</span><span data-i18n="home.family-court-agra">Family Court, Agra</span>
+          <span data-i18n="home.chief-judicial-magistrate-agra">Chief Judicial Magistrate, Agra</span><span data-i18n="home.district-consumer-commission-agra">District Consumer Commission, Agra</span>
+          <span data-i18n="home.motor-accident-claims-tribunal-agra">Motor Accident Claims Tribunal, Agra</span><span data-i18n="home.labour-court-agra">Labour Court, Agra</span>
+          <span data-i18n="home.commercial-court-agra">Commercial Court, Agra</span><span data-i18n="home.revenue-courts-agra">Revenue Courts, Agra</span>
+          <span data-i18n="home.allahabad-high-court">Allahabad High Court</span><span data-i18n="home.up-rera">UP RERA</span>
         </span>
         <span class="flex shrink-0 gap-10 sm:gap-14" aria-hidden="true">
           <span>District &amp; Sessions Court, Agra</span><span>Family Court, Agra</span>
@@ -221,12 +228,12 @@
   <!-- ══════════════════════════════════════════════ PRACTICE AREAS ═══ -->
   <section id="practice-areas" class="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8">
     <div class="max-w-2xl" data-reveal>
-      <p class="text-xs font-bold uppercase tracking-[.2em] text-[var(--gold)]">What do you need help with?</p>
-      <h2 class="balance mt-3 font-display text-3xl font-bold text-[var(--ink)] sm:text-4xl">
+      <p class="text-xs font-bold uppercase tracking-[.2em] text-[var(--gold)]" data-i18n="home.what-do-you-need-help-with">What do you need help with?</p>
+      <h2 class="balance mt-3 font-display text-3xl font-bold text-[var(--ink)] sm:text-4xl" data-i18n="home.legal-practice-areas-covered-in-agra">
         Legal practice areas covered in Agra
       </h2>
       <div class="rule-gold mt-4"></div>
-      <p class="pretty mt-5 text-[15px] leading-relaxed text-[var(--muted)]">
+      <p class="pretty mt-5 text-[15px] leading-relaxed text-[var(--muted)]" data-i18n="home.every-advocate-in-this-directory-lists-the">
         Every advocate in this directory lists the exact matters they take on — from anticipatory bail
         and mutual-consent divorce to GST notices and RERA complaints. Pick the area closest to your problem.
       </p>
@@ -239,7 +246,7 @@
 
     <div class="mt-10 text-center" data-reveal>
       <a href="practice-areas.html" class="btn btn-ghost px-6 py-3">
-        See every case type we cover
+        <span data-i18n="home.see-every-case-type-we-cover">See every case type we cover</span>
         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
     </div>
@@ -249,9 +256,9 @@
   <section class="relative overflow-hidden bg-[var(--paper-2)] py-20 sm:py-24">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="mx-auto max-w-2xl text-center" data-reveal>
-        <p class="text-xs font-bold uppercase tracking-[.2em] text-[var(--gold)]">Simple and free</p>
-        <h2 class="balance mt-3 font-display text-3xl font-bold text-[var(--ink)] sm:text-4xl">How Vakil Saab Agra works</h2>
-        <p class="pretty mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-[var(--muted)]">
+        <p class="text-xs font-bold uppercase tracking-[.2em] text-[var(--gold)]" data-i18n="home.simple-and-free">Simple and free</p>
+        <h2 class="balance mt-3 font-display text-3xl font-bold text-[var(--ink)] sm:text-4xl" data-i18n="home.how-vakil-saab-agra-works">How Vakil Saab Agra works</h2>
+        <p class="pretty mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-[var(--muted)]" data-i18n="home.no-sign-up-no-commission-no-middlemen-you">
           No sign-up, no commission, no middlemen. You find the advocate and speak to them yourself.
         </p>
       </div>
@@ -259,24 +266,24 @@
       <ol class="relative mt-14 grid gap-6 lg:grid-cols-3" data-stagger="120">
         <li class="card relative p-7" data-reveal>
           <span class="absolute -top-4 left-7 grid h-9 w-9 place-items-center rounded-full bg-[var(--ink)] font-display text-base font-bold text-[var(--gold-2)] shadow-md">1</span>
-          <h3 class="mt-4 font-display text-lg font-bold text-[var(--ink)]">Search your legal issue</h3>
-          <p class="pretty mt-2.5 text-sm leading-relaxed text-[var(--muted)]">
+          <h3 class="mt-4 font-display text-lg font-bold text-[var(--ink)]" data-i18n="home.search-your-legal-issue">Search your legal issue</h3>
+          <p class="pretty mt-2.5 text-sm leading-relaxed text-[var(--muted)]" data-i18n="home.type-your-problem-in-plain-language-landlord">
             Type your problem in plain language — “landlord not returning deposit”, “498A notice”,
             “cheque bounced”. We match it against the case types each advocate actually handles.
           </p>
         </li>
         <li class="card relative p-7" data-reveal>
           <span class="absolute -top-4 left-7 grid h-9 w-9 place-items-center rounded-full bg-[var(--ink)] font-display text-base font-bold text-[var(--gold-2)] shadow-md">2</span>
-          <h3 class="mt-4 font-display text-lg font-bold text-[var(--ink)]">Compare and shortlist</h3>
-          <p class="pretty mt-2.5 text-sm leading-relaxed text-[var(--muted)]">
+          <h3 class="mt-4 font-display text-lg font-bold text-[var(--ink)]" data-i18n="home.compare-and-shortlist">Compare and shortlist</h3>
+          <p class="pretty mt-2.5 text-sm leading-relaxed text-[var(--muted)]" data-i18n="home.filter-by-years-of-experience-consultation">
             Filter by years of experience, consultation fee, language and the part of Agra you live in.
             Read each advocate's profile, courts they appear in and the matters they specialise in.
           </p>
         </li>
         <li class="card relative p-7" data-reveal>
           <span class="absolute -top-4 left-7 grid h-9 w-9 place-items-center rounded-full bg-[var(--ink)] font-display text-base font-bold text-[var(--gold-2)] shadow-md">3</span>
-          <h3 class="mt-4 font-display text-lg font-bold text-[var(--ink)]">Call the advocate directly</h3>
-          <p class="pretty mt-2.5 text-sm leading-relaxed text-[var(--muted)]">
+          <h3 class="mt-4 font-display text-lg font-bold text-[var(--ink)]" data-i18n="home.call-the-advocate-directly">Call the advocate directly</h3>
+          <p class="pretty mt-2.5 text-sm leading-relaxed text-[var(--muted)]" data-i18n="home.their-phone-number-is-right-on-the-profile">
             Their phone number is right on the profile. Call or WhatsApp them yourself and fix a
             consultation. We take no cut and never sit between you and your lawyer.
           </p>
@@ -289,16 +296,16 @@
   <section class="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8">
     <div class="flex flex-wrap items-end justify-between gap-6" data-reveal>
       <div class="max-w-2xl">
-        <p class="text-xs font-bold uppercase tracking-[.2em] text-[var(--gold)]">Highly rated in Agra</p>
-        <h2 class="balance mt-3 font-display text-3xl font-bold text-[var(--ink)] sm:text-4xl">Top advocates this month</h2>
+        <p class="text-xs font-bold uppercase tracking-[.2em] text-[var(--gold)]" data-i18n="home.highly-rated-in-agra">Highly rated in Agra</p>
+        <h2 class="balance mt-3 font-display text-3xl font-bold text-[var(--ink)] sm:text-4xl" data-i18n="home.top-advocates-this-month">Top advocates this month</h2>
         <div class="rule-gold mt-4"></div>
-        <p class="pretty mt-5 text-[15px] leading-relaxed text-[var(--muted)]">
+        <p class="pretty mt-5 text-[15px] leading-relaxed text-[var(--muted)]" data-i18n="home.ranked-on-client-ratings-years-in-practice">
           Ranked on client ratings, years in practice and responsiveness. Every listing below is verified
           against Bar Council enrolment records before it goes live.
         </p>
       </div>
       <a href="lawyers.html" class="btn btn-ghost px-5 py-2.5 text-sm">
-        View all advocates
+        <span data-i18n="home.view-all-advocates">View all advocates</span>
         <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
     </div>
@@ -313,9 +320,9 @@
     <div class="orb -right-20 -top-10 h-96 w-96 bg-[var(--gold-2)]/12 animate-drift" aria-hidden="true"></div>
     <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="mx-auto max-w-2xl text-center" data-reveal>
-        <p class="text-xs font-bold uppercase tracking-[.2em] text-[var(--gold-2)]">Why people in Agra use us</p>
-        <h2 class="balance mt-3 font-display text-3xl font-bold sm:text-4xl">Built for one city, done properly</h2>
-        <p class="pretty mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-[#a8bdd4]">
+        <p class="text-xs font-bold uppercase tracking-[.2em] text-[var(--gold-2)]" data-i18n="home.why-people-in-agra-use-us">Why people in Agra use us</p>
+        <h2 class="balance mt-3 font-display text-3xl font-bold sm:text-4xl" data-i18n="home.built-for-one-city-done-properly">Built for one city, done properly</h2>
+        <p class="pretty mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-[#a8bdd4]" data-i18n="home.a-national-portal-will-show-you-a-lawyer-in">
           A national portal will show you a lawyer in another state. We only list advocates who
           actually appear in Agra's courts.
         </p>
@@ -326,29 +333,29 @@
           <span class="mb-4 inline-grid h-11 w-11 place-items-center rounded-xl bg-[var(--gold-2)]/15 text-[var(--gold-2)]">
             <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.4-7 10-4-1.6-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
           </span>
-          <h3 class="font-display text-lg font-bold">Enrolment verified</h3>
-          <p class="pretty mt-2 text-sm leading-relaxed text-[#a8bdd4]">Every advocate's Bar Council enrolment number is checked before their profile is published.</p>
+          <h3 class="font-display text-lg font-bold" data-i18n="home.enrolment-verified">Enrolment verified</h3>
+          <p class="pretty mt-2 text-sm leading-relaxed text-[#a8bdd4]" data-i18n="home.every-advocate-s-bar-council-enrolment">Every advocate's Bar Council enrolment number is checked before their profile is published.</p>
         </div>
         <div class="rounded-2xl border border-white/10 bg-white/[.04] p-6 transition-all duration-500 hover:-translate-y-1.5 hover:border-[var(--gold-2)]/40 hover:bg-white/[.07]" data-reveal>
           <span class="mb-4 inline-grid h-11 w-11 place-items-center rounded-xl bg-[var(--gold-2)]/15 text-[var(--gold-2)]">
             <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 21s-7-5.6-7-11a7 7 0 1114 0c0 5.4-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
           </span>
-          <h3 class="font-display text-lg font-bold">Agra only</h3>
-          <p class="pretty mt-2 text-sm leading-relaxed text-[#a8bdd4]">From Civil Lines to Trans Yamuna — advocates who know the local courts, clerks and procedure.</p>
+          <h3 class="font-display text-lg font-bold" data-i18n="home.agra-only">Agra only</h3>
+          <p class="pretty mt-2 text-sm leading-relaxed text-[#a8bdd4]" data-i18n="home.from-civil-lines-to-trans-yamuna-advocates">From Civil Lines to Trans Yamuna — advocates who know the local courts, clerks and procedure.</p>
         </div>
         <div class="rounded-2xl border border-white/10 bg-white/[.04] p-6 transition-all duration-500 hover:-translate-y-1.5 hover:border-[var(--gold-2)]/40 hover:bg-white/[.07]" data-reveal>
           <span class="mb-4 inline-grid h-11 w-11 place-items-center rounded-xl bg-[var(--gold-2)]/15 text-[var(--gold-2)]">
             <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 2v20M17 6H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 110 7H6"/></svg>
           </span>
-          <h3 class="font-display text-lg font-bold">Zero commission</h3>
-          <p class="pretty mt-2 text-sm leading-relaxed text-[#a8bdd4]">We never take a cut of your legal fee. Consultation charges are shown upfront on every profile.</p>
+          <h3 class="font-display text-lg font-bold" data-i18n="home.zero-commission">Zero commission</h3>
+          <p class="pretty mt-2 text-sm leading-relaxed text-[#a8bdd4]" data-i18n="home.we-never-take-a-cut-of-your-legal-fee">We never take a cut of your legal fee. Consultation charges are shown upfront on every profile.</p>
         </div>
         <div class="rounded-2xl border border-white/10 bg-white/[.04] p-6 transition-all duration-500 hover:-translate-y-1.5 hover:border-[var(--gold-2)]/40 hover:bg-white/[.07]" data-reveal>
           <span class="mb-4 inline-grid h-11 w-11 place-items-center rounded-xl bg-[var(--gold-2)]/15 text-[var(--gold-2)]">
             <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
           </span>
-          <h3 class="font-display text-lg font-bold">Direct contact</h3>
-          <p class="pretty mt-2 text-sm leading-relaxed text-[#a8bdd4]">No lead forms or call centres. The advocate's own number is on the profile — call them today.</p>
+          <h3 class="font-display text-lg font-bold" data-i18n="home.direct-contact">Direct contact</h3>
+          <p class="pretty mt-2 text-sm leading-relaxed text-[#a8bdd4]" data-i18n="home.no-lead-forms-or-call-centres-the-advocate-s">No lead forms or call centres. The advocate's own number is on the profile — call them today.</p>
         </div>
       </div>
     </div>
@@ -357,47 +364,47 @@
   <!-- ═══════════════════════════════════════════════ TESTIMONIALS ═══ -->
   <section class="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8">
     <div class="mx-auto max-w-2xl text-center" data-reveal>
-      <p class="text-xs font-bold uppercase tracking-[.2em] text-[var(--gold)]">From people we helped</p>
-      <h2 class="balance mt-3 font-display text-3xl font-bold text-[var(--ink)] sm:text-4xl">What Agra says about us</h2>
+      <p class="text-xs font-bold uppercase tracking-[.2em] text-[var(--gold)]" data-i18n="home.from-people-we-helped">From people we helped</p>
+      <h2 class="balance mt-3 font-display text-3xl font-bold text-[var(--ink)] sm:text-4xl" data-i18n="home.what-agra-says-about-us">What Agra says about us</h2>
     </div>
 
     <div class="mt-12 grid gap-5 lg:grid-cols-3" data-stagger="100">
       <figure class="card card-hover p-7" data-reveal>
         <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor" class="text-[var(--gold-2)]/40" aria-hidden="true"><path d="M9.5 6C6 6 3.5 8.8 3.5 12.4c0 3 2 5.6 5 5.6 2.5 0 4.3-1.9 4.3-4.3 0-2.3-1.6-4-3.8-4-.4 0-.8 0-1 .2.4-1.6 2-3 4-3.3zm10 0c-3.5 0-6 2.8-6 6.4 0 3 2 5.6 5 5.6 2.5 0 4.3-1.9 4.3-4.3 0-2.3-1.6-4-3.8-4-.4 0-.8 0-1 .2.4-1.6 2-3 4-3.3z"/></svg>
-        <blockquote class="pretty mt-4 text-[15px] leading-relaxed text-[var(--muted)]">
+        <blockquote class="pretty mt-4 text-[15px] leading-relaxed text-[var(--muted)]" data-i18n="home.my-father-s-property-was-stuck-in-a">
           My father's property was stuck in a partition matter for years. I found an advocate in Sadar
           Bazaar through this site, called him the same evening, and finally understood what our options were.
         </blockquote>
         <figcaption class="mt-6 flex items-center gap-3 border-t border-[var(--line-2)] pt-5">
-          <span class="grid h-10 w-10 place-items-center rounded-full bg-[var(--paper-3)] font-display font-bold text-[var(--ink)]">RS</span>
-          <span><span class="block text-sm font-semibold text-[var(--ink)]">Rohit S.</span>
-                <span class="block text-xs text-[var(--muted-2)]">Property matter &middot; Dayalbagh</span></span>
+          <span class="grid h-10 w-10 place-items-center rounded-full bg-[var(--paper-3)] font-display font-bold text-[var(--ink)]" data-i18n="home.rs">RS</span>
+          <span><span class="block text-sm font-semibold text-[var(--ink)]" data-i18n="home.rohit-s">Rohit S.</span>
+                <span class="block text-xs text-[var(--muted-2)]" data-i18n="home.property-matter-dayalbagh">Property matter &middot; Dayalbagh</span></span>
         </figcaption>
       </figure>
 
       <figure class="card card-hover p-7" data-reveal>
         <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor" class="text-[var(--gold-2)]/40" aria-hidden="true"><path d="M9.5 6C6 6 3.5 8.8 3.5 12.4c0 3 2 5.6 5 5.6 2.5 0 4.3-1.9 4.3-4.3 0-2.3-1.6-4-3.8-4-.4 0-.8 0-1 .2.4-1.6 2-3 4-3.3zm10 0c-3.5 0-6 2.8-6 6.4 0 3 2 5.6 5 5.6 2.5 0 4.3-1.9 4.3-4.3 0-2.3-1.6-4-3.8-4-.4 0-.8 0-1 .2.4-1.6 2-3 4-3.3z"/></svg>
-        <blockquote class="pretty mt-4 text-[15px] leading-relaxed text-[var(--muted)]">
+        <blockquote class="pretty mt-4 text-[15px] leading-relaxed text-[var(--muted)]" data-i18n="home.i-needed-a-lady-advocate-for-a-domestic">
           I needed a lady advocate for a domestic violence case and did not know where to start. The
           filters here made it simple, and the fees were written clearly on the profile before I called.
         </blockquote>
         <figcaption class="mt-6 flex items-center gap-3 border-t border-[var(--line-2)] pt-5">
-          <span class="grid h-10 w-10 place-items-center rounded-full bg-[var(--paper-3)] font-display font-bold text-[var(--ink)]">MK</span>
-          <span><span class="block text-sm font-semibold text-[var(--ink)]">Meera K.</span>
-                <span class="block text-xs text-[var(--muted-2)]">Family matter &middot; Kamla Nagar</span></span>
+          <span class="grid h-10 w-10 place-items-center rounded-full bg-[var(--paper-3)] font-display font-bold text-[var(--ink)]" data-i18n="home.mk">MK</span>
+          <span><span class="block text-sm font-semibold text-[var(--ink)]" data-i18n="home.meera-k">Meera K.</span>
+                <span class="block text-xs text-[var(--muted-2)]" data-i18n="home.family-matter-kamla-nagar">Family matter &middot; Kamla Nagar</span></span>
         </figcaption>
       </figure>
 
       <figure class="card card-hover p-7" data-reveal>
         <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor" class="text-[var(--gold-2)]/40" aria-hidden="true"><path d="M9.5 6C6 6 3.5 8.8 3.5 12.4c0 3 2 5.6 5 5.6 2.5 0 4.3-1.9 4.3-4.3 0-2.3-1.6-4-3.8-4-.4 0-.8 0-1 .2.4-1.6 2-3 4-3.3zm10 0c-3.5 0-6 2.8-6 6.4 0 3 2 5.6 5 5.6 2.5 0 4.3-1.9 4.3-4.3 0-2.3-1.6-4-3.8-4-.4 0-.8 0-1 .2.4-1.6 2-3 4-3.3z"/></svg>
-        <blockquote class="pretty mt-4 text-[15px] leading-relaxed text-[var(--muted)]">
+        <blockquote class="pretty mt-4 text-[15px] leading-relaxed text-[var(--muted)]" data-i18n="home.two-of-my-cheques-bounced-from-a-supplier">
           Two of my cheques bounced from a supplier. Found an advocate in Belanganj who handles only
           138 matters, sent the notice within the deadline, and got a settlement in four months.
         </blockquote>
         <figcaption class="mt-6 flex items-center gap-3 border-t border-[var(--line-2)] pt-5">
-          <span class="grid h-10 w-10 place-items-center rounded-full bg-[var(--paper-3)] font-display font-bold text-[var(--ink)]">AJ</span>
-          <span><span class="block text-sm font-semibold text-[var(--ink)]">Ashok J.</span>
-                <span class="block text-xs text-[var(--muted-2)]">Cheque bounce &middot; Loha Mandi</span></span>
+          <span class="grid h-10 w-10 place-items-center rounded-full bg-[var(--paper-3)] font-display font-bold text-[var(--ink)]" data-i18n="home.aj">AJ</span>
+          <span><span class="block text-sm font-semibold text-[var(--ink)]" data-i18n="home.ashok-j">Ashok J.</span>
+                <span class="block text-xs text-[var(--muted-2)]" data-i18n="home.cheque-bounce-loha-mandi">Cheque bounce &middot; Loha Mandi</span></span>
         </figcaption>
       </figure>
     </div>
@@ -407,17 +414,17 @@
   <section class="bg-[var(--paper-2)] py-20 sm:py-24">
     <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
       <div class="text-center" data-reveal>
-        <p class="text-xs font-bold uppercase tracking-[.2em] text-[var(--gold)]">Questions</p>
-        <h2 class="balance mt-3 font-display text-3xl font-bold text-[var(--ink)] sm:text-4xl">Frequently asked</h2>
+        <p class="text-xs font-bold uppercase tracking-[.2em] text-[var(--gold)]" data-i18n="home.questions">Questions</p>
+        <h2 class="balance mt-3 font-display text-3xl font-bold text-[var(--ink)] sm:text-4xl" data-i18n="home.frequently-asked">Frequently asked</h2>
       </div>
 
       <div class="mt-10 space-y-3" data-accordion-group data-stagger="60">
         <div class="acc-item card overflow-hidden" data-reveal>
           <button type="button" aria-expanded="false" class="flex w-full items-center justify-between gap-4 p-5 text-left">
-            <span class="font-semibold text-[var(--ink)]">Is it free to find a lawyer on Vakil Saab Agra?</span>
+            <span class="font-semibold text-[var(--ink)]" data-i18n="home.is-it-free-to-find-a-lawyer-on-vakil-saab">Is it free to find a lawyer on Vakil Saab Agra?</span>
             <svg class="acc-chevron shrink-0 text-[var(--gold)]" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
           </button>
-          <div class="acc-panel"><div><p class="px-5 pb-5 text-[15px] leading-relaxed text-[var(--muted)]">
+          <div class="acc-panel"><div><p class="px-5 pb-5 text-[15px] leading-relaxed text-[var(--muted)]" data-i18n="home.yes-completely-free-we-do-not-charge-users">
             Yes, completely free. We do not charge users anything, we do not take a commission from the advocate's
             fee, and you are never required to register. You call the advocate directly using the number on their profile.
           </p></div></div>
@@ -425,10 +432,10 @@
 
         <div class="acc-item card overflow-hidden" data-reveal>
           <button type="button" aria-expanded="false" class="flex w-full items-center justify-between gap-4 p-5 text-left">
-            <span class="font-semibold text-[var(--ink)]">How are the advocates on this site verified?</span>
+            <span class="font-semibold text-[var(--ink)]" data-i18n="home.how-are-the-advocates-on-this-site-verified">How are the advocates on this site verified?</span>
             <svg class="acc-chevron shrink-0 text-[var(--gold)]" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
           </button>
-          <div class="acc-panel"><div><p class="px-5 pb-5 text-[15px] leading-relaxed text-[var(--muted)]">
+          <div class="acc-panel"><div><p class="px-5 pb-5 text-[15px] leading-relaxed text-[var(--muted)]" data-i18n="home.before-a-profile-goes-live-we-check-the">
             Before a profile goes live we check the advocate's Bar Council of Uttar Pradesh enrolment number,
             confirm the chamber address in Agra and speak to them on the phone. We still recommend you verify
             credentials yourself at the first consultation.
@@ -437,10 +444,10 @@
 
         <div class="acc-item card overflow-hidden" data-reveal>
           <button type="button" aria-expanded="false" class="flex w-full items-center justify-between gap-4 p-5 text-left">
-            <span class="font-semibold text-[var(--ink)]">What does a lawyer in Agra usually charge?</span>
+            <span class="font-semibold text-[var(--ink)]" data-i18n="home.what-does-a-lawyer-in-agra-usually-charge">What does a lawyer in Agra usually charge?</span>
             <svg class="acc-chevron shrink-0 text-[var(--gold)]" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
           </button>
-          <div class="acc-panel"><div><p class="px-5 pb-5 text-[15px] leading-relaxed text-[var(--muted)]">
+          <div class="acc-panel"><div><p class="px-5 pb-5 text-[15px] leading-relaxed text-[var(--muted)]" data-i18n="home.a-first-consultation-in-agra-typically">
             A first consultation in Agra typically ranges from about ₹400 to ₹2,000 depending on the advocate's
             seniority and the complexity of the matter. Case fees are agreed separately. Every profile in this
             directory shows the consultation fee upfront so there are no surprises.
@@ -449,22 +456,22 @@
 
         <div class="acc-item card overflow-hidden" data-reveal>
           <button type="button" aria-expanded="false" class="flex w-full items-center justify-between gap-4 p-5 text-left">
-            <span class="font-semibold text-[var(--ink)]">I am an advocate in Agra. How do I get listed?</span>
+            <span class="font-semibold text-[var(--ink)]" data-i18n="home.i-am-an-advocate-in-agra-how-do-i-get-listed">I am an advocate in Agra. How do I get listed?</span>
             <svg class="acc-chevron shrink-0 text-[var(--gold)]" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
           </button>
           <div class="acc-panel"><div><p class="px-5 pb-5 text-[15px] leading-relaxed text-[var(--muted)]">
-            Send us a WhatsApp message on <a href="tel:+919876543210" class="font-semibold text-[var(--gold)] underline-offset-2 hover:underline">+91 98765 43210</a>
-            with your name, enrolment number, practice areas and chamber address. We verify the details and
-            publish your profile, usually within two working days.
+            <span data-i18n="home.send-us-a-whatsapp-message-on">Send us a WhatsApp message on</span> <a href="tel:+919876543210" class="font-semibold text-[var(--gold)] underline-offset-2 hover:underline">+91 98765 43210</a>
+            <span data-i18n="home.with-your-name-enrolment-number-practice">with your name, enrolment number, practice areas and chamber address. We verify the details and
+            publish your profile, usually within two working days.</span>
           </p></div></div>
         </div>
 
         <div class="acc-item card overflow-hidden" data-reveal>
           <button type="button" aria-expanded="false" class="flex w-full items-center justify-between gap-4 p-5 text-left">
-            <span class="font-semibold text-[var(--ink)]">Do you cover courts outside Agra?</span>
+            <span class="font-semibold text-[var(--ink)]" data-i18n="home.do-you-cover-courts-outside-agra">Do you cover courts outside Agra?</span>
             <svg class="acc-chevron shrink-0 text-[var(--gold)]" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
           </button>
-          <div class="acc-panel"><div><p class="px-5 pb-5 text-[15px] leading-relaxed text-[var(--muted)]">
+          <div class="acc-panel"><div><p class="px-5 pb-5 text-[15px] leading-relaxed text-[var(--muted)]" data-i18n="home.no-we-deliberately-cover-agra-and-agra">
             No. We deliberately cover Agra and Agra district only. Several listed advocates also appear before
             the Allahabad High Court for appeals and quashing petitions arising out of Agra matters, and that is
             noted on their individual profiles.
@@ -473,8 +480,8 @@
       </div>
 
       <p class="mt-8 text-center text-sm text-[var(--muted)]" data-reveal>
-        More questions? <a href="faq.html" class="font-semibold text-[var(--gold)] underline-offset-2 hover:underline">Read the full FAQ</a>
-        or <a href="contact.html" class="font-semibold text-[var(--gold)] underline-offset-2 hover:underline">contact us</a>.
+        <span data-i18n="home.more-questions">More questions?</span> <a href="faq.html" class="font-semibold text-[var(--gold)] underline-offset-2 hover:underline" data-i18n="home.read-the-full-faq">Read the full FAQ</a>
+        <span data-i18n="home.or">or</span> <a href="contact.html" class="font-semibold text-[var(--gold)] underline-offset-2 hover:underline" data-i18n="home.contact-us">contact us</a>.
       </p>
     </div>
   </section>
@@ -485,11 +492,11 @@
       <div class="orb -left-10 -top-10 h-64 w-64 bg-[var(--gold-2)]/20 animate-drift" aria-hidden="true"></div>
       <div class="orb -bottom-16 -right-10 h-72 w-72 bg-[var(--gold-2)]/10 animate-drift" style="animation-delay:-11s" aria-hidden="true"></div>
       <div class="relative">
-        <p class="text-xs font-bold uppercase tracking-[.2em] text-[var(--gold-2)]">For advocates practising in Agra</p>
-        <h2 class="balance mx-auto mt-4 max-w-2xl font-display text-3xl font-bold text-white sm:text-4xl">
+        <p class="text-xs font-bold uppercase tracking-[.2em] text-[var(--gold-2)]" data-i18n="home.for-advocates-practising-in-agra">For advocates practising in Agra</p>
+        <h2 class="balance mx-auto mt-4 max-w-2xl font-display text-3xl font-bold text-white sm:text-4xl" data-i18n="home.get-your-practice-in-front-of-clients">
           Get your practice in front of clients searching in Agra
         </h2>
-        <p class="pretty mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-[#a8bdd4]">
+        <p class="pretty mx-auto mt-4 max-w-xl text-[15px] leading-relaxed text-[#a8bdd4]" data-i18n="home.one-whatsapp-message-is-all-it-takes-send-us">
           One WhatsApp message is all it takes. Send us your enrolment number and practice areas —
           we verify and publish your profile, free of charge.
         </p>
@@ -497,9 +504,9 @@
           <a href="https://wa.me/919876543210?text=Hi%2C%20I%20am%20an%20advocate%20in%20Agra%20and%20would%20like%20to%20be%20listed%20on%20Vakil%20Saab%20Agra."
              target="_blank" rel="noopener" class="btn btn-gold px-7 py-3.5">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 00-8.6 15l-1.3 4.8 4.9-1.3A10 10 0 1012 2zm0 18.2a8.2 8.2 0 01-4.2-1.2l-.3-.2-2.9.8.8-2.8-.2-.3A8.2 8.2 0 1112 20.2z"/></svg>
-            WhatsApp us to get listed
+            <span data-i18n="home.whatsapp-us-to-get-listed">WhatsApp us to get listed</span>
           </a>
-          <a href="list-your-practice.html" class="btn bg-white/10 px-7 py-3.5 text-white ring-1 ring-inset ring-white/20 hover:bg-white/15">
+          <a href="list-your-practice.html" class="btn bg-white/10 px-7 py-3.5 text-white ring-1 ring-inset ring-white/20 hover:bg-white/15" data-i18n="home.how-listing-works">
             How listing works
           </a>
         </div>
@@ -515,8 +522,8 @@
     <div class="grid gap-10 lg:grid-cols-12">
 
       <div class="lg:col-span-4">
-        <img src="assets/logo-light.png" alt="Vakil Saab Agra" width="280" height="76" loading="lazy" class="h-14 w-auto">
-        <p class="mt-5 max-w-sm text-sm leading-relaxed pretty">
+        <img src="assets/logo-light.png" alt="Vakil Saab Agra" width="280" height="76" loading="lazy" class="h-14 w-auto" data-i18n-attr="alt:common.alt.vakil-saab-agra">
+        <p class="mt-5 max-w-sm text-sm leading-relaxed pretty" data-i18n="common.an-independent-directory-of-practising">
           An independent directory of practising advocates in Agra, Uttar Pradesh. Search by practice area,
           experience and locality, then contact the advocate directly — we never charge you a referral fee.
         </p>
@@ -527,90 +534,94 @@
           </a>
           <a href="https://wa.me/919876543210" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-lg border border-white/15 px-3.5 py-2 text-sm font-medium text-white transition-colors hover:border-[#25D366] hover:text-[#25D366]">
             <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 00-8.6 15l-1.3 4.8 4.9-1.3A10 10 0 1012 2zm0 18.2a8.2 8.2 0 01-4.2-1.2l-.3-.2-2.9.8.8-2.8-.2-.3A8.2 8.2 0 1112 20.2z"/></svg>
-            WhatsApp
+            <span data-i18n="common.whatsapp">WhatsApp</span>
           </a>
         </div>
       </div>
 
-      <nav aria-label="Practice areas" class="lg:col-span-3">
-        <h2 class="text-xs font-bold uppercase tracking-[.2em] text-[var(--gold-2)]">Practice Areas</h2>
+      <nav aria-label="Practice areas" class="lg:col-span-3" data-i18n-attr="aria-label:common.practice-areas-2">
+        <h2 class="text-xs font-bold uppercase tracking-[.2em] text-[var(--gold-2)]" data-i18n="common.practice-areas">Practice Areas</h2>
         <ul class="mt-5 grid grid-cols-1 gap-2.5 text-sm sm:grid-cols-2 lg:grid-cols-1">
-          <li><a href="lawyers.html?category=criminal" class="transition-colors hover:text-[var(--gold-2)]">Criminal Law Lawyers</a></li>
-          <li><a href="lawyers.html?category=family" class="transition-colors hover:text-[var(--gold-2)]">Family & Divorce Lawyers</a></li>
-          <li><a href="lawyers.html?category=property" class="transition-colors hover:text-[var(--gold-2)]">Property & Real Estate Lawyers</a></li>
-          <li><a href="lawyers.html?category=civil" class="transition-colors hover:text-[var(--gold-2)]">Civil Litigation Lawyers</a></li>
-          <li><a href="lawyers.html?category=cheque-bounce" class="transition-colors hover:text-[var(--gold-2)]">Cheque Bounce Lawyers</a></li>
-          <li><a href="lawyers.html?category=corporate" class="transition-colors hover:text-[var(--gold-2)]">Corporate & Startup Lawyers</a></li>
-          <li><a href="lawyers.html?category=consumer" class="transition-colors hover:text-[var(--gold-2)]">Consumer Protection Lawyers</a></li>
-          <li><a href="lawyers.html?category=labour" class="transition-colors hover:text-[var(--gold-2)]">Labour & Service Lawyers</a></li>
-          <li><a href="lawyers.html?category=motor-accident" class="transition-colors hover:text-[var(--gold-2)]">Motor Accident Claims Lawyers</a></li>
-          <li><a href="lawyers.html?category=cyber" class="transition-colors hover:text-[var(--gold-2)]">Cyber Crime Lawyers</a></li>
-          <li><a href="lawyers.html?category=tax-gst" class="transition-colors hover:text-[var(--gold-2)]">Taxation & GST Lawyers</a></li>
-          <li><a href="lawyers.html?category=documentation" class="transition-colors hover:text-[var(--gold-2)]">Documentation & Registration Lawyers</a></li>
+          <li><a href="lawyers.html?category=criminal" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.criminal-law-lawyers">Criminal Law Lawyers</a></li>
+          <li><a href="lawyers.html?category=family" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.family-divorce-lawyers">Family & Divorce Lawyers</a></li>
+          <li><a href="lawyers.html?category=property" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.property-real-estate-lawyers">Property & Real Estate Lawyers</a></li>
+          <li><a href="lawyers.html?category=civil" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.civil-litigation-lawyers">Civil Litigation Lawyers</a></li>
+          <li><a href="lawyers.html?category=cheque-bounce" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.cheque-bounce-lawyers">Cheque Bounce Lawyers</a></li>
+          <li><a href="lawyers.html?category=corporate" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.corporate-startup-lawyers">Corporate & Startup Lawyers</a></li>
+          <li><a href="lawyers.html?category=consumer" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.consumer-protection-lawyers">Consumer Protection Lawyers</a></li>
+          <li><a href="lawyers.html?category=labour" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.labour-service-lawyers">Labour & Service Lawyers</a></li>
+          <li><a href="lawyers.html?category=motor-accident" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.motor-accident-claims-lawyers">Motor Accident Claims Lawyers</a></li>
+          <li><a href="lawyers.html?category=cyber" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.cyber-crime-lawyers">Cyber Crime Lawyers</a></li>
+          <li><a href="lawyers.html?category=tax-gst" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.taxation-gst-lawyers">Taxation & GST Lawyers</a></li>
+          <li><a href="lawyers.html?category=documentation" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.documentation-registration-lawyers">Documentation & Registration Lawyers</a></li>
         </ul>
       </nav>
 
-      <nav aria-label="Quick links" class="lg:col-span-2">
-        <h2 class="text-xs font-bold uppercase tracking-[.2em] text-[var(--gold-2)]">Quick Links</h2>
+      <nav aria-label="Quick links" class="lg:col-span-2" data-i18n-attr="aria-label:common.label.quick-links">
+        <h2 class="text-xs font-bold uppercase tracking-[.2em] text-[var(--gold-2)]" data-i18n="common.quick-links">Quick Links</h2>
         <ul class="mt-5 space-y-2.5 text-sm">
-          <li><a href="lawyers.html" class="transition-colors hover:text-[var(--gold-2)]">All Advocates</a></li>
-          <li><a href="practice-areas.html" class="transition-colors hover:text-[var(--gold-2)]">Practice Areas</a></li>
-          <li><a href="list-your-practice.html" class="transition-colors hover:text-[var(--gold-2)]">List Your Practice</a></li>
-          <li><a href="about.html" class="transition-colors hover:text-[var(--gold-2)]">About Us</a></li>
-          <li><a href="faq.html" class="transition-colors hover:text-[var(--gold-2)]">FAQ</a></li>
-          <li><a href="contact.html" class="transition-colors hover:text-[var(--gold-2)]">Contact</a></li>
-          <li><a href="privacy.html" class="transition-colors hover:text-[var(--gold-2)]">Privacy Policy</a></li>
-          <li><a href="terms.html" class="transition-colors hover:text-[var(--gold-2)]">Terms of Use</a></li>
+          <li><a href="lawyers.html" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.all-advocates">All Advocates</a></li>
+          <li><a href="practice-areas.html" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.practice-areas">Practice Areas</a></li>
+          <li><a href="list-your-practice.html" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.list-your-practice-2">List Your Practice</a></li>
+          <li><a href="about.html" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.about-us">About Us</a></li>
+          <li><a href="faq.html" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.faq">FAQ</a></li>
+          <li><a href="contact.html" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.contact">Contact</a></li>
+          <li><a href="privacy.html" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.privacy-policy">Privacy Policy</a></li>
+          <li><a href="terms.html" class="transition-colors hover:text-[var(--gold-2)]" data-i18n="common.terms-of-use">Terms of Use</a></li>
         </ul>
       </nav>
 
-      <nav aria-label="Areas served in Agra" class="lg:col-span-3">
-        <h2 class="text-xs font-bold uppercase tracking-[.2em] text-[var(--gold-2)]">Advocates by Area</h2>
+      <nav aria-label="Areas served in Agra" class="lg:col-span-3" data-i18n-attr="aria-label:common.label.areas-served-in-agra">
+        <h2 class="text-xs font-bold uppercase tracking-[.2em] text-[var(--gold-2)]" data-i18n="common.advocates-by-area">Advocates by Area</h2>
         <ul class="mt-5 flex flex-wrap gap-1.5 text-[13px]">
-          <li><a href="lawyers.html?area=Civil%20Lines" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]">Civil Lines</a></li>
-          <li><a href="lawyers.html?area=Sadar%20Bazaar" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]">Sadar Bazaar</a></li>
-          <li><a href="lawyers.html?area=Kamla%20Nagar" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]">Kamla Nagar</a></li>
-          <li><a href="lawyers.html?area=Dayalbagh" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]">Dayalbagh</a></li>
-          <li><a href="lawyers.html?area=Sikandra" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]">Sikandra</a></li>
-          <li><a href="lawyers.html?area=Tajganj" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]">Tajganj</a></li>
-          <li><a href="lawyers.html?area=Shahganj" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]">Shahganj</a></li>
-          <li><a href="lawyers.html?area=Belanganj" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]">Belanganj</a></li>
-          <li><a href="lawyers.html?area=Balkeshwar" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]">Balkeshwar</a></li>
-          <li><a href="lawyers.html?area=Fatehabad%20Road" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]">Fatehabad Road</a></li>
-          <li><a href="lawyers.html?area=Trans%20Yamuna%20Colony" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]">Trans Yamuna Colony</a></li>
-          <li><a href="lawyers.html?area=Loha%20Mandi" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]">Loha Mandi</a></li>
-          <li><a href="lawyers.html?area=Khandari" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]">Khandari</a></li>
-          <li><a href="lawyers.html?area=Bodla" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]">Bodla</a></li>
-          <li><a href="lawyers.html?area=Rakabganj" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]">Rakabganj</a></li>
-          <li><a href="lawyers.html?area=Shamshabad%20Road" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]">Shamshabad Road</a></li>
-          <li><a href="lawyers.html?area=Nai%20Ki%20Mandi" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]">Nai Ki Mandi</a></li>
-          <li><a href="lawyers.html?area=Collectorate" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]">Collectorate</a></li>
+          <li><a href="lawyers.html?area=Civil%20Lines" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]" data-i18n="common.civil-lines">Civil Lines</a></li>
+          <li><a href="lawyers.html?area=Sadar%20Bazaar" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]" data-i18n="common.sadar-bazaar">Sadar Bazaar</a></li>
+          <li><a href="lawyers.html?area=Kamla%20Nagar" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]" data-i18n="common.kamla-nagar">Kamla Nagar</a></li>
+          <li><a href="lawyers.html?area=Dayalbagh" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]" data-i18n="common.dayalbagh">Dayalbagh</a></li>
+          <li><a href="lawyers.html?area=Sikandra" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]" data-i18n="common.sikandra">Sikandra</a></li>
+          <li><a href="lawyers.html?area=Tajganj" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]" data-i18n="common.tajganj">Tajganj</a></li>
+          <li><a href="lawyers.html?area=Shahganj" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]" data-i18n="common.shahganj">Shahganj</a></li>
+          <li><a href="lawyers.html?area=Belanganj" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]" data-i18n="common.belanganj">Belanganj</a></li>
+          <li><a href="lawyers.html?area=Balkeshwar" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]" data-i18n="common.balkeshwar">Balkeshwar</a></li>
+          <li><a href="lawyers.html?area=Fatehabad%20Road" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]" data-i18n="common.fatehabad-road">Fatehabad Road</a></li>
+          <li><a href="lawyers.html?area=Trans%20Yamuna%20Colony" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]" data-i18n="common.trans-yamuna-colony">Trans Yamuna Colony</a></li>
+          <li><a href="lawyers.html?area=Loha%20Mandi" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]" data-i18n="common.loha-mandi">Loha Mandi</a></li>
+          <li><a href="lawyers.html?area=Khandari" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]" data-i18n="common.khandari">Khandari</a></li>
+          <li><a href="lawyers.html?area=Bodla" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]" data-i18n="common.bodla">Bodla</a></li>
+          <li><a href="lawyers.html?area=Rakabganj" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]" data-i18n="common.rakabganj">Rakabganj</a></li>
+          <li><a href="lawyers.html?area=Shamshabad%20Road" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]" data-i18n="common.shamshabad-road">Shamshabad Road</a></li>
+          <li><a href="lawyers.html?area=Nai%20Ki%20Mandi" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]" data-i18n="common.nai-ki-mandi">Nai Ki Mandi</a></li>
+          <li><a href="lawyers.html?area=Collectorate" class="inline-block rounded-full border border-white/12 px-2.5 py-1 transition-colors hover:border-[var(--gold-2)] hover:text-[var(--gold-2)]" data-i18n="common.collectorate">Collectorate</a></li>
         </ul>
       </nav>
     </div>
 
     <div class="mt-12 rounded-xl border border-white/10 bg-white/[.03] p-5">
       <p class="text-xs leading-relaxed text-[#8ea6c2]">
-        <strong class="text-white">Disclaimer.</strong> Vakil Saab Agra is an information directory and is not a law firm.
+        <strong class="text-white" data-i18n="common.disclaimer">Disclaimer.</strong> <span data-i18n="common.vakil-saab-agra-is-an-information-directory">Vakil Saab Agra is an information directory and is not a law firm.
         We do not provide legal advice, and no advocate–client relationship is created by using this website. Listings are
         published at the request of the advocate concerned and are not an advertisement or solicitation within the meaning
-        of the Bar Council of India Rules. Please verify an advocate's credentials independently before engaging them.
-        <span data-demo-notice> Listings currently shown are sample entries for demonstration.</span>
+        of the Bar Council of India Rules. Please verify an advocate's credentials independently before engaging them.</span>
+        <span data-demo-notice data-i18n="common.listings-currently-shown-are-sample-entries"> Listings currently shown are sample entries for demonstration.</span>
       </p>
     </div>
 
     <div class="mt-8 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 text-xs sm:flex-row">
-      <p>&copy; <span data-year>2026</span> Vakil Saab Agra. Serving Agra, Uttar Pradesh.</p>
+      <div class="lang-toggle lang-toggle-dark order-first sm:order-none shrink-0" role="group" aria-label="Language / भाषा" data-i18n-attr="aria-label:common.label.language">
+        <button type="button" data-lang="en" aria-pressed="true" title="English">EN</button>
+        <button type="button" data-lang="hi" aria-pressed="false" title="हिन्दी" lang="hi">हिं</button>
+      </div>
+      <p>&copy; <span data-year>2026</span> <span data-i18n="common.vakil-saab-agra-serving-agra-uttar-pradesh">Vakil Saab Agra. Serving Agra, Uttar Pradesh.</span></p>
       <p class="flex items-center gap-1.5">
         <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21s-7-5.6-7-11a7 7 0 1114 0c0 5.4-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
-        Agra &middot; Uttar Pradesh &middot; India
+        <span data-i18n="common.agra-uttar-pradesh-india">Agra &middot; Uttar Pradesh &middot; India</span>
       </p>
     </div>
   </div>
 </footer>
 
 <button id="to-top" type="button" aria-label="Back to top"
-        class="fixed bottom-6 right-5 z-40 grid h-11 w-11 place-items-center rounded-full bg-[var(--ink)] text-white shadow-lg transition-transform hover:scale-110">
+        class="fixed bottom-6 right-5 z-40 grid h-11 w-11 place-items-center rounded-full bg-[var(--ink)] text-white shadow-lg transition-transform hover:scale-110" data-i18n-attr="aria-label:common.label.back-to-top">
   <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
 </button>
 

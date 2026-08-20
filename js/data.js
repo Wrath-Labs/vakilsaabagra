@@ -39,14 +39,26 @@
       l.categoryNames = l.categories.map(function (s) {
         return byCat[s] ? byCat[s].name : s;
       });
+      l.categoryNamesHi = l.categories.map(function (s) {
+        return byCat[s] ? (byCat[s].nameHi || byCat[s].name) : s;
+      });
       l.primaryCategoryName = byCat[l.primaryCategory] ? byCat[l.primaryCategory].name : l.primaryCategory;
+      l.primaryCategoryNameHi = byCat[l.primaryCategory]
+        ? (byCat[l.primaryCategory].nameHi || byCat[l.primaryCategory].name)
+        : l.primaryCategory;
       l.area = (l.location && l.location.area) || 'Agra';
-      /* pre-built haystack keeps keyword search fast and typo-tolerant */
+      l.areaHi = (l.location && l.location.areaHi) || null;
+      /* Pre-built haystack keeps keyword search fast and typo-tolerant. Both
+         languages go in the one index, so "ज़मानत" and "bail" find the same
+         advocate whichever language the page is being read in. */
       l.search = [
         l.name, l.about, l.area, l.primaryCategoryName,
         l.categoryNames.join(' '), l.topics.join(' '),
         (l.courts || []).join(' '), (l.languages || []).join(' '),
-        (l.highlights || []).join(' ')
+        (l.highlights || []).join(' '),
+        l.aboutHi || '', l.primaryCategoryNameHi, l.areaHi || '',
+        l.categoryNamesHi.join(' '), (l.topicsHi || []).join(' '),
+        (l.highlightsHi || []).join(' ')
       ].join(' ').toLowerCase();
       l.categories.forEach(function (s) { if (byCat[s]) byCat[s].count++; });
     });
@@ -109,8 +121,9 @@
     },
 
     money: function (n) {
-      if (!n) return 'Free first consult';
-      return '₹' + n.toLocaleString('en-IN');
+      var i18n = w.VS && w.VS.i18n;
+      if (!n) return i18n ? i18n.t('js.money.free', 'Free first consult') : 'Free first consult';
+      return '₹' + n.toLocaleString(i18n ? i18n.locale() : 'en-IN');
     },
 
     telHref: function (num) { return 'tel:' + String(num).replace(/[^\d+]/g, ''); },

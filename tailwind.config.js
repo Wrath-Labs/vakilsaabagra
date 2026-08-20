@@ -5,8 +5,12 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
-        display: ['"Playfair Display"', 'Georgia', '"Times New Roman"', 'serif'],
+        /* Noto Sans Devanagari sits after the Latin faces in both stacks:
+           Latin text keeps Inter and Playfair, and Devanagari codepoints —
+           which neither of those covers — fall through to Noto instead of to
+           whatever the device happens to have. */
+        sans: ['Inter', '"Noto Sans Devanagari"', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
+        display: ['"Playfair Display"', '"Noto Sans Devanagari"', 'Georgia', '"Times New Roman"', 'serif'],
       },
       colors: {
         ink: { DEFAULT: '#0f2540', 2: '#1b3f68', 3: '#081527' },
