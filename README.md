@@ -17,6 +17,7 @@ serves each paying advocate's microsite on its own subdomain.
 | send someone their monthly numbers | [Reading a month back](#reading-a-month-back) |
 | edit the Hindi | [Hindi and English](#hindi-and-english) |
 | know why it is built this way | [Decisions](#decisions-and-why) |
+| see what changed and when | [CHANGELOG.md](CHANGELOG.md) |
 
 ---
 
