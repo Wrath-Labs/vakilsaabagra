@@ -255,18 +255,39 @@
       "featured": true,
       "featuredUntil": null,
       "listing": {
-        "plan": "none",
-        "paidUntil": null,
+        "plan": "yearly",
+        "paidUntil": "2027-06-30",
         "active": true,
-        "onboardedOn": null
+        "onboardedOn": "2026-06-30"
       },
       "microsite": {
-        "enabled": false,
-        "slug": null,
-        "tagline": null,
-        "longAbout": null,
-        "faqs": [],
-        "accent": "gold"
+        "enabled": true,
+        "slug": "ramesh",
+        "tagline": "Bail, sessions trials and criminal appeals in Agra",
+        "longAbout": "I have practised criminal law at the District and Sessions Court, Agra since 2002. Most of my work is what walks through the door at short notice — an arrest at night, a summons that has arrived without warning, a first information report that names somebody who was never there. Bail applications, anticipatory bail, and the sessions trials that follow make up the bulk of the chamber's docket, and I appear in them myself rather than sending a junior.\n\nThe part of a criminal case that decides it is usually the cross-examination, and that is prepared long before the hearing. I read the case diary, the recovery memo and the medical papers line by line against the statements, because the contradiction that matters is almost always already on the record. Where an FIR does not disclose an offence at all, the shorter road is a quashing petition before the Allahabad High Court, and I will say so at the first meeting instead of letting a trial run for years.\n\nFamilies come to a criminal lawyer frightened and usually badly informed, so the first conversation in this chamber is about what the law actually allows, what it will cost, and how long it will realistically take. I explain the sections a person has been charged under in Hindi, in plain words, and I do not promise outcomes — nobody honestly can. What I can undertake is that an urgent bail application is moved the same day it is brought to me, and that whoever is appearing for you knows the file.",
+        "faqs": [
+          {
+            "q": "Someone in my family has just been arrested. What happens first?",
+            "a": "Bring whatever papers you have — the FIR copy, the arrest memo, the notice, even a photograph of it on a phone. A bail application can usually be drafted and moved the same day, before the Magistrate or the Sessions Court depending on the sections involved. If the arrest has not happened yet but is expected, an anticipatory bail application is the route, and that is worth moving before rather than after."
+          },
+          {
+            "q": "What should I bring to the first meeting?",
+            "a": "The FIR or complaint copy, any notice or summons received, the charge sheet if it has been filed, and identity proof. If there are medical papers, recovery memos or bank records connected to the allegation, bring those too. If you have nothing at all yet, come anyway — the FIR can be obtained."
+          },
+          {
+            "q": "Do you appear before the Allahabad High Court as well?",
+            "a": "Yes, for criminal appeals, revisions and petitions to quash an FIR under Section 482. Those are filed and argued at Allahabad, and I will tell you at the outset whether a matter genuinely belongs there or is better fought out at Agra."
+          },
+          {
+            "q": "How long does a sessions trial take?",
+            "a": "Honestly, it varies with the sections, the number of witnesses and how often the prosecution produces them. A straightforward trial may finish in a year; a case with fifteen witnesses spread across districts takes longer. What I can do is make sure no date is wasted from our side, and tell you at each stage where the matter actually stands."
+          },
+          {
+            "q": "What is the consultation fee, and is it adjusted later?",
+            "a": "The first consultation is ₹1,000 and it is adjusted against the case fee if you engage the chamber. Fees for the matter itself are settled in writing before any appearance, so there is no surprise later."
+          }
+        ],
+        "accent": "navy"
       }
     },
     {
@@ -323,18 +344,39 @@
       "featured": true,
       "featuredUntil": null,
       "listing": {
-        "plan": "none",
-        "paidUntil": null,
+        "plan": "yearly",
+        "paidUntil": "2027-04-30",
         "active": true,
-        "onboardedOn": null
+        "onboardedOn": "2026-04-30"
       },
       "microsite": {
-        "enabled": false,
-        "slug": null,
-        "tagline": null,
-        "longAbout": null,
-        "faqs": [],
-        "accent": "gold"
+        "enabled": true,
+        "slug": "neha",
+        "tagline": "Divorce, maintenance and custody before the Family Court, Agra",
+        "longAbout": "My practice is at the Family Court, Agra, and it is almost entirely matrimonial: divorce by mutual consent, contested petitions, maintenance under Section 125 CrPC, custody and visitation, and proceedings under the Protection of Women from Domestic Violence Act. I hold an LL.M. in family law and I am a trained mediator with the Agra District Legal Services Authority, which shapes how I approach a file.\n\nThat approach is to test settlement first. A mutual-consent divorce that both sides have actually agreed to is faster, cheaper and very much less damaging than a contested petition that runs for years while the same two people keep meeting in a corridor. Where there are children, the difference is not academic. So the first thing I do is work out whether there is a settlement to be had — on maintenance, on the stridhan, on custody and access — and only then advise on litigation. Where the other side will not engage, or where there is violence, I do not waste anybody's time on mediation and we file.\n\nA good deal of this work is unglamorous and practical: getting an interim maintenance order that is actually paid, getting a passport or a school admission unblocked, getting visitation on a schedule that survives contact with real life. Consultations are in Hindi or English, whichever you are comfortable in, and I would rather tell you at the first meeting that your expectation is not what the law provides than take a case on a false premise.",
+        "faqs": [
+          {
+            "q": "How long does a mutual consent divorce take in Agra?",
+            "a": "Once both parties file jointly, the law requires a gap of six months between the first and second motion, which the court can waive in some circumstances. In practice, a matter where everything has genuinely been agreed — maintenance, stridhan, custody — is usually concluded within six to eight months. Disagreement discovered halfway through is what makes it longer."
+          },
+          {
+            "q": "My husband has stopped paying anything. What can be done quickly?",
+            "a": "An application for interim maintenance under Section 125 CrPC, or under the Domestic Violence Act, can be moved without waiting for the main matter to be decided. Bring what evidence of his income you have — salary slips, bank statements, GST filings, property papers, even photographs of the business. Documenting income is what decides the figure."
+          },
+          {
+            "q": "Will I lose custody of my child if I am not earning?",
+            "a": "No. Custody is decided on the welfare of the child, not on which parent earns more, and maintenance for the child is a separate obligation on the father regardless of who has custody. What the court looks at is who has actually been caring for the child, the child's age, schooling and stability."
+          },
+          {
+            "q": "What papers should I bring to the first meeting?",
+            "a": "Marriage proof (certificate, invitation card or photographs), Aadhaar of both parties, birth certificates of children, and whatever you have on the other side's income. If there has been any police complaint, protection order or earlier case, bring those papers as well."
+          },
+          {
+            "q": "Do you handle cases where there has been violence at home?",
+            "a": "Yes — applications under the Protection of Women from Domestic Violence Act for protection, residence and monetary orders, and matters under Section 498A. If you are not safe where you are, say so at the first meeting; the sequence in which things are filed changes."
+          }
+        ],
+        "accent": "maroon"
       }
     },
     {
@@ -598,18 +640,39 @@
       "featured": true,
       "featuredUntil": null,
       "listing": {
-        "plan": "none",
-        "paidUntil": null,
+        "plan": "halfyearly",
+        "paidUntil": "2027-02-28",
         "active": true,
-        "onboardedOn": null
+        "onboardedOn": "2026-08-31"
       },
       "microsite": {
-        "enabled": false,
-        "slug": null,
-        "tagline": null,
-        "longAbout": null,
-        "faqs": [],
-        "accent": "gold"
+        "enabled": true,
+        "slug": "deepak",
+        "tagline": "Cheque bounce and recovery work for Agra's traders",
+        "longAbout": "I work for traders. Most of my files come out of the wholesale markets — Loha Mandi, Belanganj, the shoe units, the transport and commission agents — and most of them start the same way: goods went out, a cheque came in, and the cheque came back. Section 138 of the Negotiable Instruments Act is what that becomes, and filing it properly is largely a question of dates.\n\nThose dates are unforgiving. The legal demand notice has to go within thirty days of the bank return memo, the drawer gets fifteen days to pay, and the complaint has to be filed within one month of that period ending. Miss any of them and a perfectly good claim is gone on limitation, which is the single most common reason a trader with an honest case loses it. So the first thing my chamber does with a returned cheque is put the calendar on paper. I also defend accused parties in 138 matters, where the questions are quite different — whether the cheque was a security cheque, whether the debt was legally enforceable, whether the notice was served at all.\n\nThe commercial truth about this work is that a trader wants the money, not a conviction. A large share of these matters are best resolved by compounding on agreed terms, and I will negotiate that wherever the other side is willing to pay, because a settlement in the ninth month is worth more than an order in the fourth year. Where recovery is larger than a cheque or the dealing was on credit without an instrument, the route is a money recovery suit or an MSME reference instead, and I will tell you which one your papers actually support.",
+        "faqs": [
+          {
+            "q": "My cheque has bounced. What should I do first, and how fast?",
+            "a": "Get the bank return memo and keep the original cheque safely — do not present it again without advice. The legal demand notice must go within thirty days of that memo. Come in with the cheque, the memo, and whatever shows the underlying dealing: invoices, ledger extracts, delivery challans, GST returns, WhatsApp messages confirming the order."
+          },
+          {
+            "q": "How long does a Section 138 case take?",
+            "a": "These are summary trials, but they still take time — a year or more is common, and it depends heavily on whether the accused appears. Many matters end earlier by compounding, which is often the better commercial result. I will give you a realistic picture at the start rather than an optimistic one."
+          },
+          {
+            "q": "The cheque I gave as security has been misused. Can I defend it?",
+            "a": "Yes, and it is a real defence, but it has to be built properly on documents rather than asserted. Bring the correspondence, the account statements and anything showing what the cheque was actually given for, and whether the amount claimed was ever legally due."
+          },
+          {
+            "q": "The amount owed to me is large and there is no cheque at all. What then?",
+            "a": "That is a recovery suit, or for a registered MSME, a reference under the MSMED Act which is often quicker. Bring the purchase orders, invoices, ledger and any acknowledgement of the balance — an admitted account makes a great deal of difference."
+          },
+          {
+            "q": "Do you take work from trade associations and multiple complaints together?",
+            "a": "Yes. Where a chamber is handling several complaints against the same drawer, or a batch of returns for one firm, they are managed together and the fee is settled for the batch rather than per case."
+          }
+        ],
+        "accent": "teal"
       }
     },
     {
@@ -737,17 +800,38 @@
       "featured": true,
       "featuredUntil": null,
       "listing": {
-        "plan": "none",
-        "paidUntil": null,
+        "plan": "monthly",
+        "paidUntil": "2026-12-31",
         "active": true,
-        "onboardedOn": null
+        "onboardedOn": "2026-07-31"
       },
       "microsite": {
-        "enabled": false,
-        "slug": null,
-        "tagline": null,
-        "longAbout": null,
-        "faqs": [],
+        "enabled": true,
+        "slug": "rajeev",
+        "tagline": "Company, contract and compliance work for Agra's manufacturers and exporters",
+        "longAbout": "My work is commercial rather than courtroom-first: structuring a business properly, writing the contract that governs it, and keeping the filings clean so that none of it becomes litigation. Agra's client base is specific — shoe manufacturers and their component suppliers, exporters, engineering units, hotels on Fatehabad Road, and a growing number of first-time founders — and the legal problems it runs into are specific too.\n\nMost of them come from documents that were never written down. A partnership with no deed, a distribution arrangement on a WhatsApp thread, an export order with no jurisdiction or arbitration clause, a founder who left with a third of the equity and no vesting. So the bulk of my practice is drafting and vetting: vendor and job-work agreements, distribution and agency contracts, employment and non-disclosure terms, founders' and shareholders' agreements, leave and licence deeds. Alongside that runs company and LLP incorporation, ROC and annual compliance, and trademark filing and opposition, which matters more than owners expect in an industry where a brand name is the asset.\n\nWhen something has already gone wrong, I appear in commercial arbitrations and recovery matters arising out of supply contracts, before the Commercial Court at Agra, the NCLT at Allahabad and the Allahabad High Court. Being qualified as a Company Secretary as well as an advocate means the compliance side and the litigation side are looked at together — which usually shortens the argument about what the parties actually agreed to. I bill commercial work on a scoped basis, agreed in writing before it starts.",
+        "faqs": [
+          {
+            "q": "How long does it take to incorporate a private limited company or an LLP?",
+            "a": "With documents in order — identity and address proof for each director or partner, a registered office address with proof, and digital signatures — incorporation is typically two to three weeks end to end. Name approval is the step that most often adds delay, so we clear the name first."
+          },
+          {
+            "q": "We have been supplying on a purchase order for years with no agreement. Is that a problem?",
+            "a": "It is the most common problem I see. A purchase order settles price and quantity and almost nothing else — not payment terms, not defect liability, not termination, not jurisdiction, not what happens to tooling. It works perfectly until the relationship sours, at which point there is nothing to enforce. A short master agreement over the existing POs fixes it without disturbing the commercial arrangement."
+          },
+          {
+            "q": "Somebody is selling shoes under a name very close to ours. What can we do?",
+            "a": "First we check what is on the register and what you can actually prove as prior use, because that decides everything that follows. Depending on the answer the routes are an opposition or rectification before the Trade Marks Registry, a cease-and-desist, or an infringement and passing-off action. Bring your earliest invoices, packaging, labels and advertising — dated use is the evidence that counts."
+          },
+          {
+            "q": "Should our contracts have an arbitration clause?",
+            "a": "Usually yes for business-to-business supply, and it must be drafted properly — seat, number of arbitrators, appointing mechanism and language. A vague clause produces a preliminary fight about the clause itself before anyone reaches the dispute. Where the counterparty is small and local, a well-drafted jurisdiction clause is sometimes the better answer."
+          },
+          {
+            "q": "Do you work on a retainer for ongoing compliance?",
+            "a": "Yes. For manufacturers and exporters with regular contracting and ROC work, a monthly retainer covering vetting, filings and advice is usually more economical than instructing matter by matter. The scope is agreed in writing at the start."
+          }
+        ],
         "accent": "gold"
       }
     },

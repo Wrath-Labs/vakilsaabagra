@@ -254,8 +254,8 @@
       "verified": true,
       "featured": true,
       "microsite": {
-        "enabled": false,
-        "slug": null
+        "enabled": true,
+        "slug": "ramesh"
       }
     },
     {
@@ -311,8 +311,8 @@
       "verified": true,
       "featured": true,
       "microsite": {
-        "enabled": false,
-        "slug": null
+        "enabled": true,
+        "slug": "neha"
       }
     },
     {
@@ -542,8 +542,8 @@
       "verified": true,
       "featured": true,
       "microsite": {
-        "enabled": false,
-        "slug": null
+        "enabled": true,
+        "slug": "deepak"
       }
     },
     {
@@ -659,8 +659,8 @@
       "verified": true,
       "featured": true,
       "microsite": {
-        "enabled": false,
-        "slug": null
+        "enabled": true,
+        "slug": "rajeev"
       }
     },
     {

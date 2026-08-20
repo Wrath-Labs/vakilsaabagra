@@ -9,6 +9,11 @@ Disallow: /admin/
 # What the site actually serves is data/lawyers.public.json.
 Disallow: /data/lawyers.json
 
+# Microsites are served from their own subdomain, where they carry their own
+# robots.txt and canonical. Reaching the same HTML at vakilsaabagra.in/sites/…
+# would make every one of them a duplicate of itself.
+Disallow: /sites/
+
 # Directory listings are the point of this site — let crawlers read the data.
 Allow: /data/
 Allow: /assets/

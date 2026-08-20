@@ -14,6 +14,9 @@ window.VS_CONFIG = {
   whatsapp: '919876543210',
   email: 'hello@vakilsaabagra.com',
 
+  /* advocate microsites are served at <slug>.<micrositeDomain> */
+  micrositeDomain: 'vakilsaabagra.in',
+
   address: {
     street: 'Sanjay Place',
     locality: 'Agra',

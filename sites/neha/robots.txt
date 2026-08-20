@@ -1,0 +1,5 @@
+# Adv. Neha Sharma — neha.vakilsaabagra.com
+User-agent: *
+Allow: /
+
+Sitemap: https://neha.vakilsaabagra.com/sitemap.xml

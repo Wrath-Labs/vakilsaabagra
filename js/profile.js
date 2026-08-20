@@ -72,6 +72,19 @@
       return (arr || []).map(function (x) { return '<span class="chip ' + (cls || '') + '">' + e(x) + '</span>'; }).join('');
     };
 
+    /* advocates who pay for a microsite get linked out to it from here; each
+       page keeps its own canonical, so the two do not compete */
+    var ms = l.microsite || {};
+    var msHost = ms.enabled && ms.slug ? ms.slug + '.' + (C.micrositeDomain || 'vakilsaabagra.in') : '';
+    var micrositeLink = msHost
+      ? '<div class="divider-fade my-6"></div>' +
+        '<p class="text-xs font-semibold uppercase tracking-[.18em] text-[var(--muted-2)]">Own website</p>' +
+        '<a href="https://' + e(msHost) + '/" target="_blank" rel="noopener" ' +
+          'class="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--gold)] underline-offset-2 hover:underline">' +
+          e(msHost) +
+          '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg></a>'
+      : '';
+
     var related = VS.sort(db.lawyers.filter(function (o) {
       return o.id !== l.id && o.categories.some(function (c) { return l.categories.indexOf(c) !== -1; });
     }), 'relevance').slice(0, 3);
@@ -192,6 +205,8 @@
               '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><path d="M8.3 10.8l7.4-4.3M8.3 13.2l7.4 4.3"/></svg>' +
               'Share profile</button>' +
           '</div>' +
+
+          micrositeLink +
 
           '<div class="divider-fade my-6"></div>' +
           '<p class="text-xs font-semibold uppercase tracking-[.18em] text-[var(--muted-2)]">Chamber</p>' +

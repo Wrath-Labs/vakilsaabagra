@@ -1,0 +1,5 @@
+# Adv. Deepak Goyal — deepak.vakilsaabagra.com
+User-agent: *
+Allow: /
+
+Sitemap: https://deepak.vakilsaabagra.com/sitemap.xml

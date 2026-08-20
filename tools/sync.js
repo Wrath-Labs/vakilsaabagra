@@ -23,6 +23,10 @@
  *   5. writes functions/_ids.js — the list of live advocate ids, so the
  *      /api/track endpoint can reject events for ids that do not exist.
  *      A leading underscore keeps Cloudflare Pages from routing the file.
+ *   6. renders templates/microsite.html into sites/<slug>/index.html for every
+ *      live advocate with microsite.enabled, with all content substituted into
+ *      the HTML itself — never fetched at runtime — plus a per-host robots.txt
+ *      and sitemap.xml, and the slug → id map the routing middleware needs.
  *
  * It also prints a renewal reminder: who has already expired, and who
  * expires within the next fifteen days.
@@ -298,6 +302,305 @@ const sitemap =
   '\n</urlset>\n';
 fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), sitemap);
 
+/* ---------------------------------------------------------- 6. microsites */
+
+/**
+ * The four accents. Each one overrides the brand tokens that css/styles.css
+ * sets on :root, which is enough to make four visibly different sites out of
+ * one stylesheet — the ink, the gradients, the rules and the accent text all
+ * follow these.
+ */
+const ACCENTS_CSS = {
+  gold:   { ink: '#0f2540', ink2: '#1b3f68', ink3: '#081527',
+            gold: '#b0861f', gold2: '#dcb85f', gold3: '#f7e3a1',
+            paper2: '#faf8f4', paper3: '#f4f1ea', line: '#e6e1d6', line2: '#efece4',
+            shadow: '176, 134, 31', btn: null },
+  navy:   { ink: '#10233d', ink2: '#25507f', ink3: '#070f1c',
+            gold: '#2f6fb5', gold2: '#7db0e6', gold3: '#dbeafb',
+            paper2: '#f6f8fc', paper3: '#e9f0f9', line: '#dbe3ee', line2: '#e9eef6',
+            shadow: '47, 111, 181', btn: ['#4a8fd4', '#2f6fb5', '#235891', '#fff'] },
+  teal:   { ink: '#0c2f2a', ink2: '#12564d', ink3: '#051916',
+            gold: '#0f8a72', gold2: '#4ec7ac', gold3: '#cdefe6',
+            paper2: '#f4faf8', paper3: '#e6f4ef', line: '#d5e8e2', line2: '#e6f1ed',
+            shadow: '15, 138, 114', btn: ['#1aa88c', '#0f8a72', '#0b6c5a', '#fff'] },
+  maroon: { ink: '#331319', ink2: '#66222f', ink3: '#1b090d',
+            gold: '#a32742', gold2: '#dc7189', gold3: '#f9dde3',
+            paper2: '#fdf7f7', paper3: '#f7e9eb', line: '#ecd9dc', line2: '#f4e7e9',
+            shadow: '163, 39, 66', btn: ['#c33a57', '#a32742', '#841f35', '#fff'] },
+};
+
+/**
+ * The accent as a stylesheet. Overriding the :root tokens carries most of the
+ * page, but .btn-gold in css/styles.css hardcodes its gradient — so the primary
+ * call button would stay brand-gold on a teal site, which is the one element
+ * you would notice. It is overridden here rather than in css/styles.css so the
+ * directory's own buttons stay exactly as they are.
+ */
+function accentCss(name) {
+  const a = ACCENTS_CSS[name] || ACCENTS_CSS.gold;
+  let css = ':root{' +
+    `--ink:${a.ink};--ink-2:${a.ink2};--ink-3:${a.ink3};` +
+    `--gold:${a.gold};--gold-2:${a.gold2};--gold-3:${a.gold3};` +
+    `--paper-2:${a.paper2};--paper-3:${a.paper3};--line:${a.line};--line-2:${a.line2};` +
+    `--shadow-gold:0 14px 32px -10px rgba(${a.shadow}, .38);` +
+  '}';
+  if (a.btn) {
+    css += `.btn-gold{background:linear-gradient(135deg,${a.btn[0]},${a.btn[1]} 60%,${a.btn[2]});` +
+           `color:${a.btn[3]};}`;
+  }
+  return css;
+}
+
+const APEX = SITE.replace(/^https?:\/\//, '').replace(/^www\./, '');
+
+function money(n) {
+  return n ? '₹' + Number(n).toLocaleString('en-IN') : 'Free first consult';
+}
+function telHref(num) { return 'tel:' + String(num).replace(/[^\d+]/g, ''); }
+function waHref(num, text) {
+  return 'https://wa.me/' + String(num).replace(/\D/g, '') +
+         (text ? '?text=' + encodeURIComponent(text) : '');
+}
+function phoneDisplay(num) {
+  const dgt = String(num).replace(/\D/g, '');
+  return dgt.length === 12 && dgt.slice(0, 2) === '91'
+    ? '+91 ' + dgt.slice(2, 7) + ' ' + dgt.slice(7)
+    : String(num);
+}
+function shortName(name) { return name.replace(/^Adv\.?\s*/i, ''); }
+
+const CHEV = '<svg class="acc-chevron shrink-0 text-[var(--gold)]" viewBox="0 0 24 24" width="18" height="18" ' +
+             'fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+const TICK = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" ' +
+             'stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 shrink-0 text-[var(--gold)]" aria-hidden="true">' +
+             '<path d="M20 6L9 17l-5-5"/></svg>';
+
+/** Splits topics up by the practice area they belong to, so each section on
+ *  the microsite lists the matters that actually sit under its heading. */
+function topicsByCategory(l, byCat) {
+  const used = new Set();
+  const out = l.categories.map((slug) => {
+    const cat = byCat[slug];
+    const master = new Set((cat && cat.topics) || []);
+    const mine = (l.topics || []).filter((t) => master.has(t));
+    mine.forEach((t) => used.add(t));
+    return { slug, name: (cat && cat.name) || slug, blurb: (cat && cat.blurb) || '', topics: mine };
+  });
+  /* anything the advocate lists that is not in a master list still belongs
+     somewhere — put it with their primary area rather than dropping it */
+  const spare = (l.topics || []).filter((t) => !used.has(t));
+  if (spare.length) {
+    const primary = out.find((o) => o.slug === l.primaryCategory) || out[0];
+    if (primary) primary.topics = primary.topics.concat(spare);
+  }
+  return out;
+}
+
+function micrositeHtml(l, template, byCat, year) {
+  const ms = l.microsite;
+  const host = `${ms.slug}.${APEX}`;
+  const siteUrl = `https://${host}/`;
+  const name = shortName(l.name);
+  const primaryCategoryName = (byCat[l.primaryCategory] || {}).name || l.primaryCategory;
+  const area = (l.location && l.location.area) || 'Agra';
+  const accent = ACCENTS_CSS[ms.accent] ? ms.accent : 'gold';
+
+  const title = `${l.name} — ${primaryCategoryName} Advocate in ${area}, Agra`;
+  const description = `${ms.tagline || primaryCategoryName + ' advocate in Agra'}. ` +
+    `${l.experienceYears} years in practice, chamber in ${area}, Agra. ` +
+    `Consultation ${money(l.consultationFee)}. Call ${phoneDisplay(l.phone)}.`;
+
+  const facts = [
+    [`${l.experienceYears}`, 'Years in practice'],
+    [money(l.consultationFee), 'Consultation'],
+    [`${(l.courts || []).length}`, 'Courts appeared before'],
+    [`${(l.languages || []).length}`, 'Languages'],
+  ].map(([v, k]) =>
+    `<div class="bg-white px-4 py-6 text-center">` +
+      `<dd class="tabular font-display text-2xl font-bold text-[var(--ink)] sm:text-3xl">${esc(v)}</dd>` +
+      `<dt class="mt-1 text-[11px] uppercase tracking-wide text-[var(--muted-2)]">${esc(k)}</dt></div>`).join('\n      ');
+
+  const aboutParas = String(ms.longAbout).split(/\n{2,}/).map((para) =>
+    `<p class="pretty">${esc(para.trim())}</p>`).join('\n          ');
+
+  const highlights = (l.highlights || []).length
+    ? `<ul class="mt-8 grid gap-3 border-t border-[var(--line-2)] pt-8 sm:grid-cols-2">` +
+      l.highlights.map((h) =>
+        `<li class="flex items-start gap-2.5 text-sm leading-relaxed text-[var(--ink)]">${TICK}` +
+        `<span>${esc(h)}</span></li>`).join('') + `</ul>`
+    : '';
+
+  const practiceSections = topicsByCategory(l, byCat).map((sec) =>
+    `<section class="card p-6 sm:p-7" data-reveal>` +
+      `<h3 class="font-display text-xl font-bold text-[var(--ink)]">${esc(sec.name)}</h3>` +
+      `<div class="rule-gold mt-3 mb-4"></div>` +
+      (sec.blurb ? `<p class="pretty text-sm leading-relaxed text-[var(--muted)]">${esc(sec.blurb)}</p>` : '') +
+      (sec.topics.length
+        ? `<ul class="mt-4 grid gap-2">` + sec.topics.map((t) =>
+            `<li class="flex items-start gap-2.5 rounded-lg bg-[var(--paper-2)] px-3.5 py-2.5 text-sm text-[var(--ink)]">` +
+            `${TICK}<span>${esc(t)}</span></li>`).join('') + `</ul>`
+        : '') +
+    `</section>`).join('\n        ');
+
+  const courts = (l.courts || []).map((c) =>
+    `<li class="flex items-start gap-2.5 text-[15px] leading-relaxed text-[var(--ink)]">${TICK}` +
+    `<span>${esc(c)}</span></li>`).join('\n          ');
+
+  const languages = (l.languages || []).map((x) => `<span class="chip">${esc(x)}</span>`).join('');
+  const education = (l.education || []).map((x) => `<li>${esc(x)}</li>`).join('\n          ');
+
+  const faqs = (ms.faqs || []).length
+    ? `<section id="faq" class="mx-auto max-w-3xl px-4 py-14 sm:px-6 sm:py-20">` +
+      `<div data-reveal><h2 class="font-display text-2xl font-bold text-[var(--ink)] sm:text-3xl">Questions people ask</h2>` +
+      `<div class="rule-gold mt-3 mb-8"></div></div>` +
+      `<div class="space-y-3" data-accordion-group data-stagger="55">` +
+      ms.faqs.map((f) =>
+        `<div class="acc-item card overflow-hidden" data-reveal>` +
+          `<button type="button" aria-expanded="false" class="flex w-full items-center justify-between gap-4 p-5 text-left">` +
+            `<span class="font-semibold text-[var(--ink)]">${esc(f.q)}</span>${CHEV}` +
+          `</button>` +
+          `<div class="acc-panel"><div><p class="px-5 pb-5 text-[15px] leading-relaxed text-[var(--muted)]">${esc(f.a)}</p></div></div>` +
+        `</div>`).join('') +
+      `</div></section>`
+    : '';
+
+  const feeNote = l.feeNote
+    ? `<p class="mt-1.5 text-xs leading-relaxed text-[var(--muted)]">${esc(l.feeNote)}</p>`
+    : '';
+
+  /* Attorney + LegalService, with the microsite itself as the canonical url */
+  const jsonLd = '<script type="application/ld+json">' + JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': ['Attorney', 'LegalService'],
+    '@id': siteUrl + '#attorney',
+    name: l.name,
+    url: siteUrl,
+    image: `${SITE}/${l.photo}`,
+    description: String(ms.longAbout).split(/\n{2,}/)[0].trim(),
+    slogan: ms.tagline || undefined,
+    telephone: l.phone,
+    priceRange: '₹' + l.consultationFee,
+    knowsLanguage: l.languages,
+    knowsAbout: l.topics,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: l.location.address,
+      addressLocality: 'Agra',
+      addressRegion: 'Uttar Pradesh',
+      addressCountry: 'IN',
+    },
+    areaServed: { '@type': 'City', name: 'Agra' },
+    makesOffer: l.categories.map((c) => ({
+      '@type': 'Offer',
+      itemOffered: { '@type': 'Service', name: ((byCat[c] || {}).name || c) + ' legal services in Agra' },
+    })),
+    mainEntityOfPage: { '@type': 'WebPage', '@id': siteUrl },
+    sameAs: `${SITE}/lawyer.html?id=${l.id}`,
+  }) + '</script>' +
+  '<script type="application/ld+json">' + JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: (ms.faqs || []).map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  }) + '</script>';
+
+  const tokens = {
+    lang: 'en-IN',
+    id: l.id,
+    title, description, siteUrl,
+    photo: '/' + l.photo,
+    photoUrl: `${SITE}/${l.photo}`,
+    themeColor: ACCENTS_CSS[accent].ink,
+    accentCss: accentCss(accent),
+    jsonLd,
+    name: l.name,
+    nameShort: name,
+    tagline: ms.tagline || '',
+    primaryCategoryName,
+    experienceYears: String(l.experienceYears),
+    enrollment: l.enrollment,
+    area,
+    telHref: telHref(l.phone),
+    waHref: waHref(l.whatsapp || l.phone,
+      `Hello ${l.name}, I found your website and would like to discuss a legal matter.`),
+    phoneDisplay: phoneDisplay(l.phone),
+    facts, aboutParas, highlights, practiceSections,
+    courts, languages, education,
+    address: l.location.address,
+    mapsUrl: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(l.location.address),
+    availability: l.availability || '',
+    fee: money(l.consultationFee),
+    feeNote,
+    faqs,
+    directoryUrl: `${SITE}/lawyer.html?id=${l.id}`,
+    year: String(year),
+  };
+
+  /* every token must exist, or a {{placeholder}} ends up on a live page */
+  const missing = [];
+  const html = template.replace(/\{\{(\w+)\}\}/g, (m, key) => {
+    if (!(key in tokens)) { missing.push(key); return m; }
+    return tokens[key] == null ? '' : String(tokens[key]);
+  });
+  if (missing.length) {
+    console.error(`\x1b[31m✗ templates/microsite.html uses unknown tokens: ${[...new Set(missing)].join(', ')}\x1b[0m`);
+    process.exit(1);
+  }
+  return { html, host, siteUrl };
+}
+
+const withSite = live.filter((l) => l.microsite && l.microsite.enabled);
+const SITES_DIR = path.join(ROOT, 'sites');
+const slugMap = {};
+
+if (withSite.length) {
+  const template = fs.readFileSync(path.join(ROOT, 'templates', 'microsite.html'), 'utf8');
+  const byCat = {};
+  db.categories.forEach((c) => { byCat[c.slug] = c; });
+  const year = new Date().getUTCFullYear();
+
+  withSite.forEach((l) => {
+    const { html, host, siteUrl } = micrositeHtml(l, template, byCat, year);
+    const dir = path.join(SITES_DIR, l.microsite.slug);
+    fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(path.join(dir, 'index.html'), html);
+
+    /* scoped to this host: the apex sitemap must not claim these URLs */
+    fs.writeFileSync(path.join(dir, 'robots.txt'),
+      `# ${l.name} — ${host}\nUser-agent: *\nAllow: /\n\nSitemap: ${siteUrl}sitemap.xml\n`);
+
+    fs.writeFileSync(path.join(dir, 'sitemap.xml'),
+      '<?xml version="1.0" encoding="UTF-8"?>\n' +
+      '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+      `  <url>\n    <loc>${siteUrl}</loc>\n    <lastmod>${today}</lastmod>\n` +
+      `    <changefreq>monthly</changefreq>\n    <priority>1.0</priority>\n  </url>\n` +
+      '</urlset>\n');
+
+    slugMap[l.microsite.slug] = l.id;
+  });
+}
+
+/* Remove folders for microsites that are no longer live, so an expired
+   advocate's site stops being served after a rebuild instead of lingering. */
+let removed = 0;
+if (fs.existsSync(SITES_DIR)) {
+  fs.readdirSync(SITES_DIR, { withFileTypes: true })
+    .filter((e) => e.isDirectory() && !slugMap[e.name])
+    .forEach((e) => { fs.rmSync(path.join(SITES_DIR, e.name), { recursive: true, force: true }); removed++; });
+}
+
+fs.mkdirSync(SITES_DIR, { recursive: true });
+fs.writeFileSync(path.join(SITES_DIR, '_map.json'), JSON.stringify(slugMap, null, 2) + '\n');
+
+/* The middleware imports this at build time rather than fetching _map.json at
+   runtime — one less request on every hit, and no JSON-loader assumption. */
+fs.writeFileSync(path.join(ROOT, 'functions', '_slugs.js'),
+  '/* AUTO-GENERATED by tools/sync.js — do not edit. Source: data/lawyers.json */\n' +
+  'export default ' + JSON.stringify(slugMap, null, 2) + ';\n');
+
 /* --------------------------------------------------------- renewal reminder */
 function renewalReport() {
   const paying = db.lawyers.filter((l) => l.listing.plan !== 'none' && isDateString(l.listing.paidUntil));
@@ -334,6 +637,9 @@ console.log(`  data/lawyers.fallback.js  written`);
 console.log(`  functions/_ids.js         ${live.length} ids for /api/track`);
 console.log(`  assets/lawyers/           ${made} avatar${made === 1 ? '' : 's'} generated`);
 console.log(`  sitemap.xml               ${urls.length} URLs`);
+console.log(`  sites/                    ${withSite.length} microsite${withSite.length === 1 ? '' : 's'}` +
+            `${removed ? `, ${removed} stale folder${removed === 1 ? '' : 's'} removed` : ''}` +
+            `${withSite.length ? ' — ' + withSite.map((l) => l.microsite.slug).join(', ') : ''}`);
 if (hidden.length) {
   hidden.forEach((l) => console.log(`  · hidden: ${l.name} — ${l.__expired ? 'expired ' + l.listing.paidUntil : 'listing.active is false'}`));
 }
