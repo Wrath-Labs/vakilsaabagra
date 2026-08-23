@@ -338,6 +338,53 @@ verified that no row renders blank and no raw key is ever visible.
 
 ---
 
+## 2026-08-23 — Business card, front and back
+
+The first printed piece for the business. Authored as HTML/CSS rather than in a
+design tool so it reuses the site's tokens directly — navy `#0f2540` →
+`#081527` gradient, gold `#b0861f`/`#dcb85f`, Playfair Display for names,
+Inter for everything else, the hero grid wash and the gold hairline the site
+draws along a card's top edge. The logo mark is inlined from
+`tools/logo-mark.svg`, so it stays vector-sharp at any print size.
+
+**Geometry.** 3.5in × 2in — the standard both Indian and US printers cut to —
+authored at 1050 × 600 CSS px so 1px is exactly 1/300in, and shot at
+`deviceScaleFactor 2`. The PNGs are therefore 2100 × 1200: 600 DPI at final
+size, double the 300 DPI a printer asks for.
+
+**Front** is the brand face only: mark, wordmark, gold rule, `AGRA · ADVOCATE
+DIRECTORY`, and `vakilsaabagra.in` along the bottom. **Back** carries the
+information in four bands — masthead, founders, contact, footer — spaced by
+`justify-content: space-between` rather than fixed margins, so the balance
+survives a line of content being added or removed. The right-hand column is
+mirrored (right-aligned, icons outboard) so the card reads edge to edge instead
+of trailing off into white space.
+
+**Content.** Founders Subroto Banerjee and Dipanshu Sarovar, both *Co-founder*.
+Phone `+91 89544 02360`, grouped 5-5 as Indian mobile numbers are written.
+`A Wrath Labs venture` in the footer. The Instagram and X rows are deliberate
+empty slots — icon plus a dashed rule — because no profiles exist yet; that is
+the same position outstanding item 3 takes for the site.
+
+**Rendering.** `node tools/business-card/render.js` shoots both faces with the
+local headless Chrome. A screenshot cannot wait on a network font, so the
+script downloads Inter and Playfair once, caches them under the system temp
+dir, inlines them as `data:` URIs and renders a copy of the page with no
+network dependency at all — the same PNG comes out offline as online. The
+committed HTML keeps its ordinary Google Fonts `<link>` so it still previews
+correctly in a browser.
+
+**Documented** in the README: the card in the brand-assets table, the render
+command beside the logo-regeneration one, `tools/business-card/` in the file
+map, and a decision-log note on why print collateral is authored in HTML
+against the site's tokens rather than redrawn in a design tool.
+
+**Note.** The card carries the real phone number. The site still carries the
+stock `+919876543210` in 55 places (outstanding item 1) — the two now disagree,
+which makes that item more urgent than it was.
+
+---
+
 ## Outstanding
 
 Carried forward until done. Also in the README launch checklist.

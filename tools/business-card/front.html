@@ -1,0 +1,52 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Vakil Saab Agra — card front</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap">
+<link rel="stylesheet" href="card.css">
+
+<div class="card front">
+  <div class="orb"></div>
+  <div class="grid-wash"></div>
+
+  <div class="inner">
+    <!-- the site's logo mark, inlined from tools/logo-mark.svg so the card
+         stays vector-sharp at any print size -->
+    <svg class="mark" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" aria-label="Vakil Saab Agra">
+      <defs>
+        <linearGradient id="fNavy" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="512" y2="512">
+          <stop offset="0%" stop-color="#1b3f68"/><stop offset="50%" stop-color="#0f2540"/><stop offset="100%" stop-color="#081527"/>
+        </linearGradient>
+        <linearGradient id="fGold" gradientUnits="userSpaceOnUse" x1="90" y1="60" x2="430" y2="440">
+          <stop offset="0%" stop-color="#f7e3a1"/><stop offset="35%" stop-color="#dcb85f"/><stop offset="70%" stop-color="#c39c40"/><stop offset="100%" stop-color="#9d7728"/>
+        </linearGradient>
+      </defs>
+      <rect width="512" height="512" rx="116" fill="url(#fNavy)"/>
+      <rect x="16" y="16" width="480" height="480" rx="102" fill="none" stroke="url(#fGold)" stroke-width="4" opacity=".5"/>
+      <g fill="none" stroke="url(#fGold)" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M214 132 Q256 62 298 132" stroke-width="13"/>
+        <path d="M256 62 V 40" stroke-width="9"/>
+        <path d="M256 132 V 372" stroke-width="16"/>
+        <path d="M112 186 H 400" stroke-width="16"/>
+        <path d="M112 186 L 76 252 M112 186 L 148 252" stroke-width="8"/>
+        <path d="M400 186 L 364 252 M400 186 L 436 252" stroke-width="8"/>
+        <path d="M64 252 Q112 320 160 252" stroke-width="15"/>
+        <path d="M352 252 Q400 320 448 252" stroke-width="15"/>
+        <path d="M190 372 Q256 352 322 372" stroke-width="15"/>
+      </g>
+      <circle cx="256" cy="40" r="11" fill="url(#fGold)"/>
+      <circle cx="256" cy="186" r="22" fill="url(#fGold)"/>
+      <circle cx="256" cy="186" r="8" fill="#0f2540"/>
+      <rect x="166" y="386" width="180" height="18" rx="9" fill="url(#fGold)"/>
+      <rect x="60" y="246" width="104" height="12" rx="6" fill="url(#fGold)"/>
+      <rect x="348" y="246" width="104" height="12" rx="6" fill="url(#fGold)"/>
+    </svg>
+
+    <div class="display wordmark">Vakil Saab</div>
+    <div class="rule"></div>
+    <div class="tagline">Agra &middot; Advocate Directory</div>
+  </div>
+
+  <div class="site">vakilsaabagra.in</div>
+</div>

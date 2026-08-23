@@ -459,6 +459,7 @@ no dark mode is defined.
 | `assets/logo-mark.png` | 512×512 square mark |
 | `assets/favicon.png`, `icon-192`, `icon-512`, `apple-touch-icon` | icon set |
 | `assets/og-image.png` | 1200×630 social share card |
+| `assets/business-card/vakil-saab-agra-card-{front,back}.png` | 2100×1200 business card, 600 DPI at 3.5in × 2in |
 
 The vector sources are in `tools/*.svg`. To regenerate a PNG after editing one:
 
@@ -466,6 +467,13 @@ The vector sources are in `tools/*.svg`. To regenerate a PNG after editing one:
 qlmanage -t -s 1400 -o assets tools/logo.svg
 mv assets/logo.svg.png assets/logo.png
 sips -c 380 1400 assets/logo.png      # crop the square render to the band
+```
+
+The business card is HTML rather than a vector source, because it reuses the
+site's own tokens instead of copying them. Re-render both faces with:
+
+```bash
+node tools/business-card/render.js
 ```
 
 ---
@@ -567,6 +575,7 @@ tools/i18n-extract.js     stamp data-i18n keys, refresh en.json
 tools/build-css.js        compile styles.css + Tailwind
 tools/set-domain.js       point every URL at a different domain
 tools/*.svg               logo sources
+tools/business-card/     business card: front.html, back.html, card.css, render.js
 
 docs/DEPLOY.md            click-by-click hosting, onboarding, renewals
 ```
@@ -781,6 +790,27 @@ honoured completely.
 The contact links are never rewritten or redirected. `tel:` behaves badly behind
 a 302 and the links must keep working with JavaScript off, so the beacon fires
 alongside the navigation and its failure is swallowed.
+
+### Print collateral authored in HTML, not a design tool
+
+The business card is `tools/business-card/*.html` styled by a stylesheet that
+declares the same tokens as `css/styles.css`, and it inlines the logo mark from
+`tools/logo-mark.svg`. A card drawn in Figma or Canva would be a *copy* of the
+brand that drifts the moment the site's navy or gold moves; this one is a second
+reading of the same values, and the divergence is a one-line diff away from
+being fixed.
+
+The geometry follows from print, not from the screen: 3.5in × 2in authored at
+1050 × 600 CSS px so `1px` is exactly `1/300in`, shot at `deviceScaleFactor 2`
+for 600 DPI at final size. Nothing is positioned in absolute pixels that a
+printer would then have to trust — the back's four bands are spaced by
+`justify-content: space-between`, so adding or removing a line rebalances the
+card instead of breaking it.
+
+`render.js` downloads Inter and Playfair Display once, caches them and inlines
+them as `data:` URIs before screenshotting, because a screenshot cannot wait on
+a network font — the render has to be the same offline as online. The committed
+HTML keeps its ordinary Google Fonts `<link>` so it still previews in a browser.
 
 ---
 
