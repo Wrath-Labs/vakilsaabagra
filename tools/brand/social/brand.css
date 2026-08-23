@@ -1,0 +1,134 @@
+/* ============================================================================
+   Vakil Saab Agra — shared surface for every rendered brand piece.
+
+   Each template sets its own canvas size and layout; this file owns the two
+   backgrounds (navy and paper), the textures that sit on them, and the type
+   primitives. Tokens mirror css/styles.css and tools/brand/tokens.js so a
+   banner and the website read as the same brand.
+
+   Authored in CSS pixels at the platform's exact spec size. render.js shoots
+   at 2x and downsamples to spec, so everything here is supersampled.
+   ========================================================================= */
+
+:root {
+  --ink:     #0f2540;
+  --ink-2:   #1b3f68;
+  --ink-3:   #081527;
+  --gold:    #b0861f;
+  --gold-2:  #dcb85f;
+  --gold-3:  #f7e3a1;
+  --paper:   #ffffff;
+  --paper-2: #faf8f4;
+  --paper-3: #f4f1ea;
+  --line:    #e6e1d6;
+  --muted:   #566a80;
+  --slate:   #a8bdd4;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { overflow: hidden; }
+
+body {
+  font-family: 'Inter', 'Noto Sans Devanagari', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'ss01';
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+
+.display {
+  font-family: 'Playfair Display', 'Noto Sans Devanagari', Georgia, 'Times New Roman', serif;
+  letter-spacing: -.015em;
+}
+
+.canvas { position: relative; overflow: hidden; }
+
+/* ------------------------------------------------------------ backgrounds */
+
+.dark  { background: linear-gradient(135deg, var(--ink-2) 0%, var(--ink) 52%, var(--ink-3) 100%); color: #fff; }
+.light { background: linear-gradient(150deg, var(--paper) 0%, var(--paper-2) 58%, var(--paper-3) 100%); color: var(--ink); }
+
+/* The site's hero grid, masked to a soft centre so it never reaches an edge
+   and turns into a visible seam. */
+.grid-wash {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,.055) 1px, transparent 1px);
+  background-size: var(--grid, 56px) var(--grid, 56px);
+  -webkit-mask-image: radial-gradient(ellipse 76% 82% at 50% 46%, #000 28%, transparent 100%);
+          mask-image: radial-gradient(ellipse 76% 82% at 50% 46%, #000 28%, transparent 100%);
+}
+.light .grid-wash {
+  background-image:
+    linear-gradient(to right, rgba(15,37,64,.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15,37,64,.055) 1px, transparent 1px);
+}
+
+/* One restrained gold bloom. Position it per template. */
+.orb {
+  position: absolute; border-radius: 50%;
+  width: var(--orb, 700px); height: var(--orb, 700px);
+  background: radial-gradient(circle, rgba(220,184,95,.22) 0%, rgba(220,184,95,0) 68%);
+}
+.light .orb { background: radial-gradient(circle, rgba(176,134,31,.13) 0%, rgba(176,134,31,0) 68%); }
+
+/* Concentric hairlines — the seal motif from the site's section headers. */
+.rings { position: absolute; }
+.rings i {
+  position: absolute; left: 50%; top: 50%;
+  border: 2px solid var(--gold-2); border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+.light .rings i { border-color: var(--gold); }
+
+/* -------------------------------------------------------------------- type */
+
+.eyebrow {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .26em;
+  color: var(--gold-2);
+}
+.light .eyebrow { color: var(--gold); }
+
+.rule {
+  height: 3px; border-radius: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold-2) 26%, var(--gold-2) 74%, transparent);
+}
+.light .rule { background: linear-gradient(90deg, transparent, var(--gold) 26%, var(--gold) 74%, transparent); }
+
+.rule-solid { height: 3px; border-radius: 2px; background: linear-gradient(90deg, var(--gold-3), var(--gold-2) 45%, var(--gold)); }
+
+/* Practice-area chips, the site's filter pills at banner scale. */
+.chips { display: flex; flex-wrap: wrap; }
+.chip {
+  border: 1px solid rgba(220,184,95,.42);
+  color: rgba(255,255,255,.9);
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.light .chip { border-color: rgba(176,134,31,.4); color: var(--ink); background: rgba(255,255,255,.6); }
+
+.pill {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: linear-gradient(180deg, var(--gold-2), var(--gold));
+  color: var(--ink);
+  border-radius: 999px;
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+
+.url { color: rgba(255,255,255,.84); letter-spacing: .06em; font-weight: 500; }
+.light .url { color: var(--muted); }
+
+/* Inlined logo SVGs are sized by their wrapper. */
+.logo svg, .mark svg { display: block; width: 100%; height: auto; }
+
+/* A template that renders in both themes carries both logo lockups and shows
+   the one that can actually be seen — a white wordmark on paper is invisible,
+   and so is a navy one on navy. Both wrappers must be block: an inline element
+   gives its SVG child nothing to be 100% of, and the logo silently vanishes. */
+.on-dark, .on-light { display: block; }
+.dark  .on-light { display: none; }
+.light .on-dark  { display: none; }

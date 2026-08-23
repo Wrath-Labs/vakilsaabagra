@@ -1,0 +1,98 @@
+{
+  "name": "Vakil Saab Agra",
+  "domain": "vakilsaabagra.in",
+  "color": {
+    "ink": {
+      "value": "#0f2540",
+      "role": "Primary brand navy. Headings, navigation, primary surfaces."
+    },
+    "ink2": {
+      "value": "#1b3f68",
+      "role": "Lighter navy. Top of the navy gradient only."
+    },
+    "ink3": {
+      "value": "#081527",
+      "role": "Near-black navy. Bottom of the navy gradient only."
+    },
+    "gold": {
+      "value": "#b0861f",
+      "role": "Accessible gold. The only gold allowed as text on a light background."
+    },
+    "gold2": {
+      "value": "#dcb85f",
+      "role": "Decorative gold. Rules, borders, gold on navy. Not body text on paper."
+    },
+    "gold3": {
+      "value": "#f7e3a1",
+      "role": "Highlight gold. The shine in the metal gradient."
+    },
+    "gold4": {
+      "value": "#9d7728",
+      "role": "Shadow gold. The dark edge of the metal gradient."
+    },
+    "paper": {
+      "value": "#ffffff",
+      "role": "White. Page background."
+    },
+    "paper2": {
+      "value": "#faf8f4",
+      "role": "Warm off-white. Alternating section bands."
+    },
+    "paper3": {
+      "value": "#f4f1ea",
+      "role": "Deeper warm band."
+    },
+    "line": {
+      "value": "#e6e1d6",
+      "role": "Hairline borders and dividers on paper."
+    },
+    "muted": {
+      "value": "#566a80",
+      "role": "Secondary text on paper."
+    },
+    "muted2": {
+      "value": "#7a8ba0",
+      "role": "Tertiary text on paper."
+    },
+    "slate": {
+      "value": "#a8bdd4",
+      "role": "Body text on navy."
+    }
+  },
+  "font": {
+    "display": {
+      "family": "Playfair Display",
+      "weights": [
+        600,
+        700,
+        800,
+        900
+      ],
+      "stack": "'Playfair Display', 'Noto Sans Devanagari', Georgia, 'Times New Roman', serif"
+    },
+    "sans": {
+      "family": "Inter",
+      "weights": [
+        400,
+        500,
+        600,
+        700,
+        800
+      ],
+      "stack": "'Inter', 'Noto Sans Devanagari', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif"
+    },
+    "devanagari": {
+      "family": "Noto Sans Devanagari",
+      "weights": [
+        400,
+        600,
+        700
+      ],
+      "note": "Fallback for Hindi codepoints in both stacks."
+    }
+  },
+  "gradient": {
+    "navy": "linear-gradient(135deg, #1b3f68 0%, #0f2540 52%, #081527 100%)",
+    "gold": "linear-gradient(160deg, #f7e3a1 0%, #dcb85f 35%, #c39c40 70%, #9d7728 100%)"
+  }
+}

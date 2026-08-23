@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Vakil Saab Agra — mark, navy on paper">
+  <title>Vakil Saab Agra — mark, navy on paper</title>
+  <defs>
+    <linearGradient id="g17" gradientUnits="userSpaceOnUse" x1="90" y1="60" x2="430" y2="440">
+      <stop offset="0%" stop-color="#f7e3a1"/><stop offset="35%" stop-color="#dcb85f"/><stop offset="70%" stop-color="#c39c40"/><stop offset="100%" stop-color="#9d7728"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="116" fill="#faf8f4"/>
+  <rect x="16" y="16" width="480" height="480" rx="102" fill="none" stroke="#b0861f" stroke-width="4" opacity="0.5"/>
+  <g fill="none" stroke="#0f2540" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M214 132 Q256 62 298 132" stroke-width="13"/>
+    <path d="M256 62 V 40" stroke-width="9"/>
+    <path d="M256 132 V 372" stroke-width="16"/>
+    <path d="M112 186 H 400" stroke-width="16"/>
+    <path d="M112 186 L 76 252 M112 186 L 148 252" stroke-width="8"/>
+    <path d="M400 186 L 364 252 M400 186 L 436 252" stroke-width="8"/>
+    <path d="M64 252 Q112 320 160 252" stroke-width="15"/>
+    <path d="M352 252 Q400 320 448 252" stroke-width="15"/>
+    <path d="M190 372 Q256 352 322 372" stroke-width="15"/>
+  </g>
+  <circle cx="256" cy="40" r="11" fill="#0f2540"/>
+  <circle cx="256" cy="186" r="22" fill="#0f2540"/>
+  <circle cx="256" cy="186" r="8" fill="#faf8f4"/>
+  <rect x="166" y="386" width="180" height="18" rx="9" fill="#0f2540"/>
+  <rect x="60" y="246" width="104" height="12" rx="6" fill="#0f2540"/>
+  <rect x="348" y="246" width="104" height="12" rx="6" fill="#0f2540"/>
+</svg>

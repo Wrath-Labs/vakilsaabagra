@@ -1,0 +1,46 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Vakil Saab Agra — link preview card</title>
+<style>
+  html, body { width: 1200px; height: 630px; }
+  /* The card WhatsApp, X and Google render under a shared link. It is read at
+     about 400px wide in a chat, so the headline is set large and the
+     supporting line is the only small type on it. */
+  .canvas { width: 1200px; height: 630px; padding: 66px 80px; display: flex; flex-direction: column; }
+  .mast { display: flex; align-items: center; gap: 22px; }
+  .mast .mark { width: 78px; }
+  .mast .name { font-size: 34px; font-weight: 700; line-height: 1.1; }
+  .mast .eyebrow { font-size: 13px; margin-top: 7px; }
+  h1 { font-size: 72px; font-weight: 700; line-height: 1.08; margin-top: auto; }
+  h1 .em { color: var(--gold-2); }
+  .light h1 .em { color: var(--gold); }
+  .areas { margin-top: 24px; font-size: 24px; color: var(--slate); }
+  .light .areas { color: var(--muted); }
+  .foot { margin-top: auto; display: flex; align-items: center; gap: 30px; }
+  .pill { font-size: 22px; padding: 19px 40px; }
+  .url { font-size: 22px; }
+  .orb { --orb: 760px; right: -220px; top: -260px; }
+  .rings { right: 60px; top: 120px; width: 0; height: 0; }
+</style></head>
+<body>
+<div class="canvas dark">
+  <div class="orb"></div>
+  <div class="grid-wash" style="--grid:56px"></div>
+  <div class="rings"><i style="width:420px;height:420px;opacity:.13"></i><i style="width:600px;height:600px;opacity:.08"></i></div>
+
+  <div class="mast">
+    <div class="mark">{{svg:icon/mark-gold.svg}}</div>
+    <div>
+      <div class="display name">Vakil Saab Agra</div>
+      <div class="eyebrow">Advocate Directory</div>
+    </div>
+  </div>
+
+  <h1 class="display">Find the right advocate<br><span class="em">in Agra — fast.</span></h1>
+  <div class="areas">Criminal &middot; Family &middot; Property &middot; Cheque Bounce &middot; Consumer &middot; Corporate</div>
+
+  <div class="foot">
+    <span class="pill">Browse advocates</span>
+    <span class="url">vakilsaabagra.in</span>
+  </div>
+</div>
+</body></html>

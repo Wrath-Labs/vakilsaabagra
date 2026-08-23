@@ -1,0 +1,45 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Vakil Saab Agra — letterhead</title>
+<style>
+  /* A4 authored at 827x1169 CSS px, which is A4 at 96 DPI. render.js shoots
+     this one at dpiScale 3 and keeps the enlargement, giving 2481x3507 —
+     A4 at 300 DPI, which is what a press wants. */
+  html, body { width: 827px; height: 1169px; }
+  .canvas { width: 827px; height: 1169px; padding: 54px 64px 46px; display: flex; flex-direction: column; }
+  .top { display: flex; align-items: flex-start; justify-content: space-between; }
+  .logo { width: 246px; }
+  .contact { text-align: right; font-size: 9.5px; line-height: 1.85; color: var(--muted); }
+  .contact b { color: var(--ink); font-weight: 600; }
+  .rule-solid { margin-top: 26px; height: 2.5px; }
+
+  /* The body area is left empty on purpose — this is stationery, not a poster.
+     The watermark is the mark at 4% so it never fights typed text. */
+  .body { flex: 1; position: relative; }
+  .watermark { position: absolute; left: 50%; top: 46%; width: 380px; transform: translate(-50%, -50%); opacity: .04; }
+
+  .foot { border-top: 1px solid var(--line); padding-top: 14px; display: flex; justify-content: space-between;
+          font-size: 9px; color: var(--muted); letter-spacing: .04em; }
+  .foot .gold { color: var(--gold); font-weight: 600; }
+  .edge { position: absolute; left: 0; top: 0; bottom: 0; width: 7px;
+          background: linear-gradient(180deg, var(--gold-3), var(--gold-2) 40%, var(--gold)); }
+</style></head>
+<body>
+<div class="canvas light">
+  <div class="edge"></div>
+  <div class="top">
+    <div class="logo">{{svg:logo/logo-horizontal-light.svg}}</div>
+    <div class="contact">
+      <b>vakilsaabagra.in</b><br>
+      +91 89544 02360<br>
+      Agra, Uttar Pradesh<br>
+      India
+    </div>
+  </div>
+  <div class="rule-solid"></div>
+  <div class="body"><div class="watermark">{{svg:icon/mark-mono-navy.svg}}</div></div>
+  <div class="foot">
+    <span class="gold">A Wrath Labs venture</span>
+    <span>vakilsaabagra.in</span>
+  </div>
+</div>
+</body></html>

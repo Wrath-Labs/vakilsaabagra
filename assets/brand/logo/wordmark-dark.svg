@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="632" height="226" viewBox="0 0 632 226" role="img" aria-label="Vakil Saab Agra — wordmark, full colour, for dark backgrounds">
+  <title>Vakil Saab Agra — wordmark, full colour, for dark backgrounds</title>
+  <defs>
+    <linearGradient id="g6" gradientUnits="userSpaceOnUse" x1="90" y1="60" x2="430" y2="440">
+      <stop offset="0%" stop-color="#f7e3a1"/><stop offset="35%" stop-color="#dcb85f"/><stop offset="70%" stop-color="#c39c40"/><stop offset="100%" stop-color="#9d7728"/>
+    </linearGradient>
+  </defs>
+  <text x="0" y="124" text-anchor="start" font-family="Georgia, 'Times New Roman', serif" font-size="126" font-weight="700" textLength="600" fill="#ffffff">Vakil Saab</text>
+  <rect x="0" y="152" width="632" height="4" rx="2" fill="#dcb85f" opacity="0.85"/>
+  <text x="0" y="210" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="30" font-weight="600" letter-spacing="7" textLength="632" fill="#dcb85f">AGRA · ADVOCATE DIRECTORY</text>
+</svg>

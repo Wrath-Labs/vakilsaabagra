@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Vakil Saab Agra — favicon">
+  <title>Vakil Saab Agra — favicon</title>
+  <defs>
+    <linearGradient id="n22" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="512" y2="512">
+      <stop offset="0%" stop-color="#1b3f68"/><stop offset="50%" stop-color="#0f2540"/><stop offset="100%" stop-color="#081527"/>
+    </linearGradient>
+    <linearGradient id="g22" gradientUnits="userSpaceOnUse" x1="90" y1="60" x2="430" y2="440">
+      <stop offset="0%" stop-color="#f7e3a1"/><stop offset="35%" stop-color="#dcb85f"/><stop offset="70%" stop-color="#c39c40"/><stop offset="100%" stop-color="#9d7728"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#n22)"/>
+  <g fill="none" stroke="url(#g22)" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M256 118 V 388" stroke-width="30"/>
+    <path d="M96 178 H 416" stroke-width="30"/>
+    <path d="M52 250 Q108 330 164 250" stroke-width="26"/>
+    <path d="M348 250 Q404 330 460 250" stroke-width="26"/>
+  </g>
+  <rect x="46" y="240" width="124" height="20" rx="10" fill="url(#g22)"/>
+  <rect x="342" y="240" width="124" height="20" rx="10" fill="url(#g22)"/>
+  <rect x="156" y="392" width="200" height="26" rx="13" fill="url(#g22)"/>
+  <circle cx="256" cy="178" r="34" fill="url(#g22)"/>
+  <circle cx="256" cy="178" r="13" fill="#0f2540"/>
+</svg>

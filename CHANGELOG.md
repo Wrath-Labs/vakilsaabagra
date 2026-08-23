@@ -385,6 +385,103 @@ which makes that item more urgent than it was.
 
 ---
 
+## 2026-08-23 — Complete brand kit
+
+**What it is.** `assets/brand/` — 82 generated files, 22 vector and 54 raster:
+every logo lockup and finish, the icon set, social banners at each platform's
+exact pixel size, A4 print pieces, the palette in four export formats, and a
+written guide at `assets/brand/BRAND.md`. Sources in `tools/brand/`, built with
+`npm run brand`.
+
+**One geometry source.** `tools/brand/build-logos.js` holds the mark's
+strokework once and generates twenty-two SVGs from it — horizontal, stacked
+and wordmark lockups in light, dark and three monos, plus six marks and the
+favicon. The mark cannot drift between the favicon, the business card and the
+LinkedIn banner because there is only one copy of it. Colours and copy come
+from `tools/brand/tokens.js`, which is also what generates the four token
+exports.
+
+**The favicon is a different drawing on purpose.** At 16px the hooks, chains
+and base steps of the real mark turn to mud, so `icon/favicon.svg` keeps only
+the beam, post, pans and boss, at heavier stroke weights. It is used at 64px
+and below; the real mark takes over at 180px.
+
+**The dark lockups drop the tile.** A navy rounded square on a navy background
+is a rectangle of nothing, so `-dark` is the gold drawing alone. Three mono
+finishes exist for one-ink print, embroidery and any background out of our
+control.
+
+**Rendering.** `tools/brand/render.js` shoots the HTML templates and the SVGs
+in headless Chrome at 2x and downsamples to spec with `sips`, so the file on
+disk is supersampled *and* exactly the size the platform asks for — no
+resizing before upload. Print pieces set `dpiScale` instead and keep the
+enlargement: the A4 letterhead and poster come out 2481 × 3507, which is A4 at
+300 DPI. Fonts are inlined as `data:` URIs and cached, the same trick the
+business-card renderer uses, so the render is identical offline.
+
+**Light and dark from one template.** A banner is one HTML file rendered twice
+with `?t=light` and `?t=dark` rather than two files that drift. The theme
+script *replaces* the class rather than adding it — adding leaves both `.dark`
+and `.light` matching, which silently hid the logo on every light variant until
+it was caught by looking at the output.
+
+**Safe areas are designed for, not hoped for.** The X header keeps its left
+third clear below the midline where the avatar sits. The Facebook cover holds
+everything inside a centred 1180 × 560 box because the desktop crop is 820 ×
+312. The YouTube banner composes inside the centred 1546 × 423 that a phone
+shows. The Instagram story stays 260px clear top and bottom.
+
+**Contrast is measured, not asserted.** `tools/brand/check-contrast.js` prints
+the WCAG ratio for all thirteen pairings the brand uses and exits non-zero if a
+body-text pairing drops below 4.5:1. Two findings, both recorded in BRAND.md
+rather than papered over:
+
+  - `--gold` (`#b0861f`) is **3.35:1** on white. It clears AA for large text
+    and rules but not for body copy, and the token comment claiming otherwise
+    was corrected.
+  - `--muted-2` (`#7a8ba0`) is **3.48:1** on white — not a text colour at any
+    size. `css/styles.css:347` uses it for the inactive language-toggle label
+    at `.74rem`, which is below AA. Left alone: repainting the live site is not
+    the brand kit's call. Moving that one rule to `--muted` fixes it.
+
+**No listing count anywhere.** The banners say what the directory is for, never
+how many advocates are in it. The number changes monthly and the records are
+still the twenty samples of outstanding item 4; a count on a banner would be
+the same invented social proof `cc033d7` removed.
+
+**Devanagari is raster-only.** The SVG lockups carry `textLength` instead of an
+embedded font, so a renderer without Playfair falls back to Georgia and lands
+on the same width — the layout survives, the letterforms do not. That trade
+does not work for Devanagari, where conjuncts and matras do not survive a
+fallback at all, so `logo-horizontal-hi-*.png` is shot with Noto Sans
+Devanagari loaded and has no SVG counterpart.
+
+**The kit is additive.** `assets/logo.png`, `assets/og-image.png` and the icons
+the pages reference are untouched and still come from `tools/*.svg`. Pointing
+the site at the kit also means changing the `width`/`height` on the two `<img>`
+tags that carry the lockup, because the new one is a different aspect ratio —
+a visible change on every page, so it is left as a decision rather than taken
+as a side effect. Recorded in the README.
+
+**A shareable guide.** `tools/brand/build-guide.js` writes `brand-guide.html`,
+the whole kit on one self-contained page: the logos inlined as live vector, the
+favicon strip at actual pixel size beside the full mark at the same sizes so the
+simplification argues for itself, the contrast table computed at build time from
+the same tokens, and the banner previews embedded as data URIs. Its two themes
+are the brand's own two grounds — warm paper and the navy — rather than an
+inversion. Gitignored at about 1.2 MB, and published at
+<https://claude.ai/code/artifact/77f880b7-885e-405c-af06-5cd5e34a3314>
+— private until shared, and a snapshot rather than a live view, so it needs
+republishing to the same URL after a token changes.
+
+**Verified** by rendering all 54 raster files and looking at them, twice: the first
+pass caught the SVG inliner stripping `width`/`height` from *every* element
+rather than the root `<svg>`, which collapsed the mark's tile and its base and
+pan plates to nothing across the whole kit, and the second caught the theme
+class bug above.
+
+---
+
 ## Outstanding
 
 Carried forward until done. Also in the README launch checklist.

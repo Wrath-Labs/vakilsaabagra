@@ -1,0 +1,37 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Vakil Saab Agra — Instagram story</title>
+<style>
+  html, body { width: 1080px; height: 1920px; }
+  /* Instagram puts its own chrome over the top 250px and bottom 250px, so the
+     composition is confined to the middle band. */
+  .canvas { width: 1080px; height: 1920px; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; padding: 260px 96px; text-align: center; }
+  .logo { width: 420px; }
+  .rule { width: 130px; height: 3px; margin-top: 54px; }
+  h1 { font-size: 82px; font-weight: 700; line-height: 1.08; margin-top: 52px; }
+  h1 .em { color: var(--gold-2); }
+  .light h1 .em { color: var(--gold); }
+  .sub { margin-top: 34px; font-size: 30px; line-height: 1.5; color: var(--slate); }
+  .light .sub { color: var(--muted); }
+  .chips { gap: 14px; margin-top: 50px; justify-content: center; }
+  .chip { font-size: 22px; font-weight: 500; padding: 14px 28px; }
+  .pill { margin-top: 66px; font-size: 27px; padding: 26px 56px; }
+  .url { margin-top: 40px; font-size: 26px; }
+  .orb { --orb: 1000px; right: -300px; top: 40px; }
+  .orb2 { --orb: 800px; left: -300px; bottom: 60px; }
+</style></head>
+<body>
+<div class="canvas dark">
+  <div class="orb"></div><div class="orb orb2"></div>
+  <div class="grid-wash" style="--grid:72px"></div>
+  <div class="logo">{{svg:logo/logo-stacked-dark.svg}}</div>
+  <div class="rule"></div>
+  <h1 class="display">Find the right advocate <span class="em">in Agra.</span></h1>
+  <div class="sub">Practice area &middot; experience &middot; locality</div>
+  <div class="chips">
+    <span class="chip">Criminal</span><span class="chip">Family</span><span class="chip">Property</span>
+    <span class="chip">Cheque Bounce</span><span class="chip">Consumer</span>
+  </div>
+  <div class="pill">vakilsaabagra.in</div>
+</div>
+</body></html>

@@ -478,6 +478,54 @@ node tools/business-card/render.js
 
 ---
 
+## The brand kit
+
+Everything above is what the *site* loads. The full kit — every logo lockup and
+finish, the icon set, banners at each platform's exact pixel size, print
+pieces, and the palette as JSON / CSS / SCSS / Tailwind — lives in
+**[`assets/brand/`](assets/brand)**, with its own guide at
+**[`assets/brand/BRAND.md`](assets/brand/BRAND.md)**.
+
+```bash
+npm run brand              # SVGs, tokens, contrast audit, then every PNG (~2 min, needs Chrome)
+node tools/brand/render.js social    # re-shoot only what matches "social"
+node tools/brand/check-contrast.js   # the palette audit on its own
+node tools/brand/build-guide.js      # a shareable one-page guide, self-contained HTML
+```
+
+`build-guide.js` writes `brand-guide.html` — the whole kit on one page, with the
+logos inlined as live vector, the favicon strip at actual size and the contrast
+numbers computed from the tokens rather than copied in. It is gitignored
+because it embeds every banner preview and runs to about 1.2 MB.
+
+A published copy of that page lives at
+<https://claude.ai/code/artifact/77f880b7-885e-405c-af06-5cd5e34a3314>.
+It is private until shared from the page's own share menu, and it is a snapshot
+— re-run `build-guide.js` and republish to the same URL after changing a
+token.
+
+| | |
+|---|---|
+| `assets/brand/logo/` | horizontal, stacked and wordmark lockups in five finishes — light, dark, and three monos — as SVG and PNG, plus a Devanagari lockup |
+| `assets/brand/icon/` | the mark on its own in five finishes, the simplified favicon, and the app-icon set including an Android maskable |
+| `assets/brand/social/` | X, LinkedIn, Facebook, Instagram, YouTube, Google Business, link-preview and slide artwork, each at the size the platform asks for |
+| `assets/brand/print/` | A4 letterhead and poster at 300 DPI, and a pasteable email signature |
+| `assets/brand/tokens/` | `brand.json`, `brand.css`, `_brand.scss`, `tailwind.brand.js` |
+
+Colour and copy change in **one** place, `tools/brand/tokens.js`. The banners
+are ordinary HTML in `tools/brand/social/` sharing one stylesheet — open one in
+a browser and it looks exactly as it will be shot.
+
+**The kit is additive.** `assets/logo.png`, `assets/og-image.png` and the icons
+the pages actually reference are still the older renders from `tools/*.svg`;
+nothing in `assets/brand/` overwrites them. Pointing the site at the kit means
+swapping those files *and* the `width`/`height` attributes on the two `<img>`
+tags that carry them, because the new lockup is a different aspect ratio — a
+visible change to every page, and so a deliberate one rather than a side effect
+of generating a brand kit.
+
+---
+
 ## SEO
 
 Built to rank for “lawyers in Agra” and the practice-area variants.

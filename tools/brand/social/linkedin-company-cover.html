@@ -1,0 +1,29 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Vakil Saab Agra — LinkedIn page cover</title>
+<style>
+  html, body { width: 1128px; height: 191px; }
+  /* A 6:1 strip. There is room for the lockup and one line of proof, nothing
+     more — so the practice areas are set as text rather than as chips. */
+  .canvas { width: 1128px; height: 191px; display: flex; align-items: center; padding: 0 52px; gap: 34px; }
+  .logo { flex: 0 0 292px; }
+  .bar { flex: 0 0 1px; align-self: stretch; margin: 42px 0; background: rgba(220,184,95,.34); }
+  .light .bar { background: rgba(176,134,31,.32); }
+  .areas { font-size: 16px; font-weight: 500; color: var(--slate); letter-spacing: .01em; }
+  .light .areas { color: var(--muted); }
+  .eyebrow { font-size: 12px; margin-bottom: 9px; }
+  .url { margin-left: auto; font-size: 17px; }
+  .orb { --orb: 420px; right: -110px; top: -170px; }
+</style></head>
+<body>
+<div class="canvas dark">
+  <div class="orb"></div>
+  <div class="grid-wash" style="--grid:38px"></div>
+  <div class="logo"><span class="on-dark">{{svg:logo/logo-horizontal-dark.svg}}</span><span class="on-light">{{svg:logo/logo-horizontal-light.svg}}</span></div>
+  <div class="bar"></div>
+  <div>
+    <div class="eyebrow">Verified advocates</div>
+    <div class="areas">Criminal &middot; Family &middot; Property &middot; Cheque Bounce &middot; Consumer &middot; Corporate</div>
+  </div>
+  <div class="url">vakilsaabagra.in</div>
+</div>
+</body></html>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="316" viewBox="0 0 1000 316" role="img" aria-label="Vakil Saab Agra — horizontal logo, one colour, navy">
+  <title>Vakil Saab Agra — horizontal logo, one colour, navy</title>
+  <g transform="translate(0,8) scale(0.585938)">
+  <g fill="none" stroke="#0f2540" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M214 132 Q256 62 298 132" stroke-width="13"/>
+    <path d="M256 62 V 40" stroke-width="9"/>
+    <path d="M256 132 V 372" stroke-width="16"/>
+    <path d="M112 186 H 400" stroke-width="16"/>
+    <path d="M112 186 L 76 252 M112 186 L 148 252" stroke-width="8"/>
+    <path d="M400 186 L 364 252 M400 186 L 436 252" stroke-width="8"/>
+    <path d="M64 252 Q112 320 160 252" stroke-width="15"/>
+    <path d="M352 252 Q400 320 448 252" stroke-width="15"/>
+    <path d="M190 372 Q256 352 322 372" stroke-width="15"/>
+  </g>
+  <circle cx="256" cy="40" r="11" fill="#0f2540"/>
+  <circle cx="256" cy="186" r="22" fill="#0f2540"/>
+  <circle cx="256" cy="186" r="8" fill="none"/>
+  <rect x="166" y="386" width="180" height="18" rx="9" fill="#0f2540"/>
+  <rect x="60" y="246" width="104" height="12" rx="6" fill="#0f2540"/>
+  <rect x="348" y="246" width="104" height="12" rx="6" fill="#0f2540"/>
+  </g>
+  <text x="356" y="156" text-anchor="start" font-family="Georgia, 'Times New Roman', serif" font-size="126" font-weight="700" textLength="600" fill="#0f2540">Vakil Saab</text>
+  <rect x="356" y="184" width="632" height="4" rx="2" fill="#0f2540" opacity="0.85"/>
+  <text x="356" y="242" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="30" font-weight="600" letter-spacing="7" textLength="632" fill="#0f2540">AGRA · ADVOCATE DIRECTORY</text>
+</svg>

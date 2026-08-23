@@ -1,0 +1,31 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Vakil Saab Agra — LinkedIn profile background</title>
+<style>
+  html, body { width: 1584px; height: 396px; }
+  /* LinkedIn drops the profile photo over the lower left, and crops the strip
+     shorter on mobile. Everything that matters sits right of x=470 and inside
+     the middle 70% of the height. */
+  .canvas { width: 1584px; height: 396px; display: flex; align-items: center; padding: 0 96px; }
+  .logo { flex: 0 0 300px; margin-bottom: 74px; }
+  .right { margin-left: auto; text-align: right; max-width: 800px; }
+  .eyebrow { font-size: 15px; }
+  h1 { font-size: 50px; font-weight: 700; line-height: 1.12; margin-top: 14px; }
+  h1 .em { color: var(--gold-2); }
+  .light h1 .em { color: var(--gold); }
+  .url { margin-top: 22px; font-size: 19px; }
+  .orb { --orb: 620px; right: -180px; bottom: -300px; }
+</style></head>
+<body>
+<div class="canvas dark">
+  <div class="orb"></div>
+  <div class="grid-wash" style="--grid:52px"></div>
+  <div class="logo"><span class="on-dark">{{svg:logo/logo-stacked-dark.svg}}</span><span class="on-light">{{svg:logo/logo-stacked-light.svg}}</span></div>
+  <div class="right">
+    <div class="eyebrow">Agra &middot; Uttar Pradesh</div>
+    <!-- No listing count anywhere in the kit: the directory's size changes
+         every month, and an out-of-date number on a banner is a false claim. -->
+    <h1 class="display">Agra&rsquo;s advocates,<br><span class="em">in one directory.</span></h1>
+    <div class="url">vakilsaabagra.in</div>
+  </div>
+</div>
+</body></html>

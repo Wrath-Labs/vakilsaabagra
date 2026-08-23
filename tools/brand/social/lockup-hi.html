@@ -1,0 +1,38 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Vakil Saab Agra — Hindi lockup</title>
+<style>
+  /* The Devanagari lockup exists only as a PNG. Conjuncts and matras do not
+     survive a font fallback the way Latin letterforms do, so the textLength
+     trick that keeps the SVG lockups honest is no help here — this one has to
+     be shot with Noto Sans Devanagari actually loaded.
+
+     Geometry mirrors logo-horizontal-*.svg: a 300-unit mark, the wordmark on
+     the same baseline, a gold rule, then the tagline. */
+  html, body { width: 1000px; height: 316px; background: transparent; }
+  /* This one is a logo file, not a banner, so it has to come out on
+     transparency. Two classes beat brand.css's single-class .light/.dark
+     background rules, which is why the selector is written this way. */
+  .canvas { width: 1000px; height: 316px; display: flex; align-items: center; gap: 56px; }
+  .canvas.light, .canvas.dark { background: none; }
+  .mark { flex: 0 0 300px; }
+  .word { font-family: 'Noto Sans Devanagari', sans-serif; font-size: 96px; font-weight: 700;
+          line-height: 1.15; color: var(--ink); letter-spacing: -.01em; }
+  .rule-solid { width: 100%; height: 4px; margin-top: 14px; }
+  .tag { font-family: 'Noto Sans Devanagari', sans-serif; font-size: 27px; font-weight: 600;
+         letter-spacing: .1em; margin-top: 16px; color: var(--gold); }
+  /* On navy the wordmark goes white and the tagline to the decorative gold,
+     exactly as the Latin dark lockup does. */
+  .dark .word { color: #fff; }
+  .dark .tag { color: var(--gold-2); }
+</style></head>
+<body>
+<div class="canvas light">
+  <div class="mark on-light">{{svg:icon/mark-navy.svg}}</div>
+  <div class="mark on-dark">{{svg:icon/mark-gold.svg}}</div>
+  <div style="flex:1">
+    <div class="word">वकील साब</div>
+    <div class="rule-solid"></div>
+    <div class="tag">आगरा · अधिवक्ता निर्देशिका</div>
+  </div>
+</div>
+</body></html>

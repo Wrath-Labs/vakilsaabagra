@@ -1,0 +1,32 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Vakil Saab Agra — YouTube channel art</title>
+<style>
+  html, body { width: 2560px; height: 1440px; }
+  /* YouTube shows the full 2560x1440 only on a TV. Everything readable has to
+     survive the phone crop, which is the centred 1546x423 box drawn here as
+     the flex centre — the rest is deliberately just texture. */
+  .canvas { width: 2560px; height: 1440px; display: grid; place-items: center; }
+  .safe { width: 1546px; height: 423px; display: flex; align-items: center; justify-content: space-between; }
+  .logo { width: 620px; }
+  .right { text-align: right; }
+  .eyebrow { font-size: 22px; }
+  h1 { font-size: 58px; font-weight: 700; line-height: 1.12; margin-top: 18px; }
+  h1 .em { color: var(--gold-2); }
+  .url { margin-top: 26px; font-size: 26px; }
+  .orb { --orb: 1400px; right: -400px; top: -500px; }
+  .orb2 { --orb: 1100px; left: -400px; bottom: -420px; }
+</style></head>
+<body>
+<div class="canvas dark">
+  <div class="orb"></div><div class="orb orb2"></div>
+  <div class="grid-wash" style="--grid:96px"></div>
+  <div class="safe">
+    <div class="logo">{{svg:logo/logo-stacked-dark.svg}}</div>
+    <div class="right">
+      <div class="eyebrow">Agra &middot; Uttar Pradesh</div>
+      <h1 class="display">Find the right advocate<br><span class="em">in Agra — fast.</span></h1>
+      <div class="url">vakilsaabagra.in</div>
+    </div>
+  </div>
+</div>
+</body></html>

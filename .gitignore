@@ -1,3 +1,7 @@
 node_modules/
 .DS_Store
 *.log
+
+# Generated brand guide — 1.2 MB of embedded previews. Rebuild with:
+#   node tools/brand/build-guide.js
+brand-guide.html

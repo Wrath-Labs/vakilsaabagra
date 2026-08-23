@@ -7,6 +7,7 @@
     "sync": "node tools/sync.js",
     "build:css": "node tools/build-css.js",
     "build": "npm run sync && npm run build:css",
+    "brand": "node tools/brand/build-logos.js && node tools/brand/build-tokens.js && node tools/brand/check-contrast.js && node tools/brand/render.js",
     "serve": "python3 -m http.server 5173",
     "set-domain": "node tools/set-domain.js"
   },
