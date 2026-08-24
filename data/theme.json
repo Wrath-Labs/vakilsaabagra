@@ -1,0 +1,126 @@
+{
+  "_comment": [
+    "Every colour in the project. THIS FILE IS THE SOURCE.",
+    "  brand    → the :root token block in css/styles.css, rewritten by",
+    "             tools/build-css.js between the AUTO-GENERATED markers.",
+    "  accents  → the four microsite looks, read by tools/sync.js. Add a fifth",
+    "             here and `accent: \"<name>\"` in a lawyer's microsite block",
+    "             starts working — no code change.",
+    "  microsite.sections → which sections a microsite renders, and in what",
+    "             order. A per-advocate `microsite.sections` array overrides it.",
+    "",
+    "Run `npm run build` after editing. Contrast is checked by",
+    "`node tools/brand/check-contrast.js`, which exits non-zero if a body-text",
+    "pairing drops below WCAG AA — run it after changing `gold` or `muted`."
+  ],
+  "brand": {
+    "ink": "#0f2540",
+    "ink-2": "#1b3f68",
+    "ink-3": "#081527",
+    "gold": "#b0861f",
+    "gold-2": "#dcb85f",
+    "gold-3": "#f7e3a1",
+    "paper": "#ffffff",
+    "paper-2": "#faf8f4",
+    "paper-3": "#f4f1ea",
+    "line": "#e6e1d6",
+    "line-2": "#efece4",
+    "muted": "#566a80",
+    "muted-2": "#7a8ba0"
+  },
+  "_brandNotes": {
+    "_comment": "Descriptive only. The WCAG contrast ratio beside each text token in css/styles.css is MEASURED by tools/build-css.js at build time — never write a ratio here, it will go stale the moment the hex changes.",
+    "ink": "deep navy — headings, primary surfaces",
+    "gold-2": "decorative gold — never text",
+    "gold-3": "highlight gold — backgrounds only",
+    "paper-2": "warm off-white section band",
+    "paper-3": "deeper warm band"
+  },
+  "accents": {
+    "_comment": "Each accent overrides the brand tokens on the microsite's :root. `btn` is [from, mid, to, text] for the primary call button, which hardcodes a gradient in css/styles.css and would otherwise stay brand-gold on a coloured site. null keeps the brand gradient.",
+    "gold": {
+      "ink": "#0f2540",
+      "ink2": "#1b3f68",
+      "ink3": "#081527",
+      "gold": "#b0861f",
+      "gold2": "#dcb85f",
+      "gold3": "#f7e3a1",
+      "paper2": "#faf8f4",
+      "paper3": "#f4f1ea",
+      "line": "#e6e1d6",
+      "line2": "#efece4",
+      "shadow": "176, 134, 31",
+      "btn": null
+    },
+    "navy": {
+      "ink": "#10233d",
+      "ink2": "#25507f",
+      "ink3": "#070f1c",
+      "gold": "#2f6fb5",
+      "gold2": "#7db0e6",
+      "gold3": "#dbeafb",
+      "paper2": "#f6f8fc",
+      "paper3": "#e9f0f9",
+      "line": "#dbe3ee",
+      "line2": "#e9eef6",
+      "shadow": "47, 111, 181",
+      "btn": [
+        "#4a8fd4",
+        "#2f6fb5",
+        "#235891",
+        "#fff"
+      ]
+    },
+    "teal": {
+      "ink": "#0c2f2a",
+      "ink2": "#12564d",
+      "ink3": "#051916",
+      "gold": "#0f8a72",
+      "gold2": "#4ec7ac",
+      "gold3": "#cdefe6",
+      "paper2": "#f4faf8",
+      "paper3": "#e6f4ef",
+      "line": "#d5e8e2",
+      "line2": "#e6f1ed",
+      "shadow": "15, 138, 114",
+      "btn": [
+        "#1aa88c",
+        "#0f8a72",
+        "#0b6c5a",
+        "#fff"
+      ]
+    },
+    "maroon": {
+      "ink": "#331319",
+      "ink2": "#66222f",
+      "ink3": "#1b090d",
+      "gold": "#a32742",
+      "gold2": "#dc7189",
+      "gold3": "#f9dde3",
+      "paper2": "#fdf7f7",
+      "paper3": "#f7e9eb",
+      "line": "#ecd9dc",
+      "line2": "#f4e7e9",
+      "shadow": "163, 39, 66",
+      "btn": [
+        "#c33a57",
+        "#a32742",
+        "#841f35",
+        "#fff"
+      ]
+    }
+  },
+  "microsite": {
+    "_comment": "Default section order for every microsite. Drop a name to remove that section from all of them; a lawyer's own microsite.sections array overrides this list for that one advocate. `hero` and `footer` are structural and cannot be removed.",
+    "defaultAccent": "gold",
+    "sections": [
+      "facts",
+      "about",
+      "practice",
+      "courts",
+      "chamber",
+      "faq"
+    ],
+    "stickyContactBar": true
+  }
+}

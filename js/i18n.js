@@ -63,9 +63,33 @@
 
   /* ------------------------------------------------------------- dictionary */
   /** The Hindi string for a key, or null when there isn't one. */
+  /**
+   * {phone} and {email} in a translated string.
+   *
+   * The contact details are not baked into the string tables, because they
+   * change and a phone number spelled out in twenty Hindi strings is twenty
+   * places to miss. They are written as tokens and expanded here, against the
+   * same VS_CONFIG the rest of the page reads — so the Hindi and the English
+   * can never disagree about what the number is.
+   *
+   * tools/content.js does the same expansion at build time for the static
+   * English, which is why the number is in the HTML source for a crawler.
+   */
+  var TOKENS = {
+    '{phone}': function () { return (w.VS_CONFIG || {}).phoneDisplay || ''; },
+    '{email}': function () { return (w.VS_CONFIG || {}).email || ''; },
+  };
+  function expand(s) {
+    if (s.indexOf('{') === -1) return s;
+    Object.keys(TOKENS).forEach(function (t) {
+      if (s.indexOf(t) !== -1) s = s.split(t).join(TOKENS[t]());
+    });
+    return s;
+  }
+
   function hi(key) {
     var v = HI[key];
-    return typeof v === 'string' && v.length ? v : null;
+    return typeof v === 'string' && v.length ? expand(v) : null;
   }
 
   /**

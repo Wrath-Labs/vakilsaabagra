@@ -2,8 +2,13 @@
 
 A static, light-theme directory of advocates practising in **Agra, Uttar Pradesh**,
 readable in Hindi or English. Plain HTML + Tailwind CSS + vanilla JavaScript —
-no framework, no bundler, no runtime dependency. Advocates are added by editing
-one JSON file.
+no framework, no bundler, no runtime dependency.
+
+**Everything you would want to change is a JSON file.** Advocates, prices, the
+navigation, the footer, the colours, every word on every page, and which
+sections a microsite renders — all of it lives in `data/`, and `npm run build`
+writes it into the HTML. You should never need to open a `.html` file to change
+what the site says. See [Editing the site](#editing-the-site).
 
 Three things run at the edge on Cloudflare Pages Functions, and only those
 three: an anonymous click counter, its admin read-out, and the host routing that
@@ -12,6 +17,7 @@ serves each paying advocate's microsite on its own subdomain.
 | I want to… | Go to |
 |---|---|
 | add or renew an advocate | [Adding an advocate](#adding-an-advocate), then [docs/DEPLOY.md](docs/DEPLOY.md#part-2--onboarding-a-new-advocate) |
+| change any text, price, link or colour | [Editing the site](#editing-the-site) |
 | understand what it costs an advocate | [Plans and billing](#plans-and-billing) |
 | set the whole thing up from scratch | [docs/DEPLOY.md](docs/DEPLOY.md#part-1--one-time-setup) |
 | send someone their monthly numbers | [Reading a month back](#reading-a-month-back) |
@@ -25,7 +31,7 @@ serves each paying advocate's microsite on its own subdomain.
 
 ```bash
 npm install            # tailwindcss, the only dependency, and it is dev-only
-npm run build          # validate data → publish → generate microsites → CSS
+npm run build          # JSON → pages → dataset → microsites → CSS
 npm run serve          # → http://localhost:5173
 ```
 
@@ -44,6 +50,95 @@ npx wrangler pages dev .
 
 Otherwise open a generated microsite directly at
 `http://localhost:5173/sites/<slug>/index.html`.
+
+---
+
+## Editing the site
+
+Nothing on this site is edited in HTML. Six JSON files under `data/` are the
+source, and `npm run build` pushes them into the pages. If you find yourself
+opening an `.html` file to change wording, a link or a price, stop — the change
+belongs in one of these, and the build will overwrite you.
+
+| I want to change… | Edit | Then |
+|---|---|---|
+| phone, WhatsApp, email, address, hours | `data/site.json` → `business` | `npm run build` |
+| the header nav or the mobile drawer | `data/site.json` → `nav` | `npm run build` |
+| the footer link columns and locality chips | `data/site.json` → `footer` | `npm run build` |
+| whether the demo notice or the prices show | `data/site.json` → `flags` | `npm run build` |
+| what a listing costs | `data/pricing.json` | `npm run build` |
+| any brand colour | `data/theme.json` → `brand` | `npm run build` |
+| the four microsite looks, or add a fifth | `data/theme.json` → `accents` | `npm run build` |
+| which sections a microsite shows, and in what order | `data/theme.json` → `microsite.sections` | `npm run build` |
+| **any visible English wording, anywhere** | `data/i18n/en.json` | `npm run build` |
+| the Hindi | `data/i18n/hi.json` | `npm run build` |
+| advocates, categories, an individual microsite's content | `data/lawyers.json` | `npm run build` |
+
+`npm run check` reports what a build *would* change without writing anything —
+useful before committing.
+
+### What generates what
+
+```
+data/site.json     ─┬─→ js/config.js                     (generated; never hand-edit)
+                    ├─→ header nav + mobile drawer       (all 11 pages)
+                    └─→ footer link columns              (all 11 pages)
+data/pricing.json  ──→ the plan table on list-your-practice.html
+data/theme.json    ─┬─→ the :root brand tokens in css/styles.css → css/tailwind.css
+                    ├─→ the microsite accent stylesheets
+                    └─→ microsite section order and the sticky contact bar
+data/i18n/en.json  ──→ the text of every data-i18n element on every page
+data/lawyers.json  ──→ the dataset, the sitemap, the microsites, the id list
+```
+
+`tools/content.js` does the first three; `tools/build-css.js` the fourth;
+`tools/sync.js` the rest.
+
+### Two directions, and when to use each
+
+`tools/i18n-extract.js` reads the pages and writes `en.json`. `tools/content.js`
+reads `en.json` and writes the pages. They are inverses, they agree on the key
+format, and you want different ones at different times:
+
+- **Wrote new hand-authored markup?** Run `node tools/i18n-extract.js` to pull
+  the new strings out into `en.json` and stamp keys onto the elements.
+- **Changing existing wording?** Edit `en.json` and run `npm run build`. Do not
+  edit the HTML — the build puts `en.json` back.
+
+Editing HTML text directly is not *dangerous*, it is just pointless: the next
+build overwrites it with whatever `en.json` says.
+
+### Adding a nav link, end to end
+
+Add to `data/site.json`:
+
+```json
+{ "href": "guides.html", "label": "Guides" }
+```
+
+`npm run build` puts it in the header and the drawer on all eleven pages, mints
+`common.guides` in `en.json`, and tells you the key needs Hindi. Add that key to
+`data/i18n/hi.json` and build again. Reorder the array and the nav reorders;
+delete the entry and it disappears everywhere. `aria-current="page"` is set on
+whichever page you are on, in both the header and the drawer.
+
+### Turning prices off
+
+`data/site.json` → `flags.showPricing: false`. The plan cards stay — same names,
+same descriptions — the figures come out, and the lede changes to the
+"message us for the current figures" line from `pricing.json`. The flag works in
+both directions, which is the point: hiding prices does not mean losing the
+markup that shows them.
+
+### The generated files
+
+Never hand-edit these. Each says so at the top, and each is rewritten on the
+next build without a merge conflict to warn you:
+
+`js/config.js` · `data/i18n/hi.js` · `data/lawyers.public.json` ·
+`data/lawyers.fallback.js` · `functions/_ids.js` · `functions/_slugs.js` ·
+`sites/**` · `sitemap.xml` · `css/tailwind.css` · the marked token block inside
+`css/styles.css`
 
 ---
 
@@ -73,7 +168,7 @@ renewal reminder for anyone expiring soon.
 | `categories` | ✅ | array of category slugs |
 | `topics` | ✅ | the specific matters they take on — these drive search |
 | `about` | ✅ | 2–4 sentences, written plainly |
-| `phone` / `whatsapp` | ✅ | E.164 format, e.g. `+919876543210` |
+| `phone` / `whatsapp` | ✅ | E.164 format, e.g. `+918954402360` |
 | `enrollment` | ✅ | Bar Council number, e.g. `UP/02847/2002` |
 | `location.area` | ✅ | locality in Agra — powers the area filter |
 | `location.address` | ✅ | full chamber address |
@@ -157,14 +252,25 @@ A **fixed technology and listing service fee**, billed in advance. It is not a
 per-enquiry charge, not a commission, and not a share of any fee the advocate
 charges a client — see the note under *Legal note* below, and keep it that way.
 
-| Plan | Total / month | Listing | Microsite |
+| Plan | Listing | Microsite | Total / month |
 |---|---|---|---|
-| Monthly | ₹800 | ₹200 | ₹600 |
-| 6-month | ₹600 | ₹150 | ₹450 |
-| Yearly | ₹500 | ₹100 | ₹400 |
+| Monthly | ₹200 | ₹600 | ₹800 |
+| 6-month | ₹150 | ₹450 | ₹600 |
+| Yearly | ₹100 | ₹400 | ₹500 |
 
-These numbers live here and nowhere else in the codebase. Nothing user-facing
-quotes them yet.
+**`data/pricing.json` is the source.** The table above is a copy for readers of
+this file; the numbers that reach an advocate come from that JSON, rendered into
+the plan cards on `list-your-practice.html` by `npm run build`. Change a figure
+there and the page follows — including the "both together" total, which is
+computed, so it cannot drift from its two parts.
+
+Prices are visible on the site because `data/site.json` → `flags.showPricing` is
+`true`. Set it to `false` and the cards keep their names and descriptions but
+drop the figures, falling back to "message us for the current figures". See
+[Turning prices off](#turning-prices-off).
+
+The plan ids in `pricing.json` — `monthly`, `halfyearly`, `yearly` — are the same
+strings `listing.plan` takes in `data/lawyers.json`, so the two stay in step.
 
 ### Expiry
 
@@ -210,36 +316,79 @@ gets both pages treated as duplicates and neither ranks.
 
 ## Business details
 
-Phone number, WhatsApp, email and address appear in one place: **`js/config.js`**.
-Change them there and every page updates — header, footer, contact page and the
-structured data Google reads.
+Phone number, WhatsApp, email and address live in one place: **`data/site.json`**
+→ `business`. `npm run build` writes them everywhere — `js/config.js`, the
+header, the footer, the mobile drawer, the contact page, the FAQ answers, the
+WhatsApp prefill links, the `tel:`/`mailto:` hrefs and the JSON-LD.
 
-```js
-phone: '+919876543210',          // TODO(subroto): stock example number, not real
-phoneDisplay: '+91 98765 43210',
-email: 'hello@vakilsaabagra.in', // TODO(subroto): confirm the mailbox exists
-micrositeDomain: 'vakilsaabagra.in',
-social: { facebook: '', instagram: '', linkedin: '', youtube: '' },
-demoNotice: true,                // ← set to false once the listings are real
+```json
+"business": {
+  "phone": "+918954402360",
+  "whatsapp": "918954402360",
+  "email": "subroto.2003@gmail.com",
+  "micrositeDomain": "vakilsaabagra.in"
+}
 ```
 
-**The phone number is not real.** `+919876543210` is the stock Indian example
-number. Worse, it is not only in this file: the header, footer, mobile drawer,
-contact page, FAQ answers and WhatsApp prefill links each write it into the HTML
-directly. `grep -rn 9876543210` finds every one — about fifty-five across twelve
-files. Nothing dials until they are all replaced.
+`phoneDisplay` is **derived**, not stored: the build groups the digits 5-5 into
+`+91 89544 02360`. There is nowhere to write a display form that disagrees with
+the number people actually dial.
 
-**The social links are intentionally empty.** They are published as schema.org
-`sameAs`, which is a claim about who we are; pointing them at `facebook.com`'s
-own home page told Google our brand's profile *is* Facebook. `js/home.js` omits
-`sameAs` entirely while they are empty. Fill in the profiles that exist and
-delete the rest.
+### Changing the phone number
 
-**`demoNotice: true`** puts a "sample listings" line in the footer of the
-directory *and* of every microsite. The 20 advocates in `data/lawyers.json` are
-placeholders — `+9199990000xx` numbers, `chambers@example.com` addresses, and
-four demo microsites whose bios were written to exercise the pipeline. Replace
-them with real, consented details and set this to `false`.
+Edit that one line and run `npm run build`. It used to be 142 occurrences across
+fourteen files; three things now hold it together:
+
+- **`tel:`, `wa.me/` and `mailto:` hrefs** on the static pages are rewritten
+  unconditionally, because every one of them belongs to the business — advocate
+  links are rendered by `js/*.js` from the dataset and never appear in these
+  files. A `?text=` prefill is preserved.
+- **`{phone}` and `{email}` tokens** stand in for the details inside the string
+  tables, so the six English strings and five Hindi ones that mention the number
+  no longer contain digits at all. `tools/content.js` expands them into the
+  static HTML — a crawler and a JavaScript-off browser still see real digits —
+  and `js/i18n.js` expands them again when the page switches to Hindi. The two
+  languages cannot disagree about what the number is.
+- **The bare numeral inside the call buttons** carries no translation key at all,
+  because `tools/i18n-extract.js` skips bare numbers by design. That is how three
+  copies per page ended up outside both systems. They all sit inside a `tel:`
+  link, so they are rewritten along with it.
+
+Anything left over that looks like a phone number and is not the one in
+`site.json` gets named in the build output:
+
+```
+! about.html: phone number(s) not driven by data/site.json: +91 77777 88888
+```
+
+The brand kit is a separate copy and was already correct: `tools/brand/tokens.js`,
+the business card and the print pieces have carried `+91 89544 02360` since they
+were authored, so the rendered PNGs in `assets/brand/` need no re-render. They
+are not wired to `site.json` — a print run is a deliberate act, not a build
+artefact.
+
+### The email
+
+**It is a personal Gmail.** Published on the contact page and in the JSON-LD as
+the LocalBusiness `email` (`js/home.js:166`), so it is a public address and will
+be scraped. A dedicated mailbox on the domain would be better and is on the
+outstanding list; this one has the advantage of being real and read today.
+
+### The social links
+
+**Intentionally empty.** They are published as schema.org `sameAs`, which is a
+claim about who we are; pointing them at `facebook.com`'s own home page told
+Google our brand's profile *is* Facebook. `js/home.js` omits `sameAs` entirely
+while they are empty. Fill in the profiles that exist, in `data/site.json` →
+`social`, and delete the rest.
+
+### `flags.demoNotice`
+
+`true` puts a "sample listings" line in the footer of the directory *and* of
+every microsite. The 20 advocates in `data/lawyers.json` are placeholders —
+`+9199990000xx` numbers, `chambers@example.com` addresses, and four demo
+microsites whose bios were written to exercise the pipeline. Replace them with
+real, consented details and set this to `false`.
 
 ---
 
@@ -326,9 +475,13 @@ and survives navigation.
 
 | File | Holds |
 |---|---|
-| `data/i18n/en.json` | every translatable string, in English — generated |
-| `data/i18n/hi.json` | the Hindi for each of those keys — **this is the file you edit** |
+| `data/i18n/en.json` | every visible English string — **the source; edit it** |
+| `data/i18n/hi.json` | the Hindi for each of those keys — **edit it** |
 | `data/i18n/hi.js` | the same Hindi as a script tag — generated by `npm run sync` |
+
+**`en.json` is a source now, not a mirror.** It used to be generated from the
+pages; `tools/content.js` puts it back into them, so changing a word means
+changing it there and running `npm run build`.
 
 Only Hindi is shipped as a dictionary. English is already in the markup, and
 `js/i18n.js` reads it out of the DOM the first time it touches a node and keeps
@@ -336,16 +489,30 @@ it, so switching back to English restores exactly what the page shipped with.
 
 ### Adding or changing copy
 
+To **change wording**, edit `data/i18n/en.json` and run `npm run build`. That is
+the whole procedure. Do not edit the HTML — the build overwrites it.
+
+To **add new hand-authored markup**, run the extractor afterwards so the new
+strings get keys and land in `en.json`:
+
 ```bash
 node tools/i18n-extract.js --report   # what would change, touching nothing
 node tools/i18n-extract.js            # mark up the pages, refresh en.json
 ```
 
 The extractor walks every page, stamps a `data-i18n` key onto each piece of
-visible text and writes `en.json` from the current copy — verbatim. It is
-idempotent, so run it again after adding a page or a section. A string used on
-three or more pages is treated as site chrome and gets a `common.*` key, so the
-header and footer are translated once rather than eleven times.
+visible text and writes `en.json` from the current copy — verbatim, and it keeps
+keys it did not see this run, so the tokens below survive. It is idempotent, so
+run it again after adding a page or a section. A string used on three or more
+pages is treated as site chrome and gets a `common.*` key, so the header and
+footer are translated once rather than eleven times.
+
+**`{phone}` and `{email}` are tokens, not text.** Six English strings and five
+Hindi ones mention the contact details, and they hold a token rather than the
+digits, so changing the number is one edit in `data/site.json` instead of eleven
+here. `tools/content.js` expands them into the static HTML and `js/i18n.js`
+expands them again at runtime. Write `{phone}` in a new string and it works;
+write the digits and you have made a place for them to go stale.
 
 Strings the page scripts build themselves (the cards, the result count, the
 profile sections) cannot be marked up in HTML. Those are written as
@@ -357,9 +524,9 @@ Then fill in the Hindi in `data/i18n/hi.json`. `npm run sync` reports how many
 strings are still English and warns about Hindi keys whose English has changed.
 
 **Fallback rule:** a missing or empty Hindi string falls back to English,
-everywhere. Nothing ever renders a blank or a raw key. Seven keys are
-deliberately left untranslated — the brand name, the logo's alt text, the
-already-bilingual language label, three avatar initials and an email address.
+everywhere. Nothing ever renders a blank or a raw key. Four keys are deliberately
+left untranslated — the brand name twice, the already-bilingual `Language / भाषा`
+label, and the email address, which is an address rather than a word.
 
 ### Content out of `lawyers.json`
 
@@ -444,9 +611,32 @@ The ordering matters and is handled by `tools/build-css.js`: Tailwind's base →
 components → `styles.css` → utilities. That is what lets a utility such as
 `lg:hidden` win over a component rule such as `.btn { display: inline-flex }`.
 
-Brand colours live as CSS custom properties at the top of `css/styles.css`
-(`--ink` navy, `--gold`, `--paper`). The site is **light theme only** by design;
+Brand colours are **not** edited in the stylesheet. They live in
+`data/theme.json` → `brand`, and `tools/build-css.js` writes them into the
+`:root` block of `css/styles.css` between two markers:
+
+```css
+  /* @@BRAND-TOKENS-START@@ */
+  --ink:       #0f2540;   /* 15.45:1 on #ffffff — AA for body text; deep navy … */
+  --gold:      #b0861f;   /* 3.35:1 on #ffffff — AA for large text and rules only, NOT body copy */
+  /* @@BRAND-TOKENS-END@@ */
+```
+
+The contrast ratio in each comment is **measured at build time**, not typed. A
+hand-written ratio goes stale the moment somebody changes the hex — which has
+already happened once here — so `build-css.js` computes it against `--paper` and
+labels each text token AA / large-text-only / fails. Change `--gold` to purple
+and the comment tells you the truth about purple on the next build. Do not write
+a ratio into `_brandNotes`; that field is for description only.
+
+Everything below the marked block — elevation, motion, component styles — is
+hand-authored and stays that way. The site is **light theme only** by design;
 no dark mode is defined.
+
+The four microsite accents are in the same file under `accents`. Add a fifth,
+give an advocate `"accent": "forest"` in their microsite block, and it works
+with no code change; `tools/sync.js` warns and falls back to the default if the
+name is not in the JSON.
 
 ---
 
@@ -549,29 +739,52 @@ Built to rank for “lawyers in Agra” and the practice-area variants.
 
 ### Before you launch
 
-The domain is already set to `https://vakilsaabagra.in`. To change it, use
-`npm run set-domain -- https://your-domain.in` and then `npm run build` — it
-rewrites the canonical, OG, Twitter and JSON-LD URLs, `robots.txt`, the
-sitemap, the microsite hosts and the string tables in one pass. Getting this
-wrong is the quiet mistake: a canonical pointing at a domain that does not serve
-the site tells Google to index that other address instead.
+**`vakilsaabagra.in` is not registered yet.** Every canonical, the sitemap, the
+`robots.txt`, the microsite hosts and the business card all say
+`https://vakilsaabagra.in`, and the domain is unregistered — confirmed available
+at the NIXI registry on 2026-08-24. Buying it is the first item below, and it
+blocks half of hosting.
 
-Still outstanding before this is a real, public site:
+To point the project at a different domain instead:
+`npm run set-domain -- https://your-domain.in`, then `npm run build`. It rewrites
+the canonical, OG, Twitter and JSON-LD URLs, `robots.txt`, the sitemap, the
+microsite hosts and the string tables in one pass. Getting this wrong is the
+quiet mistake: a canonical pointing at a domain that does not serve the site
+tells Google to index that other address instead.
 
-1. **Replace the placeholder phone number.** `+919876543210` is the stock
-   example number. It is in `js/config.js` *and* written directly into the
-   header, footer, drawer, contact page, FAQ answers and WhatsApp prefill links
-   of every page — `grep -rn 9876543210` finds all of them.
-2. **Confirm `hello@vakilsaabagra.in` exists** and forwards somewhere read.
-3. **Fill in or delete the social links.** They are empty in `js/config.js`;
-   empty means no `sameAs` is published, which is correct until real profiles
-   exist.
-4. **Replace the twenty sample advocates** with real, consented details, then
-   set `demoNotice: false` — that removes the "sample listings" line from the
+Still outstanding before this is a real, public site, in order:
+
+1. **Register `vakilsaabagra.in`.** Any accredited registrar; `docs/DEPLOY.md`
+   assumes Hostinger and moving the nameservers to Cloudflare. Cloudflare
+   Registrar would skip the nameserver step but does not sell `.in` as far as we
+   can tell — check when you are there. The name is already printed on the
+   business card and the print collateral, so it is not really a choice any more.
+2. **Do the Cloudflare setup** — `docs/DEPLOY.md` Part 1. Steps 1.2, 1.4 and 1.5
+   (Pages project, D1, `ADMIN_TOKEN`) work with no domain and are worth doing
+   first; 1.1 and 1.3 (nameservers, custom domains) need the registration.
+3. **Do not add the four demo slugs as custom domains.** `ramesh`, `neha`,
+   `deepak` and `rajeev` are sample bios. No subdomain exists and the apex
+   `robots.txt` disallows `/sites/`, so they are effectively unreachable today —
+   adding a custom domain is exactly what would make a sample advocate look like
+   a real one at a real address.
+4. **Fill in or delete the social links** in `data/site.json` → `social`. Empty
+   means no `sameAs` is published, which is correct until real profiles exist.
+5. **Replace the twenty sample advocates** with real, consented details, then set
+   `flags.demoNotice: false` — that removes the "sample listings" line from the
    footer of the directory and of every microsite. The sample records also carry
    `chambers@example.com` and `+9199990000xx` numbers.
-5. Submit `sitemap.xml` in Google Search Console, and set up a Google Business
+6. **A mailbox on the domain**, to replace the personal Gmail now published in
+   the JSON-LD.
+7. Submit `sitemap.xml` in Google Search Console, and set up a Google Business
    Profile for Agra — for local search that matters more than anything on-page.
+
+**If you deploy to `*.pages.dev` before the domain exists**, note that every page
+carries `<link rel="canonical" href="https://vakilsaabagra.in/">` and
+`robots: index, follow`. Production `pages.dev` URLs are crawlable — only preview
+deployments get an automatic noindex — so Google could crawl the preview and be
+told the real address is a domain that does not resolve. The risk is small
+(nothing links to a fresh `pages.dev` URL) and it disappears the moment the
+domain is live, but it is the reason to buy the domain first rather than last.
 
 ---
 
@@ -587,18 +800,21 @@ privacy.html  terms.html  404.html
 
 admin/stats.html          internal read-out for /api/stats — unlinked, noindex
 
-data/lawyers.json         ← the only file you edit to add advocates
+data/site.json            ← business details, nav, footer, feature flags
+data/pricing.json         ← plans and prices
+data/theme.json           ← brand colours, microsite accents, section order
+data/lawyers.json         ← advocates, categories, per-advocate microsite content
+data/i18n/en.json         ← every visible English string on every page
+data/i18n/hi.json         ← the Hindi
 data/lawyers.public.json  generated; live listings only, billing stripped —
                           this is what the pages actually fetch
 data/lawyers.fallback.js  generated; the same dataset, makes file:// work
-data/i18n/en.json         generated; every translatable string, in English
-data/i18n/hi.json         ← the Hindi, edited by hand
 data/i18n/hi.js           generated; the Hindi as a script tag
 
 css/styles.css            authored — tokens, motion, components
 css/tailwind.css          compiled — the file the pages load
 
-js/config.js              business details
+js/config.js              generated from data/site.json — never hand-edited
 js/i18n.js                language resolution, string swapping, the toggle
 js/data.js                loading, search, sort, formatting helpers
 js/ui.js                  header, drawer, reveals, counters, lawyer card
@@ -607,7 +823,8 @@ js/home.js                home page
 js/directory.js           directory filtering and URL state
 js/profile.js             profile rendering and JSON-LD
 
-templates/microsite.html  the microsite design, with {{…}} tokens
+templates/microsite.html  the microsite design: {{…}} tokens for values,
+                          <!-- @section:name --> blocks for what theme.json orders
 sites/<slug>/             generated microsites, one folder per advocate
 sites/_map.json           generated; slug → advocate id
 
@@ -618,9 +835,10 @@ functions/api/track.js    POST — counts a view or a contact click
 functions/api/stats.js    GET  — reads it back, behind ADMIN_TOKEN
 schema.sql                the D1 table and its indexes
 
+tools/content.js          JSON → HTML: config, nav, footer, prices, all copy
 tools/sync.js             validate → publish, avatars, sitemap, microsites, i18n
-tools/i18n-extract.js     stamp data-i18n keys, refresh en.json
-tools/build-css.js        compile styles.css + Tailwind
+tools/i18n-extract.js     HTML → JSON: stamp data-i18n keys, refresh en.json
+tools/build-css.js        theme.json → styles.css tokens, then compile Tailwind
 tools/set-domain.js       point every URL at a different domain
 tools/*.svg               logo sources
 tools/business-card/     business card: front.html, back.html, card.css, render.js
@@ -628,10 +846,14 @@ tools/business-card/     business card: front.html, back.html, card.css, render.
 docs/DEPLOY.md            click-by-click hosting, onboarding, renewals
 ```
 
-**Generated files, never edited by hand:** `data/lawyers.public.json`,
-`data/lawyers.fallback.js`, `data/i18n/en.json`, `data/i18n/hi.js`,
-`css/tailwind.css`, `sitemap.xml`, `sites/**`, `functions/_ids.js`,
-`functions/_slugs.js`. Each carries a header saying so.
+**Generated files, never edited by hand:** `js/config.js`,
+`data/lawyers.public.json`, `data/lawyers.fallback.js`, `data/i18n/hi.js`,
+`css/tailwind.css`, the marked token block inside `css/styles.css`,
+`sitemap.xml`, `sites/**`, `functions/_ids.js`, `functions/_slugs.js`. Each
+carries a header saying so.
+
+`data/i18n/en.json` is the exception that changed: it used to be generated *from*
+the pages and is now the source *for* them. Edit it.
 
 ---
 

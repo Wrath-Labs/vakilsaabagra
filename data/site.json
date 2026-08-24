@@ -1,0 +1,94 @@
+{
+  "_comment": [
+    "Business details, navigation and site-wide toggles. THIS FILE IS THE SOURCE.",
+    "js/config.js is generated from it, and the header nav, mobile drawer and",
+    "footer link columns on every page are rewritten from it by tools/content.js.",
+    "Run `npm run build` after editing. Never edit js/config.js by hand — it says",
+    "so at the top of the generated file, and your edit is overwritten."
+  ],
+
+  "business": {
+    "name": "Vakil Saab Agra",
+    "tagline": "Agra’s advocate directory",
+    "url": "https://vakilsaabagra.in",
+
+    "phone": "+918954402360",
+    "whatsapp": "918954402360",
+    "email": "subroto.2003@gmail.com",
+
+    "micrositeDomain": "vakilsaabagra.in",
+
+    "address": {
+      "street": "Sanjay Place",
+      "locality": "Agra",
+      "region": "Uttar Pradesh",
+      "postalCode": "282002",
+      "country": "IN"
+    },
+    "geo": { "lat": 27.1767, "lng": 78.0081 },
+    "hours": "Mon–Sat, 10:00 AM – 7:00 PM"
+  },
+
+  "social": {
+    "_comment": "Published as schema.org sameAs. Empty values are skipped entirely, which is correct until a profile actually exists. Never point one at a platform's home page.",
+    "facebook": "",
+    "instagram": "",
+    "linkedin": "",
+    "youtube": ""
+  },
+
+  "flags": {
+    "demoNotice": true,
+    "_demoNotice": "Shows the 'sample listings' line in the footer of the directory and every microsite. Set false once data/lawyers.json holds real, consented advocates.",
+    "showPricing": true,
+    "_showPricing": "Renders the priced plan table on list-your-practice.html from data/pricing.json. Set false to go back to 'message us for the current figures'."
+  },
+
+  "nav": {
+    "_comment": "The primary nav and the mobile drawer, in order. `href` is a page in the repo root. Add, remove or reorder here and every page's header follows.",
+    "primary": [
+      { "href": "index.html", "label": "Home" },
+      { "href": "lawyers.html", "label": "Find a Lawyer" },
+      { "href": "practice-areas.html", "label": "Practice Areas" },
+      { "href": "about.html", "label": "About" },
+      { "href": "faq.html", "label": "FAQ" },
+      { "href": "contact.html", "label": "Contact" }
+    ],
+    "drawerExtra": [
+      { "href": "list-your-practice.html", "label": "List Your Practice" }
+    ],
+    "cta": { "href": "list-your-practice.html", "label": "List your practice" }
+  },
+
+  "footer": {
+    "practiceAreas": {
+      "_comment": "Generated from the categories in data/lawyers.json — add a category there and the column grows. `suffix` is appended to each category name.",
+      "heading": "Practice Areas",
+      "source": "categories",
+      "suffix": " Lawyers"
+    },
+    "quickLinks": {
+      "heading": "Quick Links",
+      "links": [
+        { "href": "lawyers.html", "label": "All Advocates" },
+        { "href": "practice-areas.html", "label": "Practice Areas" },
+        { "href": "list-your-practice.html", "label": "List Your Practice" },
+        { "href": "about.html", "label": "About Us" },
+        { "href": "faq.html", "label": "FAQ" },
+        { "href": "contact.html", "label": "Contact" },
+        { "href": "privacy.html", "label": "Privacy Policy" },
+        { "href": "terms.html", "label": "Terms of Use" }
+      ]
+    },
+    "areas": {
+      "_comment": "The locality chips. Each becomes lawyers.html?area=<name>, so the name must match `location.area` in data/lawyers.json exactly or the filter returns nothing. tools/content.js warns when one has no advocates.",
+      "heading": "Advocates by Area",
+      "list": [
+        "Civil Lines", "Sadar Bazaar", "Kamla Nagar", "Dayalbagh", "Sikandra",
+        "Tajganj", "Shahganj", "Belanganj", "Balkeshwar", "Fatehabad Road",
+        "Trans Yamuna Colony", "Loha Mandi", "Khandari", "Bodla", "Rakabganj",
+        "Shamshabad Road", "Nai Ki Mandi", "Collectorate"
+      ]
+    }
+  }
+}

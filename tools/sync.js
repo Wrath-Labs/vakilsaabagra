@@ -347,29 +347,16 @@ if (fs.existsSync(HI_JSON)) {
 /* ---------------------------------------------------------- 7. microsites */
 
 /**
- * The four accents. Each one overrides the brand tokens that css/styles.css
- * sets on :root, which is enough to make four visibly different sites out of
- * one stylesheet — the ink, the gradients, the rules and the accent text all
- * follow these.
+ * The accents, from data/theme.json. Each one overrides the brand tokens that
+ * css/styles.css sets on :root, which is enough to make visibly different sites
+ * out of one stylesheet — the ink, the gradients, the rules and the accent text
+ * all follow these. Add a fifth to the JSON and `accent: "<name>"` on an
+ * advocate's microsite block starts working with no change here.
  */
-const ACCENTS_CSS = {
-  gold:   { ink: '#0f2540', ink2: '#1b3f68', ink3: '#081527',
-            gold: '#b0861f', gold2: '#dcb85f', gold3: '#f7e3a1',
-            paper2: '#faf8f4', paper3: '#f4f1ea', line: '#e6e1d6', line2: '#efece4',
-            shadow: '176, 134, 31', btn: null },
-  navy:   { ink: '#10233d', ink2: '#25507f', ink3: '#070f1c',
-            gold: '#2f6fb5', gold2: '#7db0e6', gold3: '#dbeafb',
-            paper2: '#f6f8fc', paper3: '#e9f0f9', line: '#dbe3ee', line2: '#e9eef6',
-            shadow: '47, 111, 181', btn: ['#4a8fd4', '#2f6fb5', '#235891', '#fff'] },
-  teal:   { ink: '#0c2f2a', ink2: '#12564d', ink3: '#051916',
-            gold: '#0f8a72', gold2: '#4ec7ac', gold3: '#cdefe6',
-            paper2: '#f4faf8', paper3: '#e6f4ef', line: '#d5e8e2', line2: '#e6f1ed',
-            shadow: '15, 138, 114', btn: ['#1aa88c', '#0f8a72', '#0b6c5a', '#fff'] },
-  maroon: { ink: '#331319', ink2: '#66222f', ink3: '#1b090d',
-            gold: '#a32742', gold2: '#dc7189', gold3: '#f9dde3',
-            paper2: '#fdf7f7', paper3: '#f7e9eb', line: '#ecd9dc', line2: '#f4e7e9',
-            shadow: '163, 39, 66', btn: ['#c33a57', '#a32742', '#841f35', '#fff'] },
-};
+const THEME = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'theme.json'), 'utf8'));
+const ACCENTS_CSS = Object.fromEntries(
+  Object.entries(THEME.accents).filter(([k]) => !k.startsWith('_')));
+const MS_THEME = THEME.microsite || {};
 
 /**
  * The accent as a stylesheet. Overriding the :root tokens carries most of the
@@ -432,8 +419,19 @@ let HI_STRINGS = {};
 try {
   HI_STRINGS = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'i18n', 'hi.json'), 'utf8'));
 } catch (e) { /* not translated yet */ }
+/* {phone} / {email} in a build-time string, same tokens js/i18n.js expands at
+   runtime — see the note there. CFG is read from the generated js/config.js. */
+const CFG = (() => {
+  const src = fs.readFileSync(path.join(ROOT, 'js', 'config.js'), 'utf8');
+  const w = {}; new Function('window', src)(w); return w.VS_CONFIG || {};
+})();
+function expandTokens(s) {
+  return String(s).split('{phone}').join(CFG.phoneDisplay || '')
+                  .split('{email}').join(CFG.email || '');
+}
 function T(key, english, tag) {
-  return bi(esc(english), HI_STRINGS[key] ? esc(HI_STRINGS[key]) : null, tag);
+  return bi(esc(expandTokens(english)),
+    HI_STRINGS[key] ? esc(expandTokens(HI_STRINGS[key])) : null, tag);
 }
 
 const CHEV = '<svg class="acc-chevron shrink-0 text-[var(--gold)]" viewBox="0 0 24 24" width="18" height="18" ' +
@@ -481,6 +479,50 @@ const LANG_HI = {
   Punjabi: 'पंजाबी', Bengali: 'बंगाली', Marathi: 'मराठी', Sanskrit: 'संस्कृत',
 };
 
+/**
+ * Which sections a microsite renders, and in what order.
+ *
+ * templates/microsite.html marks each removable section with
+ * `<!-- @section:name -->` … `<!-- @/section -->`. The order in
+ * data/theme.json (microsite.sections) decides what is emitted, and an
+ * advocate's own `microsite.sections` array overrides it for that one site —
+ * which is how two advocates get a different page shape without a second
+ * template. Anything the template marks but the list omits is dropped.
+ *
+ * `<!-- @optional:flag -->` blocks survive only while theme.json's
+ * microsite.<flag> is true.
+ */
+function applySections(template, wanted) {
+  const blocks = {};
+  const re = /[ \t]*<!-- @section:(\w+) -->\n?([\s\S]*?)[ \t]*<!-- @\/section -->\n?/g;
+  let m, first = -1, last = -1;
+  while ((m = re.exec(template))) {
+    blocks[m[1]] = m[2];
+    if (first === -1) first = m.index;
+    last = m.index + m[0].length;
+  }
+  if (first === -1) return template;   /* template has no markers — leave it */
+
+  const unknown = wanted.filter((n) => !(n in blocks));
+  if (unknown.length) {
+    console.error(`\x1b[31m✗ data/theme.json asks for microsite section(s) the template does not define: ${unknown.join(', ')}\x1b[0m`);
+    process.exit(1);
+  }
+  let out = template.slice(0, first) + wanted.map((n) => blocks[n]).join('') + template.slice(last);
+
+  out = out.replace(/[ \t]*<!-- @optional:(\w+) -->\n?([\s\S]*?)[ \t]*<!-- @\/optional -->\n?/g,
+    (all, flag, body) => (MS_THEME[flag] === false ? '' : body));
+
+  /* The hero nav links to #about, #practice and friends. Dropping a section
+     and leaving its link is the kind of breakage nobody notices until an
+     advocate taps it on their own site, so the link goes with the section. */
+  const dropped = Object.keys(blocks).filter((n) => !wanted.includes(n));
+  dropped.forEach((n) => {
+    out = out.replace(new RegExp(`[ \\t]*<a href="#${n}"[^>]*>[\\s\\S]*?</a>\\n?`, 'g'), '');
+  });
+  return out;
+}
+
 function micrositeHtml(l, template, byCat, year) {
   const ms = l.microsite;
   const host = `${ms.slug}.${APEX}`;
@@ -489,7 +531,11 @@ function micrositeHtml(l, template, byCat, year) {
   const primaryCategoryName = (byCat[l.primaryCategory] || {}).name || l.primaryCategory;
   const area = (l.location && l.location.area) || 'Agra';
   const areaHi = (l.location && l.location.areaHi) || null;
-  const accent = ACCENTS_CSS[ms.accent] ? ms.accent : 'gold';
+  const fallbackAccent = ACCENTS_CSS[MS_THEME.defaultAccent] ? MS_THEME.defaultAccent : 'gold';
+  const accent = ACCENTS_CSS[ms.accent] ? ms.accent : fallbackAccent;
+  if (ms.accent && !ACCENTS_CSS[ms.accent]) {
+    console.warn(`  ! ${l.id}: accent "${ms.accent}" is not in data/theme.json — using ${fallbackAccent}`);
+  }
 
   const title = `${l.name} — ${primaryCategoryName} Advocate in ${area}, Agra`;
   const description = `${ms.tagline || primaryCategoryName + ' advocate in Agra'}. ` +
@@ -653,6 +699,11 @@ function micrositeHtml(l, template, byCat, year) {
     directoryUrl: `${SITE}/lawyer.html?id=${l.id}`,
     year: String(year),
   };
+
+  const wanted = Array.isArray(ms.sections) && ms.sections.length
+    ? ms.sections
+    : (MS_THEME.sections || ['facts', 'about', 'practice', 'courts', 'chamber', 'faq']);
+  template = applySections(template, wanted);
 
   /* every token must exist, or a {{placeholder}} ends up on a live page */
   const missing = [];

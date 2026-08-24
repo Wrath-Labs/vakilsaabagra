@@ -482,18 +482,304 @@ class bug above.
 
 ---
 
+## 2026-08-24 — Real phone number and email
+
+**What changed.** `+919876543210`, the stock Indian example number, is replaced
+everywhere by `+918954402360`, and `hello@vakilsaabagra.in` — a mailbox that was
+never confirmed to exist — by `subroto.2003@gmail.com`. Outstanding items 1 and
+2 are done. Items 3, 4 and 5 are deliberately left as they are: the social links
+stay empty, the twenty sample advocates stay, and the four demo microsites stay.
+
+**Four forms, not one.** The number is written four different ways and all four
+had to move together, which is why this is 142 occurrences across fourteen
+files rather than the one line in `js/config.js` that ought to own it:
+
+| form | where |
+|---|---|
+| `+918954402360` | `tel:` links, `config.phone` |
+| `918954402360` | `wa.me/` links, `config.whatsapp` |
+| `+91 89544 02360` | visible text, aria-labels, `config.phoneDisplay` |
+| `91-89544-02360` | `data-i18n` key slugs, and their entries in `en.json` and `hi.json` |
+
+**The translation keys carry the digits.** `tools/i18n-extract.js` slugs a key
+from the English text it marks up, so five keys had the old number baked into
+their names — `faq.call-91-98765-43210` and friends — and the Hindi strings they
+point at spell the number out in full. Renaming the key in the HTML without
+renaming it in both string tables would have silently dropped the Hindi for
+those lines; `tools/sync.js` warns about stray keys but a *missing* one just
+falls back to English, which is the failure that does not announce itself. All
+three were changed in the same pass. `node tools/i18n-extract.js --report` now
+reports 0 strings needing markup and no orphans, and `npm run sync` still counts
+711 Hindi strings with 4 English — the same numbers as before the change, which
+is the check that nothing was lost.
+
+The four that stay English are correct: the brand name twice, the
+`Language / भाषा` toggle label, and the email address itself.
+
+**The brand kit already had it right.** `tools/brand/tokens.js`, the business
+card and the three print pieces have carried `+91 89544 02360` since they were
+authored — that is the disagreement the business-card entry above flagged as
+making item 1 more urgent. The site now matches the card, and none of the 54
+rendered PNGs in `assets/brand/` needed re-rendering.
+
+**The email is a personal Gmail, knowingly.** It goes on the contact page and
+into the JSON-LD as the LocalBusiness `email` (`js/home.js:166`), so it is a
+public address and will be scraped. A dedicated mailbox on the domain would be
+better and remains worth doing; the advantage of this one is that it is real and
+read today, which the previous address was not. Recorded in `js/config.js` and
+the README rather than left as a silent choice.
+
+**Verified** by serving the site and loading it in a headless browser: the
+contact page resolves `tel:+918954402360`, `wa.me/918954402360` and
+`mailto:subroto.2003@gmail.com`, the `data-cfg` targets fill from the config,
+the injected JSON-LD carries the real `telephone` and `email`, and no page
+contains the string `98765` or `hello@vakilsaab` any more. `sameAs` is still
+absent from the JSON-LD, which is correct while the social links are empty. The
+one console error under `npm run serve` is the documented `501` from
+`/api/track`, which has no Function behind it under a plain static server.
+
+The `+919999000xx` numbers still on the directory and the microsites are the
+sample advocates' own — outstanding item 4, deliberately untouched.
+
+---
+
+## 2026-08-24 — Everything editable from JSON, and the prices published
+
+**The problem.** Changing the phone number touched 142 places across fourteen
+files. That is not a phone-number problem, it is a structure problem: the site's
+content lived in its markup, so every edit was a find-and-replace with a chance
+to miss one. This moves all of it into `data/`, and makes `npm run build` write
+the HTML.
+
+**Three new source files.**
+
+| File | Owns |
+|---|---|
+| `data/site.json` | business details, the header nav, the mobile drawer, the three footer link columns, and the `demoNotice` / `showPricing` flags |
+| `data/pricing.json` | the plans, what each costs, the badge, the footnotes |
+| `data/theme.json` | every brand colour, the four microsite accents, and which sections a microsite renders in what order |
+
+And one existing file changed job: **`data/i18n/en.json` is now the source for
+page copy, not a mirror of it.** It used to be generated from the markup by
+`tools/i18n-extract.js`. The new `tools/content.js` runs the other way and puts
+all 1271 marked strings back into the pages. The two tools are inverses, share
+the same `slug()`, and you want different ones at different times — extract
+after writing new markup, `content` after editing the JSON. Both directions are
+documented in the README.
+
+**`js/config.js` is now generated** from `data/site.json` and says so at the top.
+`phoneDisplay` is derived rather than stored, so there is no longer a display
+form that can disagree with the number people dial.
+
+**What the build does now.** `npm run content && npm run sync && npm run build:css`:
+
+```
+data/site.json     ─┬─→ js/config.js
+                    ├─→ header nav + mobile drawer      (all 11 pages)
+                    └─→ footer link columns             (all 11 pages)
+data/pricing.json  ──→ the plan table on list-your-practice.html
+data/theme.json    ─┬─→ the :root tokens in css/styles.css → css/tailwind.css
+                    ├─→ the microsite accent stylesheets
+                    └─→ microsite section order, sticky contact bar
+data/i18n/en.json  ──→ the text of every data-i18n element
+data/lawyers.json  ──→ dataset, sitemap, microsites, id list
+```
+
+`npm run check` reports what a build would change without writing anything.
+
+---
+
+### The phone number, properly this time
+
+Four mechanisms, because the digits were hiding in four different kinds of place:
+
+  1. **`tel:`, `wa.me/` and `mailto:` hrefs** are rewritten unconditionally.
+     Safe because every one of them on a static page belongs to the business —
+     advocate links are rendered by `js/*.js` from the dataset and never appear
+     in these files. A `?text=` prefill is preserved.
+  2. **`{phone}` and `{email}` tokens** replace the digits inside the string
+     tables. Six English strings and five Hindi ones mentioned the number;
+     none of them contain a digit now. `tools/content.js` expands them into the
+     static HTML — so a crawler and a JavaScript-off browser still see real
+     digits — and `js/i18n.js` expands them again at runtime through the single
+     `hi()` chokepoint. English and Hindi can no longer disagree about the
+     number, which they could before and nothing would have caught it.
+  3. **Five translation keys were named after the digits** —
+     `faq.call-91-89544-02360` and friends, because the extractor slugs keys
+     from the English. Renamed to `faq.call-phone` and the like, in the HTML and
+     both string tables.
+  4. **The bare numeral inside the call buttons** carries no key at all:
+     `tools/i18n-extract.js` skips bare numbers by design, which is how three
+     copies per page sat outside both systems. They are all inside a `tel:`
+     link, so they go with it.
+
+Anything left over that looks like a phone number and is not the one in
+`site.json` is named in the build output. **Verified** by changing the number in
+`data/site.json` alone, rebuilding, and finding zero occurrences of the old one
+anywhere in `*.html`, `js/`, `data/` or `sites/` — then changing it back. The
+stray-number check runs *after* the copy is applied, not before; checking earlier
+made it read un-expanded `{phone}` tokens and warn on all eleven pages of a
+correct change, which would have trained you to ignore it.
+
+The brand kit is deliberately **not** wired to `site.json`. A print run is an
+act, not a build artefact, and `tools/brand/tokens.js` already had the right
+number.
+
+---
+
+### Prices, published
+
+`list-your-practice.html` said "message us for the current figures". It now
+carries the table, from `data/pricing.json`:
+
+| Plan | Listing | Microsite | Both |
+|---|---|---|---|
+| Monthly | ₹200 | ₹600 | ₹800 |
+| Six months | ₹150 | ₹450 | ₹600 |
+| Yearly | ₹100 | ₹400 | ₹500 |
+
+The "both together" figure is **computed**, not stored, so it cannot drift from
+its two parts. The plan ids match the `listing.plan` values in
+`data/lawyers.json`. The Terms of Use link on the refund footnote survived the
+rewrite as a real link rather than becoming plain text — the refund terms have to
+stay reachable from the price.
+
+`flags.showPricing: false` hides the figures and restores the "ask us" lede,
+keeping the plan names and descriptions. The flag works in **both** directions:
+an earlier draft simply left whatever markup was on the page when hiding, which
+meant it worked exactly once.
+
+The "To be plain about it" note — not a law firm, not an intermediary, no share
+of your fee — is hand-written and was left alone. It is positioning, not price.
+
+Ten new strings, all translated into Hindi in the same pass. `npm run sync`
+reports 718 translated and 4 English, up from 711/4; the four that stay English
+are the brand name twice, the already-bilingual `Language / भाषा` label, and the
+email address.
+
+**One accessibility fix taken while writing it:** the "per month" label uses
+`--muted`, not `--muted-2`. At `text-xs`, `--muted-2` is the 3.48:1 pairing the
+brand kit's contrast check flagged as failing AA at any size.
+
+---
+
+### Contrast that cannot go stale
+
+`data/theme.json` drives the `:root` brand tokens, written into `css/styles.css`
+between two markers. The **WCAG ratio in each comment is measured at build time**
+against `--paper`, and each text token is labelled AA / large-text-only / fails.
+
+This is a direct response to the brand-kit entry above, where a token comment
+claimed a contrast the colour did not have. Change `--gold` to purple and the
+next build tells you the truth about purple. `_brandNotes` in the JSON is for
+description only; writing a ratio there is how the last one went stale.
+
+---
+
+### Microsite shape, from JSON
+
+`templates/microsite.html` now marks its removable sections with
+`<!-- @section:name -->`. `data/theme.json` → `microsite.sections` lists what to
+emit and in what order, and an advocate's own `microsite.sections` array
+overrides it for that one site — two advocates can have differently shaped pages
+without a second template. `stickyContactBar` is an `@optional` block on the
+same mechanism.
+
+Dropping a section also **drops its link from the hero nav**. The nav points at
+`#about`, `#practice`, `#chamber` and `#faq`, and a link to a section that is no
+longer rendered is the kind of thing nobody notices until an advocate taps it on
+their own site.
+
+The four accents moved out of `tools/sync.js` into the JSON. Add a fifth and
+`"accent": "forest"` starts working with no code change; an unknown name warns
+and falls back to the default rather than silently rendering brand gold.
+
+---
+
+### The FAQ structured data is derived now
+
+`index.html` and `faq.html` each carried a hand-written `FAQPage` JSON-LD block
+duplicating the accordion — 5 and 19 questions. It is now rebuilt from the
+accordion on the same page at build time, which is what Google requires and what
+was quietly not true: the JSON-LD still held the old phone number after the
+contact details changed, because nothing connected the two copies.
+
+The extraction reads the **visible text**, not the `data-i18n` values. Keying off
+the values dropped a whole Q&A from `index.html` — the "how do I get listed"
+answer is three spans around a phone link and has no key of its own. What the
+visitor reads is the thing Google has to be told.
+
+---
+
+### Smaller things this turned up
+
+- **The mobile drawer was never translated.** Its seven links carried no
+  `data-i18n` at all, so the whole drawer stayed English on the Hindi site. The
+  generated markup gives them the same keys the header uses; the Hindi already
+  existed.
+- **`aria-current="page"`** is now set in the drawer as well as the header.
+- **`data-cfg` fallbacks** — the contact page's email and phone spans that
+  `js/ui.js` fills at runtime — are filled at build time too. The value in the
+  source is what a crawler and a JavaScript-off browser read, and it was the last
+  stale email on the site.
+- **A footer locality chip that matches no live advocate** now warns at build
+  time. The link looks fine and only fails when somebody taps it and gets an
+  empty filter.
+- **Dead translation keys** are reported, and `--prune` drops them from both
+  tables. Reported rather than deleted by default, because an entry in `hi.json`
+  is somebody's work.
+
+---
+
+### Verified
+
+`npm run build` twice in a row: the second is a no-op, which is the property
+that makes the whole thing safe to run on every commit. Then all thirteen pages —
+eleven directory pages and two microsites — loaded in a headless browser and
+checked for: no `98765`, no old email, no un-expanded `{phone}` or `{email}`, no
+leaked `{{token}}` or `@section:` marker, the right `tel:` per page (the business
+number on directory pages, the advocate's own on microsites), no dangling
+in-page anchor, exactly one `h1`. The only console error is the documented `501`
+from `/api/track`, which has no Function behind it under a plain static server.
+
+End to end, changing a nav label, adding a footer link, changing a price and
+changing a brand colour — each in JSON only — all reached the pages; and a
+deliberately planted `+91 77777 88888` produced the warning it should.
+
+**Not done, and worth saying:** the page *structure* is still HTML. This makes
+every word, link, price, colour and contact detail JSON-driven, and the microsite
+sections orderable — it does not turn the layout into a page builder. Adding a
+new kind of section to a directory page is still an HTML edit, followed by
+`node tools/i18n-extract.js` to pull its strings out.
+
+---
+
 ## Outstanding
 
 Carried forward until done. Also in the README launch checklist.
 
+In order: 1 blocks 2, and 2 blocks everything public.
+
 | # | Item | Where |
 |---|---|---|
-| 1 | **The phone number is not real.** `+919876543210` is the stock example number — 4 references in `js/config.js` and 51 written directly into HTML across 11 pages. `grep -rn 9876543210` | `js/config.js:12` |
-| 2 | Confirm `hello@vakilsaabagra.in` exists and forwards somewhere read | `js/config.js:20` |
-| 3 | Fill in or delete the social links (empty means no `sameAs` is published, which is correct until real profiles exist) | `js/config.js:40` |
-| 4 | Replace the 20 sample advocates — all carry `chambers@example.com` and `+9199990000xx` — then set `demoNotice: false` | `data/lawyers.json`, `js/config.js:51` |
-| 5 | The four demo microsites (`ramesh`, `neha`, `deepak`, `rajeev`) have hand-written sample bios; delete or overwrite them when real advocates sign up | `data/lawyers.json` |
-| 6 | Manual hosting steps not attempted by design: nameservers, Pages project, custom domains, D1 binding, `ADMIN_TOKEN` | `docs/DEPLOY.md` Part 1 |
+| 1 | **Register `vakilsaabagra.in`.** It is not bought yet — confirmed available at the NIXI registry on 2026-08-24. Every canonical, the sitemap, the microsite hosts and the printed business card already say it | any accredited registrar |
+| 2 | Cloudflare setup. 1.2, 1.4 and 1.5 (Pages project, D1, `ADMIN_TOKEN`) need no domain and can be done now; 1.1 and 1.3 (nameservers, custom domains) wait for item 1 | `docs/DEPLOY.md` Part 1 |
+| 3 | Fill in or delete the social links (empty means no `sameAs` is published, which is correct until real profiles exist) | `data/site.json` → `social` |
+| 4 | Replace the 20 sample advocates — all carry `chambers@example.com` and `+9199990000xx` — then set `flags.demoNotice: false` | `data/lawyers.json`, `data/site.json` |
+| 5 | The four demo microsites (`ramesh`, `neha`, `deepak`, `rajeev`) have hand-written sample bios. Do **not** add their slugs as Cloudflare custom domains — no subdomain exists and the apex `robots.txt` disallows `/sites/`, so they are unreachable today, and a custom domain is exactly what would make a sample advocate look real | `data/lawyers.json` |
+| 6 | A mailbox on the domain, to replace the personal Gmail now published in the JSON-LD | `data/site.json` → `business.email` |
+
+**A note on deploying to `*.pages.dev` before item 1.** Every page carries
+`<link rel="canonical" href="https://vakilsaabagra.in/">` and
+`robots: index, follow`. Production `pages.dev` URLs are crawlable — only preview
+deployments get an automatic noindex — so Google can crawl the preview and be
+told the canonical is a domain that does not resolve. Small risk in practice,
+nothing links to a fresh `pages.dev` URL, and it vanishes when the domain is
+live. It is the reason to buy the domain first rather than last.
+
+**Done.** The phone number and the contact email (both 2026-08-24) were the first
+two items on this list; both are now real, and the structure that made them hard
+to change is gone.
 
 **Verified as far as is possible locally, needing Cloudflare to finish:**
 subdomain serving (30 middleware assertions pass and microsites render when

@@ -1,0 +1,66 @@
+{
+  "_comment": [
+    "What a listing costs. THIS FILE IS THE SOURCE for the priced table on",
+    "list-your-practice.html — tools/content.js renders the section from it.",
+    "Set flags.showPricing to false in data/site.json to hide the table without",
+    "deleting the numbers.",
+    "",
+    "A fixed technology and listing service fee, billed in advance. Not a",
+    "per-enquiry charge, not a commission, and never a share of the fee an",
+    "advocate charges a client. Keep it that way — the whole positioning in",
+    "about.html, terms.html and the Bar Council note depends on it."
+  ],
+
+  "currency": { "symbol": "₹", "code": "INR", "locale": "en-IN" },
+
+  "unit": "per month",
+  "billingNote": "Billed in advance for the period you choose. Prices are per month; you pay the whole period up front.",
+  "hiddenPricesNote": "Billed in advance for the period you choose. Message us on WhatsApp for the current figures and we will send them to you in writing before you pay anything.",
+
+  "plans": [
+    {
+      "id": "monthly",
+      "name": "Monthly",
+      "months": 1,
+      "listing": 200,
+      "microsite": 600,
+      "blurb": "Paid one month at a time. Stop whenever you like — the listing runs to the end of the month you have paid for.",
+      "highlight": false
+    },
+    {
+      "id": "halfyearly",
+      "name": "Six months",
+      "months": 6,
+      "listing": 150,
+      "microsite": 450,
+      "blurb": "Paid for half a year in advance, at a lower monthly rate than the monthly plan.",
+      "highlight": true,
+      "badge": "Most advocates choose this"
+    },
+    {
+      "id": "yearly",
+      "name": "Yearly",
+      "months": 12,
+      "listing": 100,
+      "microsite": 400,
+      "blurb": "Paid for the year in advance, at the lowest monthly rate.",
+      "highlight": false
+    }
+  ],
+
+  "columns": {
+    "listing": "Directory listing",
+    "microsite": "Microsite (optional)",
+    "total": "Both together"
+  },
+
+  "_footnotesComment": "Each entry is either a plain string, or an object with `text` plus a `link` — {href, label} — appended as a real link. Keep the Terms of Use link: the refund terms have to be reachable from the price.",
+  "footnotes": [
+    "The listing and the microsite are priced separately — you can take the listing on its own.",
+    "No charge per enquiry, and no share of any fee you charge a client.",
+    {
+      "text": "Refund and non-renewal terms are set out on the",
+      "link": { "href": "terms.html", "label": "Terms of Use" }
+    }
+  ]
+}

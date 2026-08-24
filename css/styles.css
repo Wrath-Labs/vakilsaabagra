@@ -10,20 +10,23 @@
    ========================================================================= */
 
 :root {
-  /* brand */
-  --ink:        #0f2540;   /* deep navy — headings, primary surfaces */
-  --ink-2:      #1b3f68;   /* lighter navy for gradients */
-  --ink-3:      #081527;   /* near-black navy */
-  --gold:       #b0861f;   /* accessible gold for text on light */
-  --gold-2:     #dcb85f;   /* decorative gold */
-  --gold-3:     #f7e3a1;   /* highlight gold */
-  --paper:      #ffffff;
-  --paper-2:    #faf8f4;   /* warm off-white section band */
-  --paper-3:    #f4f1ea;   /* deeper warm band */
-  --line:       #e6e1d6;
-  --line-2:     #efece4;
-  --muted:      #566a80;
-  --muted-2:    #7a8ba0;
+  /* ---- brand: AUTO-GENERATED from data/theme.json by tools/build-css.js.
+     Edit the JSON, not the block between these two markers. ---- */
+  /* @@BRAND-TOKENS-START@@ */
+  --ink:       #0f2540;   /* 15.45:1 on #ffffff — AA for body text; deep navy — headings, primary surfaces */
+  --ink-2:     #1b3f68;   /* 10.73:1 on #ffffff — AA for body text */
+  --ink-3:     #081527;
+  --gold:      #b0861f;   /* 3.35:1 on #ffffff — AA for large text and rules only, NOT body copy */
+  --gold-2:    #dcb85f;   /* decorative gold — never text */
+  --gold-3:    #f7e3a1;   /* highlight gold — backgrounds only */
+  --paper:     #ffffff;
+  --paper-2:   #faf8f4;   /* warm off-white section band */
+  --paper-3:   #f4f1ea;   /* deeper warm band */
+  --line:      #e6e1d6;
+  --line-2:    #efece4;
+  --muted:     #566a80;   /* 5.57:1 on #ffffff — AA for body text */
+  --muted-2:   #7a8ba0;   /* 3.48:1 on #ffffff — AA for large text and rules only, NOT body copy */
+  /* @@BRAND-TOKENS-END@@ */
 
   /* elevation */
   --shadow-sm:  0 1px 2px rgba(15, 37, 64, .06), 0 1px 3px rgba(15, 37, 64, .04);

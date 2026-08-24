@@ -82,7 +82,7 @@ window.__VS_LAWYER__ = '{{id}}';
   <div class="mx-auto flex max-w-6xl items-center gap-3 px-4 py-3 sm:px-6">
     <a href="{{siteUrl}}" class="min-w-0 shrink">
       <span class="block truncate font-display text-[17px] font-bold leading-none text-[var(--ink)] sm:text-lg">{{name}}</span>
-      <span class="mt-1 block text-[9px] font-bold uppercase tracking-[.2em] text-[var(--gold)] sm:text-[10px]" data-i18n="microsite.advocate-agra">Advocate &middot; Agra</span>
+      <span class="mt-1 block text-[9px] font-bold uppercase tracking-[.2em] text-[var(--gold)] sm:text-[10px]" data-i18n="microsite.advocate-agra">Advocate · Agra</span>
     </a>
 
     <div class="lang-toggle shrink-0" role="group" aria-label="Language / भाषा" data-i18n-attr="aria-label:common.label.language">
@@ -148,6 +148,7 @@ window.__VS_LAWYER__ = '{{id}}';
   </section>
 
   <!-- ═════════════════════════════════════════════════════════════ facts -->
+  <!-- @section:facts -->
   <section class="border-b border-[var(--line)] bg-[var(--paper-2)]">
     <dl class="mx-auto grid max-w-6xl grid-cols-2 gap-px bg-[var(--line)] sm:grid-cols-4">
       <div class="bg-white px-4 py-6 text-center">
@@ -170,6 +171,8 @@ window.__VS_LAWYER__ = '{{id}}';
   </section>
 
   <!-- ═════════════════════════════════════════════════════════════ about -->
+  <!-- @/section -->
+  <!-- @section:about -->
   <section id="about" class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20">
     <div class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px]">
       <div data-reveal>
@@ -202,6 +205,8 @@ window.__VS_LAWYER__ = '{{id}}';
   </section>
 
   <!-- ══════════════════════════════════════════════════════════ practice -->
+  <!-- @/section -->
+  <!-- @section:practice -->
   <section id="practice" class="border-y border-[var(--line)] bg-[var(--paper-2)] py-14 sm:py-20">
     <div class="mx-auto max-w-6xl px-4 sm:px-6">
       <div data-reveal>
@@ -215,6 +220,8 @@ window.__VS_LAWYER__ = '{{id}}';
   </section>
 
   <!-- ════════════════════════════════════════════ courts and languages -->
+  <!-- @/section -->
+  <!-- @section:courts -->
   <section class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20">
     <div class="grid gap-10 sm:grid-cols-2">
       <div data-reveal>
@@ -240,6 +247,8 @@ window.__VS_LAWYER__ = '{{id}}';
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════ chamber -->
+  <!-- @/section -->
+  <!-- @section:chamber -->
   <section id="chamber" class="border-y border-[var(--line)] bg-[var(--paper-2)] py-14 sm:py-20">
     <div class="mx-auto max-w-6xl px-4 sm:px-6">
       <div class="grid gap-10 lg:grid-cols-2">
@@ -276,7 +285,10 @@ window.__VS_LAWYER__ = '{{id}}';
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════════ faq -->
+  <!-- @/section -->
+  <!-- @section:faq -->
   {{faqs}}
+  <!-- @/section -->
 </main>
 
 <!-- ═══════════════════════════════════════════════════════════════ footer -->
@@ -303,10 +315,7 @@ window.__VS_LAWYER__ = '{{id}}';
 
     <div class="mt-10 rounded-xl border border-white/10 bg-white/[.03] p-5">
       <p class="text-xs leading-relaxed text-[#8ea6c2]">
-        <strong class="text-white" data-i18n="common.disclaimer">Disclaimer.</strong> <span data-i18n="microsite.this-page-carries-factual-particulars-of-an">This page carries factual particulars of an advocate&rsquo;s
-        practice, published at their request, and is not an advertisement or solicitation within the meaning of the
-        Bar Council of India Rules. Nothing here is legal advice, and no advocate&ndash;client relationship is created
-        by reading it or by contacting the number above.</span>
+        <strong class="text-white" data-i18n="common.disclaimer">Disclaimer.</strong> <span data-i18n="microsite.this-page-carries-factual-particulars-of-an">This page carries factual particulars of an advocate’s practice, published at their request, and is not an advertisement or solicitation within the meaning of the Bar Council of India Rules. Nothing here is legal advice, and no advocate–client relationship is created by reading it or by contacting the number above.</span>
         <span data-demo-notice data-i18n="microsite.this-is-a-sample-listing-published-for"> This is a sample listing published for demonstration.</span>
       </p>
     </div>
@@ -320,7 +329,8 @@ window.__VS_LAWYER__ = '{{id}}';
   </div>
 </footer>
 
-<!-- sticky contact bar, mobile only -->
+<!-- sticky contact bar, mobile only — theme.json microsite.stickyContactBar -->
+<!-- @optional:stickyContactBar -->
 <div class="fixed inset-x-0 bottom-0 z-40 grid grid-cols-2 gap-2 border-t border-[var(--line)] bg-white/95 p-3 backdrop-blur lg:hidden">
   <a href="{{telHref}}" class="btn btn-primary w-full px-4 py-3 text-sm">
     <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .4 1.9.7 2.8a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.3-1.2a2 2 0 012.1-.5c.9.3 1.8.6 2.8.7a2 2 0 011.7 2z"/></svg>
@@ -331,6 +341,7 @@ window.__VS_LAWYER__ = '{{id}}';
     <span data-i18n="common.whatsapp">WhatsApp</span>
   </a>
 </div>
+<!-- @/optional -->
 
 <script src="/js/config.js"></script>
 <script src="/js/ui.js" defer></script>
