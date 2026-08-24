@@ -46,7 +46,7 @@ const CHECK = process.argv.includes('--check');
 
 const PAGES = ['index.html', 'lawyers.html', 'lawyer.html', 'practice-areas.html',
   'about.html', 'contact.html', 'faq.html', 'list-your-practice.html',
-  'privacy.html', 'terms.html', '404.html'];
+  'pricing.html', 'privacy.html', 'terms.html', '404.html'];
 
 const read = (p) => fs.readFileSync(path.join(ROOT, p), 'utf8');
 const readJson = (p) => JSON.parse(read(p));
@@ -111,6 +111,18 @@ function keyFor(label, existingKey, scope) {
 
   const base = (scope || 'common') + '.' + slug(label);
   if (en[base] === label) return base;
+
+  /* Before minting: is this exact English already keyed somewhere?
+     The "what you get" lists render on two pages now, and minting a second key
+     for a string that already has Hindi would put a translated line back into
+     English for no reason. Same-scope first, then common.*, then anywhere —
+     sorted, so the choice is deterministic across machines. */
+  const same = Object.keys(en).filter((k) => en[k] === label).sort();
+  const preferred = same.find((k) => k.startsWith((scope || 'common') + '.'))
+    || same.find((k) => k.startsWith('common.'))
+    || same[0];
+  if (preferred) return preferred;
+
   if (!(base in en)) {
     en[base] = label; minted.push(base);
     return base;
@@ -162,6 +174,11 @@ function keyMap(regionHtml) {
   return out;
 }
 
+function money(n) {
+  const c = pricing.currency;
+  return c.symbol + Number(n).toLocaleString(c.locale || 'en-IN');
+}
+
 /* ------------------------------------------------- 1. js/config.js */
 
 function buildConfig() {
@@ -174,6 +191,7 @@ function buildConfig() {
   const cfg = {
     name: b.name, tagline: b.tagline, url: b.url,
     phone: b.phone, phoneDisplay: display, whatsapp: b.whatsapp, email: b.email,
+    priceFrom: money(Math.min(...pricing.plans.map((p) => p.listing))),
     micrositeDomain: b.micrositeDomain,
     address: b.address, geo: b.geo, hours: b.hours,
     social: Object.fromEntries(
@@ -279,16 +297,38 @@ function footerAreas(existing) {
 
 /* ------------------------------------------------- 3. the priced plan table */
 
-function money(n) {
-  const c = pricing.currency;
-  return c.symbol + Number(n).toLocaleString(c.locale || 'en-IN');
-}
-
 /**
  * The plan table. Rendered into the page rather than fetched, so the prices
  * are in the HTML source an advocate's phone loads on a bad connection, and in
  * what Google indexes.
  */
+/**
+ * The compact block on list-your-practice.html.
+ *
+ * The full table is on pricing.html and only there. Two pages carrying the
+ * same nine figures is two pages Google has to choose between, and the listing
+ * flow is about the process, not the price. `{from}` is the cheapest listing
+ * rate across the plans, computed rather than written down.
+ */
+function pricingSummary() {
+  const sm = pricing.summary;
+  const k = (t) => keyFor(t, null, 'listing');
+  /* {from} stays a token here — expanded by applyCopy, like {phone}. Baking
+     the figure in would put "₹100" into a translation key's name and value,
+     and the yearly rate would then have two homes. */
+  const lede = sm.lede;
+  const figures = site.flags.showPricing === true;
+
+  return `
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <h3 class="font-display text-xl font-bold text-[var(--ink)]" data-i18n="${k(sm.heading)}">${esc(sm.heading)}</h3>
+          <a href="${escAttr(sm.linkHref)}" class="btn btn-gold px-5 py-2.5 text-sm" data-i18n="${k(sm.linkLabel)}">${esc(sm.linkLabel)}</a>
+        </div>
+        <div class="rule-gold mt-3 mb-5"></div>
+        <p class="pretty text-[15px] leading-relaxed text-[var(--muted)]" data-i18n="${k(figures ? lede : pricing.hiddenPricesNote)}">${esc(figures ? lede : pricing.hiddenPricesNote)}</p>
+        `;
+}
+
 function pricingCard() {
   const show = site.flags.showPricing === true;
   const k = (label) => keyFor(label, null, 'listing');
@@ -350,6 +390,120 @@ function pricingCard() {
 ${notes}
         </ul>
         `;
+}
+
+/* ------------------------------------------------- 4. pricing.html body */
+
+/**
+ * pricing.html has no hand-written body at all. Every section between an
+ * `<!-- @auto:name -->` / `<!-- /@auto -->` pair is rendered from
+ * data/pricing.json, so the page is JSON the whole way down — which is the
+ * point of having a separate page rather than a second copy of the table.
+ *
+ * The "what you get" lists are rendered onto list-your-practice.html from the
+ * same JSON, so the two pages cannot drift apart.
+ */
+function autoRegion(html, name, build, file) {
+  const open = `<!-- @auto:${name} -->`;
+  const close = '<!-- /@auto -->';
+  const a = html.indexOf(open);
+  if (a === -1) return html;
+  const b = html.indexOf(close, a);
+  if (b === -1) throw new Error(`${file}: @auto:${name} is not closed`);
+  return html.slice(0, a + open.length) + build() + '\n      ' + html.slice(b);
+}
+
+const TICK = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" ' +
+  'stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="mt-1 shrink-0 text-[var(--gold)]" ' +
+  'aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>';
+const CHEV = '<svg class="acc-chevron shrink-0 text-[var(--gold)]" viewBox="0 0 24 24" width="18" height="18" ' +
+  'fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+
+function pricingHero() {
+  const g = pricing.page;
+  const k = (t) => keyFor(t, null, 'pricing');
+  return `
+      <p class="text-xs font-bold uppercase tracking-[.2em] text-[var(--gold-2)]" data-i18n="${k(g.eyebrow)}">${esc(g.eyebrow)}</p>
+      <h1 class="balance mt-4 font-display text-4xl font-bold leading-[1.1] sm:text-5xl" data-i18n="${k(g.title)}">${esc(g.title)}</h1>
+      <p class="pretty mx-auto mt-5 max-w-2xl text-[17px] leading-relaxed text-[#c7d6e8]" data-i18n="${k(g.lede)}">${esc(g.lede)}</p>
+      <p class="pretty mx-auto mt-6 max-w-2xl rounded-xl border border-white/15 bg-white/5 p-4 text-sm leading-relaxed text-[#c7d6e8]" data-i18n="${k(g.freeNote)}">${esc(g.freeNote)}</p>`;
+}
+
+/**
+ * The two feature lists. Shared by pricing.html and list-your-practice.html so
+ * the two pages cannot drift.
+ *
+ * `withHeading` is false on list-your-practice, where the section already has
+ * its own "What it includes, and what it costs" heading and a lede above —
+ * stacking a second heading under those reads as a mistake.
+ */
+function includesCards(withHeading) {
+  const inc = pricing.includes;
+  const k = (t) => keyFor(t, null, 'pricing');
+  const card = (c) => `
+        <div class="card p-6 sm:p-7" data-reveal>
+          <h3 class="font-display text-xl font-bold text-[var(--ink)]"><span data-i18n="${k(c.heading)}">${esc(c.heading)}</span>${
+    c.badge ? ` <span class="ml-1 align-middle text-xs font-semibold uppercase tracking-wide text-[var(--gold)]" data-i18n="${k(c.badge)}">${esc(c.badge)}</span>` : ''}</h3>
+          <div class="rule-gold mt-3 mb-5"></div>
+          <ul class="space-y-3 text-[15px] leading-relaxed text-[var(--ink)]">
+${c.items.map((it) => `            <li class="flex items-start gap-2.5">${TICK}<span data-i18n="${k(it)}">${esc(it)}</span></li>`).join('\n')}
+          </ul>
+        </div>`;
+  const heading = withHeading === false ? '' : `
+      <div class="mx-auto max-w-2xl text-center" data-reveal>
+        <h2 class="balance font-display text-3xl font-bold text-[var(--ink)]" data-i18n="${k(inc.heading)}">${esc(inc.heading)}</h2>
+      </div>`;
+  return `${heading}
+      <div class="${withHeading === false ? 'mt-0' : 'mt-10'} grid gap-6 lg:grid-cols-2" data-stagger="80">${card(inc.listing)}${card(inc.microsite)}
+      </div>`;
+}
+
+function termsList() {
+  const t = pricing.terms;
+  const k = (x) => keyFor(x, null, 'pricing');
+  return `
+    <div class="mx-auto max-w-2xl text-center" data-reveal>
+      <h2 class="balance font-display text-3xl font-bold text-[var(--ink)]" data-i18n="${k(t.heading)}">${esc(t.heading)}</h2>
+    </div>
+    <dl class="mt-10 space-y-6" data-stagger="70">
+${t.items.map((it) => `      <div data-reveal>
+        <dt class="font-display text-lg font-bold text-[var(--ink)]" data-i18n="${k(it.term)}">${esc(it.term)}</dt>
+        <dd class="pretty mt-2 text-[15px] leading-[1.8] text-[var(--muted)]" data-i18n="${k(it.detail)}">${esc(it.detail)}</dd>
+      </div>`).join('\n')}
+    </dl>`;
+}
+
+function pricingFaq() {
+  const f = pricing.faqs;
+  const k = (x) => keyFor(x, null, 'pricing');
+  return `
+      <h2 class="text-center font-display text-3xl font-bold text-[var(--ink)]" data-reveal data-i18n="${k(f.heading)}">${esc(f.heading)}</h2>
+      <div class="rule-gold mx-auto mt-3 mb-8"></div>
+      <div class="space-y-3" data-accordion-group data-stagger="55">
+${f.items.map((it) => `        <div class="acc-item card overflow-hidden" data-reveal>
+          <button type="button" aria-expanded="false" class="flex w-full items-center justify-between gap-4 p-5 text-left">
+            <span class="font-semibold text-[var(--ink)]" data-i18n="${k(it.q)}">${esc(it.q)}</span>
+            ${CHEV}
+          </button>
+          <div class="acc-panel"><div><p class="px-5 pb-5 text-[15px] leading-relaxed text-[var(--muted)]" data-i18n="${k(it.a)}">${esc(it.a)}</p></div></div>
+        </div>`).join('\n')}
+      </div>`;
+}
+
+function pricingCta() {
+  const c = pricing.cta;
+  const k = (x) => keyFor(x, null, 'pricing');
+  const wa = 'https://wa.me/' + String(site.business.whatsapp).replace(/\D/g, '') +
+    '?text=' + encodeURIComponent(c.whatsappText);
+  return `
+    <div data-reveal>
+      <h2 class="balance font-display text-3xl font-bold text-[var(--ink)]" data-i18n="${k(c.heading)}">${esc(c.heading)}</h2>
+      <p class="pretty mx-auto mt-4 max-w-2xl text-[15px] leading-relaxed text-[var(--muted)]" data-i18n="${k(c.body)}">${esc(c.body)}</p>
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <a href="${escAttr(wa)}" target="_blank" rel="noopener" class="btn btn-gold px-7 py-3.5" data-i18n="${k(c.whatsappLabel)}">${esc(c.whatsappLabel)}</a>
+        <a href="${escAttr(c.secondaryHref)}" class="btn btn-ghost px-7 py-3.5" data-i18n="${k(c.secondaryLabel)}">${esc(c.secondaryLabel)}</a>
+      </div>
+    </div>`;
 }
 
 /* ------------------------------------------------- 4. contact links */
@@ -523,7 +677,11 @@ function applyCopy(html, file) {
 /* ------------------------------------------------------------------- run */
 
 const phoneDisplay = buildConfig();
-TOKENS = { '{phone}': phoneDisplay, '{email}': site.business.email };
+TOKENS = {
+  '{phone}': phoneDisplay,
+  '{email}': site.business.email,
+  '{from}': money(Math.min(...pricing.plans.map((p) => p.listing))),
+};
 
 for (const page of PAGES) {
   const file = path.join(ROOT, page);
@@ -541,14 +699,29 @@ for (const page of PAGES) {
     process.exit(1);
   }
 
+  if (page === 'pricing.html') {
+    try {
+      html = autoRegion(html, 'hero', pricingHero, page);
+      html = autoRegion(html, 'plans', pricingCard, page);
+      html = autoRegion(html, 'includes', includesCards, page);
+      html = autoRegion(html, 'terms', termsList, page);
+      html = autoRegion(html, 'faq', pricingFaq, page);
+      html = autoRegion(html, 'cta', pricingCta, page);
+    } catch (e) {
+      console.error(`\x1b[31m✗ ${e.message}\x1b[0m`);
+      process.exit(1);
+    }
+  }
+
   if (page === 'list-your-practice.html') {
     try {
+      html = autoRegion(html, 'includes', () => includesCards(false), page);
       html = replaceInner(html, /<(div)\s+class="card mt-6 p-6 sm:p-7"\s+data-reveal>/, (ex) => {
         /* the closing "To be plain about it" note is positioning, not price —
            it is hand-written, says what we are not, and stays exactly as it is */
         const keep = ex.indexOf('<p class="pretty mt-4 rounded-xl');
         if (keep === -1) throw new Error('list-your-practice.html: the "to be plain about it" note moved');
-        return pricingCard() + ex.slice(keep);
+        return pricingSummary() + ex.slice(keep);
       }, 'pricing card');
     } catch (e) {
       console.error(`\x1b[31m✗ ${e.message}\x1b[0m`);

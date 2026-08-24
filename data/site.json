@@ -6,18 +6,14 @@
     "Run `npm run build` after editing. Never edit js/config.js by hand — it says",
     "so at the top of the generated file, and your edit is overwritten."
   ],
-
   "business": {
     "name": "Vakil Saab Agra",
     "tagline": "Agra’s advocate directory",
     "url": "https://vakilsaabagra.in",
-
     "phone": "+918954402360",
     "whatsapp": "918954402360",
     "email": "subroto.2003@gmail.com",
-
     "micrositeDomain": "vakilsaabagra.in",
-
     "address": {
       "street": "Sanjay Place",
       "locality": "Agra",
@@ -25,10 +21,12 @@
       "postalCode": "282002",
       "country": "IN"
     },
-    "geo": { "lat": 27.1767, "lng": 78.0081 },
+    "geo": {
+      "lat": 27.1767,
+      "lng": 78.0081
+    },
     "hours": "Mon–Sat, 10:00 AM – 7:00 PM"
   },
-
   "social": {
     "_comment": "Published as schema.org sameAs. Empty values are skipped entirely, which is correct until a profile actually exists. Never point one at a platform's home page.",
     "facebook": "",
@@ -36,30 +34,55 @@
     "linkedin": "",
     "youtube": ""
   },
-
   "flags": {
     "demoNotice": true,
     "_demoNotice": "Shows the 'sample listings' line in the footer of the directory and every microsite. Set false once data/lawyers.json holds real, consented advocates.",
     "showPricing": true,
     "_showPricing": "Renders the priced plan table on list-your-practice.html from data/pricing.json. Set false to go back to 'message us for the current figures'."
   },
-
   "nav": {
     "_comment": "The primary nav and the mobile drawer, in order. `href` is a page in the repo root. Add, remove or reorder here and every page's header follows.",
     "primary": [
-      { "href": "index.html", "label": "Home" },
-      { "href": "lawyers.html", "label": "Find a Lawyer" },
-      { "href": "practice-areas.html", "label": "Practice Areas" },
-      { "href": "about.html", "label": "About" },
-      { "href": "faq.html", "label": "FAQ" },
-      { "href": "contact.html", "label": "Contact" }
+      {
+        "href": "index.html",
+        "label": "Home"
+      },
+      {
+        "href": "lawyers.html",
+        "label": "Find a Lawyer"
+      },
+      {
+        "href": "practice-areas.html",
+        "label": "Practice Areas"
+      },
+      {
+        "href": "pricing.html",
+        "label": "Pricing"
+      },
+      {
+        "href": "about.html",
+        "label": "About"
+      },
+      {
+        "href": "faq.html",
+        "label": "FAQ"
+      },
+      {
+        "href": "contact.html",
+        "label": "Contact"
+      }
     ],
     "drawerExtra": [
-      { "href": "list-your-practice.html", "label": "List Your Practice" }
+      {
+        "href": "list-your-practice.html",
+        "label": "List Your Practice"
+      }
     ],
-    "cta": { "href": "list-your-practice.html", "label": "List your practice" }
+    "cta": {
+      "href": "list-your-practice.html",
+      "label": "List your practice"
+    }
   },
-
   "footer": {
     "practiceAreas": {
       "_comment": "Generated from the categories in data/lawyers.json — add a category there and the column grows. `suffix` is appended to each category name.",
@@ -70,25 +93,122 @@
     "quickLinks": {
       "heading": "Quick Links",
       "links": [
-        { "href": "lawyers.html", "label": "All Advocates" },
-        { "href": "practice-areas.html", "label": "Practice Areas" },
-        { "href": "list-your-practice.html", "label": "List Your Practice" },
-        { "href": "about.html", "label": "About Us" },
-        { "href": "faq.html", "label": "FAQ" },
-        { "href": "contact.html", "label": "Contact" },
-        { "href": "privacy.html", "label": "Privacy Policy" },
-        { "href": "terms.html", "label": "Terms of Use" }
+        {
+          "href": "lawyers.html",
+          "label": "All Advocates"
+        },
+        {
+          "href": "practice-areas.html",
+          "label": "Practice Areas"
+        },
+        {
+          "href": "list-your-practice.html",
+          "label": "List Your Practice"
+        },
+        {
+          "href": "pricing.html",
+          "label": "Pricing"
+        },
+        {
+          "href": "about.html",
+          "label": "About Us"
+        },
+        {
+          "href": "faq.html",
+          "label": "FAQ"
+        },
+        {
+          "href": "contact.html",
+          "label": "Contact"
+        },
+        {
+          "href": "privacy.html",
+          "label": "Privacy Policy"
+        },
+        {
+          "href": "terms.html",
+          "label": "Terms of Use"
+        }
       ]
     },
     "areas": {
       "_comment": "The locality chips. Each becomes lawyers.html?area=<name>, so the name must match `location.area` in data/lawyers.json exactly or the filter returns nothing. tools/content.js warns when one has no advocates.",
       "heading": "Advocates by Area",
       "list": [
-        "Civil Lines", "Sadar Bazaar", "Kamla Nagar", "Dayalbagh", "Sikandra",
-        "Tajganj", "Shahganj", "Belanganj", "Balkeshwar", "Fatehabad Road",
-        "Trans Yamuna Colony", "Loha Mandi", "Khandari", "Bodla", "Rakabganj",
-        "Shamshabad Road", "Nai Ki Mandi", "Collectorate"
+        "Civil Lines",
+        "Sadar Bazaar",
+        "Kamla Nagar",
+        "Dayalbagh",
+        "Sikandra",
+        "Tajganj",
+        "Shahganj",
+        "Belanganj",
+        "Balkeshwar",
+        "Fatehabad Road",
+        "Trans Yamuna Colony",
+        "Loha Mandi",
+        "Khandari",
+        "Bodla",
+        "Rakabganj",
+        "Shamshabad Road",
+        "Nai Ki Mandi",
+        "Collectorate"
       ]
     }
+  },
+  "sitemap": {
+    "_comment": "The static pages, for sitemap.xml. tools/sync.js adds the category and advocate URLs itself. Add a page here when you add one, or it never gets submitted. 404.html and lawyer.html are deliberately absent — one is an error page, the other is a template with no content of its own.",
+    "pages": [
+      {
+        "loc": "/",
+        "priority": "1.0",
+        "changefreq": "weekly"
+      },
+      {
+        "loc": "/lawyers.html",
+        "priority": "0.9",
+        "changefreq": "weekly"
+      },
+      {
+        "loc": "/practice-areas.html",
+        "priority": "0.8",
+        "changefreq": "monthly"
+      },
+      {
+        "loc": "/list-your-practice.html",
+        "priority": "0.7",
+        "changefreq": "monthly"
+      },
+      {
+        "loc": "/pricing.html",
+        "priority": "0.7",
+        "changefreq": "monthly"
+      },
+      {
+        "loc": "/faq.html",
+        "priority": "0.6",
+        "changefreq": "monthly"
+      },
+      {
+        "loc": "/about.html",
+        "priority": "0.5",
+        "changefreq": "yearly"
+      },
+      {
+        "loc": "/contact.html",
+        "priority": "0.5",
+        "changefreq": "yearly"
+      },
+      {
+        "loc": "/privacy.html",
+        "priority": "0.2",
+        "changefreq": "yearly"
+      },
+      {
+        "loc": "/terms.html",
+        "priority": "0.2",
+        "changefreq": "yearly"
+      }
+    ]
   }
 }

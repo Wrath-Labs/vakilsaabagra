@@ -66,7 +66,9 @@ belongs in one of these, and the build will overwrite you.
 | the header nav or the mobile drawer | `data/site.json` → `nav` | `npm run build` |
 | the footer link columns and locality chips | `data/site.json` → `footer` | `npm run build` |
 | whether the demo notice or the prices show | `data/site.json` → `flags` | `npm run build` |
-| what a listing costs | `data/pricing.json` | `npm run build` |
+| what a listing costs | `data/pricing.json` → `plans` | `npm run build` |
+| any wording on the pricing page | `data/pricing.json` → `page` / `includes` / `terms` / `faqs` / `cta` | `npm run build` |
+| which pages go in `sitemap.xml` | `data/site.json` → `sitemap.pages` | `npm run build` |
 | any brand colour | `data/theme.json` → `brand` | `npm run build` |
 | the four microsite looks, or add a fifth | `data/theme.json` → `accents` | `npm run build` |
 | which sections a microsite shows, and in what order | `data/theme.json` → `microsite.sections` | `npm run build` |
@@ -83,7 +85,10 @@ useful before committing.
 data/site.json     ─┬─→ js/config.js                     (generated; never hand-edit)
                     ├─→ header nav + mobile drawer       (all 11 pages)
                     └─→ footer link columns              (all 11 pages)
-data/pricing.json  ──→ the plan table on list-your-practice.html
+data/pricing.json  ─┬─→ the whole of pricing.html — hero, plans, what you get,
+                    │    billing terms, FAQ, call to action
+                    └─→ the "what you get" cards and the price summary on
+                         list-your-practice.html
 data/theme.json    ─┬─→ the :root brand tokens in css/styles.css → css/tailwind.css
                     ├─→ the microsite accent stylesheets
                     └─→ microsite section order and the sticky contact bar
@@ -93,6 +98,20 @@ data/lawyers.json  ──→ the dataset, the sitemap, the microsites, the id li
 
 `tools/content.js` does the first three; `tools/build-css.js` the fourth;
 `tools/sync.js` the rest.
+
+### Adding a page
+
+1. Copy an existing page's shell (head, header, drawer, footer) — the nav and
+   footer inside it are regenerated, so the copy does not have to be current.
+2. Mark each body section you want driven by JSON with
+   `<!-- @auto:name -->` … `<!-- /@auto -->`, and add a renderer in
+   `tools/content.js`.
+3. Add the file to `PAGES` in `tools/content.js`.
+4. Add it to `data/site.json` → `sitemap.pages`, or `npm run build` warns that
+   the page exists and will never be submitted.
+5. Add a `nav.primary` entry if it belongs in the header.
+
+`pricing.html` is the worked example: it has no hand-written body at all.
 
 ### Two directions, and when to use each
 
@@ -259,10 +278,16 @@ charges a client — see the note under *Legal note* below, and keep it that way
 | Yearly | ₹100 | ₹400 | ₹500 |
 
 **`data/pricing.json` is the source.** The table above is a copy for readers of
-this file; the numbers that reach an advocate come from that JSON, rendered into
-the plan cards on `list-your-practice.html` by `npm run build`. Change a figure
-there and the page follows — including the "both together" total, which is
-computed, so it cannot drift from its two parts.
+this file; the numbers that reach an advocate come from that JSON, rendered by
+`npm run build`. Change a figure there and the pages follow — including the
+"both together" total and the "from ₹100" line, both computed, so neither can
+drift from the plan rates.
+
+**The full table lives on `pricing.html` and only there.** `list-your-practice.html`
+carries a one-line summary and a link. Two pages holding the same nine figures
+is two pages Google has to choose between, and the listing flow is about the
+process rather than the price. The "what you get" cards *do* appear on both,
+rendered from the same `includes` block, so they cannot disagree.
 
 Prices are visible on the site because `data/site.json` → `flags.showPricing` is
 `true`. Set it to `false` and the cards keep their names and descriptions but
@@ -795,6 +820,8 @@ index.html                home
 lawyers.html              directory — search, filters, sort, paging
 lawyer.html               advocate profile (?id=…)
 practice-areas.html       all 12 areas and 96 case types
+pricing.html              what a listing costs — no hand-written body at all,
+                          every section rendered from data/pricing.json
 about.html  contact.html  faq.html  list-your-practice.html
 privacy.html  terms.html  404.html
 

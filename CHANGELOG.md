@@ -754,6 +754,89 @@ new kind of section to a directory page is still an HTML edit, followed by
 
 ---
 
+## 2026-08-24 — A pricing page, in the navbar
+
+**What it is.** `pricing.html`, the twelfth page, and a **Pricing** item in the
+header nav and the mobile drawer on all of them.
+
+**It has no hand-written body.** Every section between an `<!-- @auto:name -->`
+pair is rendered from `data/pricing.json` — the hero, the plan table, the two
+"what you get" lists, the billing and leaving terms, a six-question FAQ about
+the fee, and the closing WhatsApp call to action. It is the worked example for
+the JSON-driven build in the entry above: the file on disk is a shell and six
+markers.
+
+**The full table is on this page and only this page.** The block on
+`list-your-practice.html` became a one-line summary and a link. Two pages
+carrying the same nine figures is two pages Google has to choose between, and
+the listing flow is about the process, not the price.
+
+**The "what you get" cards were duplicated and now are not.** They were
+hand-written on `list-your-practice.html`; the new page needed the same content.
+Rather than a second copy they moved into `pricing.json` → `includes` and both
+pages render from it. `includesCards(false)` drops the heading on
+`list-your-practice`, which already has one of its own above the lede.
+
+**A note on placing it in the nav.** The prices concern advocates; visitors
+looking for a lawyer pay nothing, and `about.html`, `faq.html` and the footer all
+say so. A top-level **Pricing** link is therefore read by the wrong audience
+first. The page opens by saying so, in a panel above the fold:
+
+> If you are looking for a lawyer, this page is not for you — searching,
+> filtering and contacting an advocate is free, there is no account, and we take
+> no share of any fee you agree with them.
+
+That is a mitigation, not a fix; if enquiries start arriving asking whether the
+site charges, the nav item is the thing to remove.
+
+---
+
+### `{from}` is a token, like `{phone}`
+
+The summary line reads "starts at ₹100 a month". Written literally that would
+have put the figure into a translation key's *name* and its value in two string
+tables — the exact staleness the phone number cost 142 replacements to undo. So
+`{from}` joins `{phone}` and `{email}`: computed as the cheapest listing rate
+across the plans, published as `priceFrom` in the generated `js/config.js`, and
+expanded by `tools/content.js` at build time and `js/i18n.js` at runtime.
+Change the yearly rate and the sentence follows, in both languages.
+
+### Keys are reused when the English already exists
+
+`keyFor()` now looks for an existing key with the same English before minting a
+new one — same scope first, then `common.*`, then anywhere, sorted so the choice
+is deterministic. Without it the shared "what you get" lists minted 39
+`pricing.*` duplicates of `listing.*` strings that were already translated, and
+39 lines would have silently reverted to English on the Hindi site.
+
+### The sitemap comes from `data/site.json`
+
+`tools/sync.js` had the static page list hardcoded, so a new page would have
+rendered, linked and never been submitted. The list moved to
+`site.json` → `sitemap.pages`, and sync now warns about any `.html` in the repo
+root that nobody listed:
+
+```
+! guides.html is not in data/site.json sitemap.pages — it will not be submitted
+```
+
+`404.html` and `lawyer.html` are exempt — one is an error page, the other a
+template with no content of its own. 41 URLs → 42.
+
+---
+
+**Verified.** Build is idempotent; `npm run check` clean. All thirteen pages
+loaded headless: no `{phone}`/`{email}`/`{from}` leaks, no `{{token}}`, Pricing
+present in both the header nav and the drawer on all twelve directory pages,
+`aria-current` correct, no dangling anchors, one `h1` each. The Hindi pass on
+`pricing.html` renders the nav as `शुल्क`, the h1 as `लिस्टिंग का ख़र्च कितना है`,
+no `pricing.*` string left in English, and `{from}` expanding to ₹100 inside a
+Hindi sentence on `list-your-practice.html`. Both pages were looked at, which is
+how the doubled heading was caught. 33 new strings, all translated; Hindi
+coverage 718 → 750, still the same 4 deliberate English ones.
+
+---
+
 ## Outstanding
 
 Carried forward until done. Also in the README launch checklist.

@@ -281,17 +281,23 @@ db.lawyers.forEach((l, i) => {
 
 /* ------------------------------------------------------------- 4. sitemap */
 const today = db.meta.lastUpdated || new Date().toISOString().slice(0, 10);
-const urls = [
-  ['/', '1.0', 'weekly'],
-  ['/lawyers.html', '0.9', 'weekly'],
-  ['/practice-areas.html', '0.8', 'monthly'],
-  ['/list-your-practice.html', '0.7', 'monthly'],
-  ['/about.html', '0.5', 'yearly'],
-  ['/contact.html', '0.5', 'yearly'],
-  ['/faq.html', '0.6', 'monthly'],
-  ['/privacy.html', '0.2', 'yearly'],
-  ['/terms.html', '0.2', 'yearly'],
-];
+/* The static pages come from data/site.json, so adding a page to the site is a
+   JSON edit rather than an edit here — the failure mode otherwise is a page
+   that exists, renders, and is never submitted to anybody. */
+const SITE_JSON = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'site.json'), 'utf8'));
+const urls = (SITE_JSON.sitemap.pages || []).map((p) => [p.loc, p.priority, p.changefreq]);
+
+/* a page in the repo that nobody listed is almost always an oversight */
+{
+  const listed = new Set(urls.map(([loc]) => loc));
+  const skip = new Set(['/404.html', '/lawyer.html']);
+  fs.readdirSync(ROOT).filter((f) => f.endsWith('.html')).forEach((f) => {
+    const loc = f === 'index.html' ? '/' : '/' + f;
+    if (!listed.has(loc) && !skip.has(loc)) {
+      console.warn(`  ! ${f} is not in data/site.json sitemap.pages — it will not be submitted`);
+    }
+  });
+}
 db.categories.forEach((c) => urls.push([`/lawyers.html?category=${c.slug}`, '0.8', 'weekly']));
 live.forEach((l) => urls.push([`/lawyer.html?id=${l.id}`, '0.7', 'monthly']));
 
@@ -427,7 +433,8 @@ const CFG = (() => {
 })();
 function expandTokens(s) {
   return String(s).split('{phone}').join(CFG.phoneDisplay || '')
-                  .split('{email}').join(CFG.email || '');
+                  .split('{email}').join(CFG.email || '')
+                  .split('{from}').join(CFG.priceFrom || '');
 }
 function T(key, english, tag) {
   return bi(esc(expandTokens(english)),

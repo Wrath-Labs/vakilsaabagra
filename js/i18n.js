@@ -78,6 +78,7 @@
   var TOKENS = {
     '{phone}': function () { return (w.VS_CONFIG || {}).phoneDisplay || ''; },
     '{email}': function () { return (w.VS_CONFIG || {}).email || ''; },
+    '{from}':  function () { return (w.VS_CONFIG || {}).priceFrom || ''; },
   };
   function expand(s) {
     if (s.indexOf('{') === -1) return s;

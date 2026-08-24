@@ -25,6 +25,18 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://vakilsaabagra.in/pricing.html</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://vakilsaabagra.in/faq.html</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://vakilsaabagra.in/about.html</loc>
     <lastmod>2026-08-18</lastmod>
     <changefreq>yearly</changefreq>
@@ -35,12 +47,6 @@
     <lastmod>2026-08-18</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://vakilsaabagra.in/faq.html</loc>
-    <lastmod>2026-08-18</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://vakilsaabagra.in/privacy.html</loc>

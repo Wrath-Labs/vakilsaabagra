@@ -13,6 +13,7 @@ window.VS_CONFIG = {
   "phoneDisplay": "+91 89544 02360",
   "whatsapp": "918954402360",
   "email": "subroto.2003@gmail.com",
+  "priceFrom": "₹100",
   "micrositeDomain": "vakilsaabagra.in",
   "address": {
     "street": "Sanjay Place",

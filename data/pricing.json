@@ -10,13 +10,14 @@
     "advocate charges a client. Keep it that way — the whole positioning in",
     "about.html, terms.html and the Bar Council note depends on it."
   ],
-
-  "currency": { "symbol": "₹", "code": "INR", "locale": "en-IN" },
-
+  "currency": {
+    "symbol": "₹",
+    "code": "INR",
+    "locale": "en-IN"
+  },
   "unit": "per month",
   "billingNote": "Billed in advance for the period you choose. Prices are per month; you pay the whole period up front.",
   "hiddenPricesNote": "Billed in advance for the period you choose. Message us on WhatsApp for the current figures and we will send them to you in writing before you pay anything.",
-
   "plans": [
     {
       "id": "monthly",
@@ -47,20 +48,124 @@
       "highlight": false
     }
   ],
-
   "columns": {
     "listing": "Directory listing",
     "microsite": "Microsite (optional)",
     "total": "Both together"
   },
-
   "_footnotesComment": "Each entry is either a plain string, or an object with `text` plus a `link` — {href, label} — appended as a real link. Keep the Terms of Use link: the refund terms have to be reachable from the price.",
   "footnotes": [
     "The listing and the microsite are priced separately — you can take the listing on its own.",
     "No charge per enquiry, and no share of any fee you charge a client.",
     {
       "text": "Refund and non-renewal terms are set out on the",
-      "link": { "href": "terms.html", "label": "Terms of Use" }
+      "link": {
+        "href": "terms.html",
+        "label": "Terms of Use"
+      }
     }
-  ]
+  ],
+  "page": {
+    "_comment": "The pricing.html page. Everything below renders into it; nothing on that page is written in HTML.",
+    "eyebrow": "For advocates",
+    "title": "What a listing costs",
+    "lede": "A fixed technology and listing service fee, billed in advance for the period you choose. It pays for building and hosting your listing, keeping the details current and the site online.",
+    "freeNote": "If you are looking for a lawyer, this page is not for you — searching, filtering and contacting an advocate is free, there is no account, and we take no share of any fee you agree with them."
+  },
+  "includes": {
+    "_comment": "The two feature lists. Rendered on BOTH pricing.html and list-your-practice.html from here, so the two pages cannot drift.",
+    "heading": "What you actually get",
+    "listing": {
+      "heading": "The directory listing",
+      "items": [
+        "A full profile page with your own phone number on it — enrolment, experience, courts, languages, chamber address and consultation fee",
+        "Listed under every practice area and case type you actually take on, so people searching that problem find you",
+        "Findable by locality, experience, language and fee in the directory filters",
+        "Readable in Hindi and English",
+        "A monthly count of how many people opened your profile and how many tapped call or WhatsApp — sent to you, so you can judge for yourself whether it is worth renewing",
+        "Changes made on request; removal honoured within one working day"
+      ]
+    },
+    "microsite": {
+      "heading": "Your own microsite",
+      "badge": "optional",
+      "items": [
+        "A separate website on your own address, such as yourname.vakilsaabagra.in, with an SSL certificate",
+        "A longer account of your practice in your own words — not a copy of your directory profile",
+        "Your practice areas set out section by section, with the matters you handle under each",
+        "Answers to the questions your clients actually ask, in your own words",
+        "Call and WhatsApp always within reach on a phone, and a link that looks like yours when you send it",
+        "A choice of four looks, so it does not read like everybody else's page"
+      ]
+    }
+  },
+  "terms": {
+    "heading": "Billing, renewal and leaving",
+    "items": [
+      {
+        "term": "Paid in advance",
+        "detail": "You pay for the period before it starts. There is no invoice at the end of a month and no auto-charge — nothing is stored that could take money without you doing something."
+      },
+      {
+        "term": "Renewal is a message",
+        "detail": "We tell you before the period ends. If you want to carry on, you pay again; if you do not reply, the listing simply stops at the date you paid up to."
+      },
+      {
+        "term": "Leaving takes one working day",
+        "detail": "Ask and we take the listing down. Your record is kept so that coming back later restores the same profile at the same address, and nothing of yours is published while you are away."
+      },
+      {
+        "term": "No lock-in on the monthly plan",
+        "detail": "Stop whenever you like. The listing runs to the end of the month you have paid for and then comes down."
+      },
+      {
+        "term": "The microsite can be added later",
+        "detail": "Start with the listing and add the microsite at any point; you pay the microsite rate from that month onwards."
+      }
+    ]
+  },
+  "faqs": {
+    "heading": "Questions about the fee",
+    "items": [
+      {
+        "q": "Do you take a share of my professional fee?",
+        "a": "No, and we never will. The fee above is the whole commercial relationship. What you agree with a client is between you and the client, and we have no visibility of it and no claim on it."
+      },
+      {
+        "q": "Do I pay per enquiry or per call?",
+        "a": "No. The fee is fixed for the period, whether the phone rings once or fifty times. We count how often people tap call or WhatsApp so we can tell you how the listing is doing, not so we can bill you for it."
+      },
+      {
+        "q": "Does paying more move me up the results?",
+        "a": "No. Ordering is by years in practice and how complete a profile is, and nothing you pay changes it. A directory that sells position is worth nothing to the person reading it, and that is the whole product."
+      },
+      {
+        "q": "Why is the microsite priced separately?",
+        "a": "Because most advocates do not need one. The directory listing is the thing that gets you found; the microsite is a separate website with your own address and your own longer writing, and it is more to build and to keep online."
+      },
+      {
+        "q": "Can I see the numbers before I renew?",
+        "a": "Yes — that is the point of sending them. Every month you get how many people opened your profile and how many tapped call or WhatsApp, so the renewal decision is yours to make on evidence rather than on our word."
+      },
+      {
+        "q": "Is there a discount for a group of advocates?",
+        "a": "Ask us. Chambers taking several listings at once is a conversation worth having, and we would rather agree something in writing than publish a rate we cannot honour."
+      }
+    ]
+  },
+  "cta": {
+    "heading": "Ready, or want to ask first?",
+    "body": "Send a WhatsApp message with your name, Bar Council enrolment number, years of practice, practice areas and chamber address. We confirm the enrolment, send you a draft profile to approve, and publish it — usually within two working days.",
+    "whatsappLabel": "Message us on WhatsApp",
+    "whatsappText": "Hi, I am an advocate in Agra and would like to know more about being listed on Vakil Saab Agra.",
+    "secondaryLabel": "How listing works",
+    "secondaryHref": "list-your-practice.html"
+  },
+  "summary": {
+    "_comment": "The compact block on list-your-practice.html. The full table lives on pricing.html; this keeps the listing flow about the process and sends anyone who wants figures to one page rather than maintaining two.",
+    "heading": "What it costs",
+    "lede": "The directory listing starts at {from} a month on the yearly plan, with the microsite priced separately on top. Billed in advance for the period you choose.",
+    "linkLabel": "See the full pricing",
+    "linkHref": "pricing.html"
+  }
 }
