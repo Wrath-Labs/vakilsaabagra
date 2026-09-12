@@ -112,12 +112,12 @@ body {
 
 .front .site {
   position: absolute;
-  left: 0; right: 0; bottom: 52px;
+  left: 0; right: 0; bottom: 48px;
   text-align: center;
-  font-size: 17px;
-  font-weight: 500;
-  letter-spacing: .06em;
-  color: rgba(255, 255, 255, .82);
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: .05em;
+  color: rgba(255, 255, 255, .92);
 }
 
 /* ------------------------------------------------------------------- back */
@@ -170,47 +170,45 @@ body {
   grid-template-columns: 1fr 1fr;
   gap: 40px;
 }
-.back .founder .fname { font-size: 24px; font-weight: 700; line-height: 1.1; }
-.back .founder .frole {
-  margin-top: 6px;
-  color: var(--muted);
-  font-size: 12px;
-  letter-spacing: .04em;
+.back .founder .fname { font-size: 28px; font-weight: 700; line-height: 1.1; }
+.back .founder .fphone {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 23px;
+  font-weight: 600;
+  letter-spacing: .01em;
+  font-variant-numeric: tabular-nums;
 }
+.back .founder .fphone svg { width: 20px; height: 20px; flex: none; color: var(--gold); }
 
 /* --- contact ------------------------------------------------------------- */
+/* one row of three — site, Instagram, Facebook — pinned left, centre, right */
 .back .contact {
   margin-top: 22px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-.back .row { display: flex; align-items: center; gap: 12px; }
-.back .row svg { width: 17px; height: 17px; flex: none; color: var(--gold); }
-.back .row .val { font-size: 17px; font-weight: 500; letter-spacing: .01em; }
-
-/* social slots that are deliberately empty until the handles exist */
-.back .row.blank svg { color: var(--muted-2); }
-.back .row.blank .val {
-  width: 150px;
-  border-bottom: 1px dashed #cdd6e0;
-  height: 15px;
-}
+.back .row { display: flex; align-items: center; gap: 10px; }
+.back .row svg { width: 21px; height: 21px; flex: none; color: var(--gold); }
+.back .row .val { font-size: 21px; font-weight: 500; letter-spacing: .01em; }
 
 /* --- footer -------------------------------------------------------------- */
 .back .foot {
   display: flex;
-  align-items: baseline;
+  align-items: flex-end;
   justify-content: space-between;
-  color: var(--muted-2);
-  font-size: 10px;
-  letter-spacing: .2em;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+  letter-spacing: .16em;
   font-weight: 600;
   text-transform: uppercase;
 }
-.back .foot .wl { color: var(--muted); }
 
 /* The right-hand column mirrors the left so the card is balanced edge to
    edge instead of trailing off into white space on the right. */
 .back .founders > :nth-child(2) { justify-self: end; text-align: right; }
-.back .contact > :nth-child(even) { justify-self: end; flex-direction: row-reverse; }
+.back .founders > :nth-child(2) .fphone { flex-direction: row-reverse; }

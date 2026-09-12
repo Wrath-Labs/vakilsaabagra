@@ -837,6 +837,52 @@ coverage 718 → 750, still the same 4 deliberate English ones.
 
 ---
 
+## 2026-09-12 — Business card: founders' numbers, real socials, larger type
+
+**Front.** `vakilsaabagra.in` along the bottom goes from 17px to 28px, weight
+500 → 600, opacity .82 → .92, and sits 4px lower to keep its gap from the
+tagline. At the card's 1px = 1/300in that is 4.1pt → 6.7pt.
+
+**Back, founders.** The two `Co-founder` lines are gone; each founder carries
+their own number in that place, with a gold phone icon — Subroto
+`+91 89544 02360`, Dipanshu `+91 85338 93530`, both grouped 5-5 like the rest
+of the brand. The right-hand number mirrors the left (icon outboard), the same
+treatment the column already had. Names 24 → 28px, numbers 23px semibold with
+tabular figures.
+
+**Back, contact.** The phone row is removed — the numbers now live under the
+names — and so is the empty X slot. What is left is one row of three, pinned
+left, centre and right: `vakilsaabagra.in`, `@vakilsaabagra` (Instagram) and
+`facebook.com/vakilsaabagra`. The Instagram and Facebook slots were dashed
+blanks until now; these are the real handles. Type 17 → 21px, icons 17 →
+21px. The Facebook icon is the outline glyph from the same stroke set as the
+globe and Instagram icons rather than Meta's filled logo, so the row reads as
+one family. The `.row.blank` styles and the even-child mirroring that the old
+2×2 grid needed are deleted.
+
+**Back, footer.** A second credit line under the first: `A Wrath Labs venture`
+/ `Marketed by Sarovar Marketing Hub`. The footer goes 10 → 12px with tracking
+eased from .2em to .16em so the longer line fits. It is now all `--muted`
+instead of partly `--muted-2`, which is the 3.48:1 pairing the brand kit
+flagged as failing AA at any size.
+
+**Files:** `tools/business-card/back.html`, `card.css` (which carries the
+front-face change too — `front.html` itself is untouched), and both PNGs
+re-rendered with `node tools/business-card/render.js`.
+
+**Verified** by rendering both faces (2100 × 1200 each, unchanged) and looking
+at them: nothing collides or wraps, the three contact entries fit the 906px
+measure with about 90px between them, and both founder numbers line up on the
+same baseline.
+
+**Not changed, and worth knowing.** The site still has `data/site.json` →
+`social` empty (outstanding item 3), so the card now publishes handles the
+site does not link or put in `sameAs`. `tools/brand/tokens.js` still has only
+`A Wrath Labs venture` as `parent`, so the letterhead and email signature do not
+carry the Sarovar Marketing Hub credit.
+
+---
+
 ## Outstanding
 
 Carried forward until done. Also in the README launch checklist.
@@ -847,7 +893,7 @@ In order: 1 blocks 2, and 2 blocks everything public.
 |---|---|---|
 | 1 | **Register `vakilsaabagra.in`.** It is not bought yet — confirmed available at the NIXI registry on 2026-08-24. Every canonical, the sitemap, the microsite hosts and the printed business card already say it | any accredited registrar |
 | 2 | Cloudflare setup. 1.2, 1.4 and 1.5 (Pages project, D1, `ADMIN_TOKEN`) need no domain and can be done now; 1.1 and 1.3 (nameservers, custom domains) wait for item 1 | `docs/DEPLOY.md` Part 1 |
-| 3 | Fill in or delete the social links (empty means no `sameAs` is published, which is correct until real profiles exist) | `data/site.json` → `social` |
+| 3 | Fill in the social links. The handles now exist and the business card carries them — Instagram `vakilsaabagra`, `facebook.com/vakilsaabagra` — but the site has them empty, so no `sameAs` is published yet | `data/site.json` → `social` |
 | 4 | Replace the 20 sample advocates — all carry `chambers@example.com` and `+9199990000xx` — then set `flags.demoNotice: false` | `data/lawyers.json`, `data/site.json` |
 | 5 | The four demo microsites (`ramesh`, `neha`, `deepak`, `rajeev`) have hand-written sample bios. Do **not** add their slugs as Cloudflare custom domains — no subdomain exists and the apex `robots.txt` disallows `/sites/`, so they are unreachable today, and a custom domain is exactly what would make a sample advocate look real | `data/lawyers.json` |
 | 6 | A mailbox on the domain, to replace the personal Gmail now published in the JSON-LD | `data/site.json` → `business.email` |
