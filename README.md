@@ -350,7 +350,7 @@ WhatsApp prefill links, the `tel:`/`mailto:` hrefs and the JSON-LD.
 "business": {
   "phone": "+918954402360",
   "whatsapp": "918954402360",
-  "email": "subroto.2003@gmail.com",
+  "email": "vakilsaabagra@gmail.com",
   "micrositeDomain": "vakilsaabagra.in"
 }
 ```
@@ -394,18 +394,22 @@ artefact.
 
 ### The email
 
-**It is a personal Gmail.** Published on the contact page and in the JSON-LD as
-the LocalBusiness `email` (`js/home.js:166`), so it is a public address and will
-be scraped. A dedicated mailbox on the domain would be better and is on the
-outstanding list; this one has the advantage of being real and read today.
+**`vakilsaabagra@gmail.com` — the business's own Gmail**, no longer a founder's
+personal address. Published on the contact page and in the JSON-LD as the
+LocalBusiness `email` (`js/home.js:166`), so it is a public address and will be
+scraped. An address on the domain would still read better and is on the
+outstanding list; once DNS is on Cloudflare, Email Routing can forward one to
+this inbox for free.
 
 ### The social links
 
-**Intentionally empty.** They are published as schema.org `sameAs`, which is a
-claim about who we are; pointing them at `facebook.com`'s own home page told
-Google our brand's profile *is* Facebook. `js/home.js` omits `sameAs` entirely
-while they are empty. Fill in the profiles that exist, in `data/site.json` →
-`social`, and delete the rest.
+**Only the profiles that exist:** Facebook, Instagram and X, all
+`vakilsaabagra`. They are published as schema.org `sameAs`, which is a claim
+about who we are; they once pointed at `facebook.com`'s own home page, which told
+Google our brand's profile *is* Facebook. `js/home.js` skips any empty value, so
+`linkedin` and `youtube` stay blank until those profiles are real. Add a
+platform by adding a key to `data/site.json` → `social`; nothing else needs to
+change.
 
 ### `flags.demoNotice`
 
@@ -764,11 +768,10 @@ Built to rank for “lawyers in Agra” and the practice-area variants.
 
 ### Before you launch
 
-**`vakilsaabagra.in` is not registered yet.** Every canonical, the sitemap, the
-`robots.txt`, the microsite hosts and the business card all say
-`https://vakilsaabagra.in`, and the domain is unregistered — confirmed available
-at the NIXI registry on 2026-08-24. Buying it is the first item below, and it
-blocks half of hosting.
+**`vakilsaabagra.in` is registered** — at Hostinger on 2026-09-12, renewing by
+2027-09-12. Every canonical, the sitemap, the `robots.txt`, the microsite hosts
+and the business card say `https://vakilsaabagra.in`. Until its nameservers
+point at Cloudflare (item 1 below) it serves Hostinger's parking page.
 
 To point the project at a different domain instead:
 `npm run set-domain -- https://your-domain.in`, then `npm run build`. It rewrites
@@ -779,28 +782,25 @@ tells Google to index that other address instead.
 
 Still outstanding before this is a real, public site, in order:
 
-1. **Register `vakilsaabagra.in`.** Any accredited registrar; `docs/DEPLOY.md`
-   assumes Hostinger and moving the nameservers to Cloudflare. Cloudflare
-   Registrar would skip the nameserver step but does not sell `.in` as far as we
-   can tell — check when you are there. The name is already printed on the
-   business card and the print collateral, so it is not really a choice any more.
-2. **Do the Cloudflare setup** — `docs/DEPLOY.md` Part 1. Steps 1.2, 1.4 and 1.5
-   (Pages project, D1, `ADMIN_TOKEN`) work with no domain and are worth doing
-   first; 1.1 and 1.3 (nameservers, custom domains) need the registration.
-3. **Do not add the four demo slugs as custom domains.** `ramesh`, `neha`,
+1. **Do the Cloudflare setup** — `docs/DEPLOY.md` Part 1, all of it. Start
+   with 1.1, because the nameserver change is the slow part. Cloudflare copies
+   Hostinger's parking `A` record when it imports the zone; delete it before
+   1.3 or it conflicts with the Pages custom domain.
+2. **Do not add the four demo slugs as custom domains.** `ramesh`, `neha`,
    `deepak` and `rajeev` are sample bios. No subdomain exists and the apex
    `robots.txt` disallows `/sites/`, so they are effectively unreachable today —
    adding a custom domain is exactly what would make a sample advocate look like
    a real one at a real address.
-4. **Fill in or delete the social links** in `data/site.json` → `social`. Empty
-   means no `sameAs` is published, which is correct until real profiles exist.
-5. **Replace the twenty sample advocates** with real, consented details, then set
+3. **Replace the twenty sample advocates** with real, consented details, then set
    `flags.demoNotice: false` — that removes the "sample listings" line from the
    footer of the directory and of every microsite. The sample records also carry
    `chambers@example.com` and `+9199990000xx` numbers.
-6. **A mailbox on the domain**, to replace the personal Gmail now published in
-   the JSON-LD.
-7. Submit `sitemap.xml` in Google Search Console, and set up a Google Business
+4. **An address on the domain** — `hello@vakilsaabagra.in`, forwarded to
+   `vakilsaabagra@gmail.com` by Cloudflare Email Routing once DNS is there.
+5. **Turn off GitHub Pages** on the repository once Cloudflare serves the site.
+   The first version was hosted there and `wrath-labs.github.io/vakilsaabagra/`
+   still answers — a second public copy with no Functions behind it.
+6. Submit `sitemap.xml` in Google Search Console, and set up a Google Business
    Profile for Agra — for local search that matters more than anything on-page.
 
 **If you deploy to `*.pages.dev` before the domain exists**, note that every page

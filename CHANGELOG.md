@@ -883,32 +883,63 @@ carry the Sarovar Marketing Hub credit.
 
 ---
 
+## 2026-09-12 — Domain registered; business email and social profiles
+
+**Domain.** `vakilsaabagra.in` is registered at Hostinger — WHOIS shows it
+created 2026-09-12 05:30 UTC, expiring 2027-09-12. Outstanding item 1 is done.
+It is still on Hostinger's parking nameservers (`pixel`/`byte.dns-parking.com`)
+and answers with their parking page at `2.57.91.91`, so the Cloudflare setup is
+now the only thing between the repository and a live site. When Cloudflare
+imports the zone it will copy that parking `A` record; it has to be deleted
+before the Pages custom domain is attached, or the two conflict.
+
+**Email.** `vakilsaabagra@gmail.com` replaces `subroto.2003@gmail.com` — the
+business's own inbox rather than a founder's personal one. One edit in
+`data/site.json`; the build carried it to `js/config.js`, the contact page's
+`mailto:` and its `data-cfg` fallback, and the privacy and terms footers. The
+JSON-LD reads it from the config at runtime. No string table held the address —
+both use `{email}` — so neither language needed touching.
+
+**Social.** `data/site.json` → `social` now holds Facebook and Instagram, the
+handles already printed on the business card, and a new `x` key for the X
+account — all `vakilsaabagra`. X needed no code: `tools/content.js` copies every
+non-underscore key into the config and `js/home.js` publishes every non-empty
+`http` value as `sameAs`, so a new platform is a new key. LinkedIn and YouTube
+stay empty. This closes the mismatch the business-card entry pointed out, where
+the card printed handles the site did not claim.
+
+**Verified.** `npm run build` clean; the diff it wrote is the email in four
+places and the three URLs, nothing else; `subroto.2003` survives only in this
+log. Evaluating the generated config with the `sameAs` filter from `js/home.js`
+yields exactly the three profile URLs. All three answer `200`, but these
+platforms return `200` behind a login wall whether or not a profile exists, so
+that proves nothing — they rest on the owner's word, which is what the comment
+in `site.json` asks for.
+
+**Also recorded:** GitHub Pages still serves the original site at
+`wrath-labs.github.io/vakilsaabagra/`, which is now an outstanding item.
+
+---
+
 ## Outstanding
 
 Carried forward until done. Also in the README launch checklist.
 
-In order: 1 blocks 2, and 2 blocks everything public.
+Item 1 blocks everything public; 5 and 6 wait for it.
 
 | # | Item | Where |
 |---|---|---|
-| 1 | **Register `vakilsaabagra.in`.** It is not bought yet — confirmed available at the NIXI registry on 2026-08-24. Every canonical, the sitemap, the microsite hosts and the printed business card already say it | any accredited registrar |
-| 2 | Cloudflare setup. 1.2, 1.4 and 1.5 (Pages project, D1, `ADMIN_TOKEN`) need no domain and can be done now; 1.1 and 1.3 (nameservers, custom domains) wait for item 1 | `docs/DEPLOY.md` Part 1 |
-| 3 | Fill in the social links. The handles now exist and the business card carries them — Instagram `vakilsaabagra`, `facebook.com/vakilsaabagra` — but the site has them empty, so no `sameAs` is published yet | `data/site.json` → `social` |
-| 4 | Replace the 20 sample advocates — all carry `chambers@example.com` and `+9199990000xx` — then set `flags.demoNotice: false` | `data/lawyers.json`, `data/site.json` |
-| 5 | The four demo microsites (`ramesh`, `neha`, `deepak`, `rajeev`) have hand-written sample bios. Do **not** add their slugs as Cloudflare custom domains — no subdomain exists and the apex `robots.txt` disallows `/sites/`, so they are unreachable today, and a custom domain is exactly what would make a sample advocate look real | `data/lawyers.json` |
-| 6 | A mailbox on the domain, to replace the personal Gmail now published in the JSON-LD | `data/site.json` → `business.email` |
+| 1 | Cloudflare setup — all of Part 1, now unblocked. Start with 1.1 (nameservers at Hostinger), the slow part; delete the imported parking `A` record before 1.3 | `docs/DEPLOY.md` Part 1 |
+| 2 | Replace the 20 sample advocates — all carry `chambers@example.com` and `+9199990000xx` — then set `flags.demoNotice: false` | `data/lawyers.json`, `data/site.json` |
+| 3 | The four demo microsites (`ramesh`, `neha`, `deepak`, `rajeev`) have hand-written sample bios. Do **not** add their slugs as Cloudflare custom domains — no subdomain exists and the apex `robots.txt` disallows `/sites/`, so they are unreachable today, and a custom domain is exactly what would make a sample advocate look real | `data/lawyers.json` |
+| 4 | An address on the domain — `hello@vakilsaabagra.in` via Cloudflare Email Routing, forwarding to `vakilsaabagra@gmail.com` | Cloudflare → Email Routing, then `data/site.json` → `business.email` |
+| 5 | Turn off GitHub Pages. `wrath-labs.github.io/vakilsaabagra/` still serves the first version — a second public copy with no Functions behind it | repository Settings → Pages |
+| 6 | Submit `sitemap.xml` in Google Search Console and set up a Google Business Profile. Was in the README checklist only | Search Console, Google Business |
 
-**A note on deploying to `*.pages.dev` before item 1.** Every page carries
-`<link rel="canonical" href="https://vakilsaabagra.in/">` and
-`robots: index, follow`. Production `pages.dev` URLs are crawlable — only preview
-deployments get an automatic noindex — so Google can crawl the preview and be
-told the canonical is a domain that does not resolve. Small risk in practice,
-nothing links to a fresh `pages.dev` URL, and it vanishes when the domain is
-live. It is the reason to buy the domain first rather than last.
-
-**Done.** The phone number and the contact email (both 2026-08-24) were the first
-two items on this list; both are now real, and the structure that made them hard
-to change is gone.
+**Done.** The phone number and the contact email (2026-08-24), then the domain
+registration, the social links and the business's own email address
+(2026-09-12). Items are renumbered as they close, so "item 3" in an older entry
+means the list as it stood that day.
 
 **Verified as far as is possible locally, needing Cloudflare to finish:**
 subdomain serving (30 middleware assertions pass and microsites render when

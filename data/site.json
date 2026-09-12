@@ -12,7 +12,7 @@
     "url": "https://vakilsaabagra.in",
     "phone": "+918954402360",
     "whatsapp": "918954402360",
-    "email": "subroto.2003@gmail.com",
+    "email": "vakilsaabagra@gmail.com",
     "micrositeDomain": "vakilsaabagra.in",
     "address": {
       "street": "Sanjay Place",
@@ -29,8 +29,9 @@
   },
   "social": {
     "_comment": "Published as schema.org sameAs. Empty values are skipped entirely, which is correct until a profile actually exists. Never point one at a platform's home page.",
-    "facebook": "",
-    "instagram": "",
+    "facebook": "https://www.facebook.com/vakilsaabagra",
+    "instagram": "https://www.instagram.com/vakilsaabagra/",
+    "x": "https://x.com/vakilsaabagra",
     "linkedin": "",
     "youtube": ""
   },

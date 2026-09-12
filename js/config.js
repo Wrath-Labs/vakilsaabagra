@@ -12,7 +12,7 @@ window.VS_CONFIG = {
   "phone": "+918954402360",
   "phoneDisplay": "+91 89544 02360",
   "whatsapp": "918954402360",
-  "email": "subroto.2003@gmail.com",
+  "email": "vakilsaabagra@gmail.com",
   "priceFrom": "₹100",
   "micrositeDomain": "vakilsaabagra.in",
   "address": {
@@ -28,8 +28,9 @@ window.VS_CONFIG = {
   },
   "hours": "Mon–Sat, 10:00 AM – 7:00 PM",
   "social": {
-    "facebook": "",
-    "instagram": "",
+    "facebook": "https://www.facebook.com/vakilsaabagra",
+    "instagram": "https://www.instagram.com/vakilsaabagra/",
+    "x": "https://x.com/vakilsaabagra",
     "linkedin": "",
     "youtube": ""
   },
