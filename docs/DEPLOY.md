@@ -16,27 +16,51 @@ file to somebody else and have them onboard an advocate without asking questions
 You only ever do this once. Skip to [Part 2](#part-2--onboarding-a-new-advocate)
 for day-to-day work.
 
+**Order.** 1.1 first, because the nameserver change is the slow part. 1.2, 1.4
+and 1.5 do not need the domain and can be done while it propagates. 1.3 waits
+until the domain shows **Active** in Cloudflare.
+
 ### 1.1 Point the domain at Cloudflare
 
-1. Sign in to **Cloudflare** → **Add a site** → enter `vakilsaabagra.in` → choose
-   the **Free** plan.
-2. Cloudflare shows two nameservers, e.g. `xxx.ns.cloudflare.com` and
+1. Sign in to **Cloudflare** → **Add a domain** (older dashboards: **Add a
+   site**) → enter `vakilsaabagra.in` → choose the **Free** plan, and let it
+   scan the existing DNS records.
+2. On the DNS review screen, **delete Hostinger's parking records**: the `A`
+   record for `vakilsaabagra.in` pointing at `2.57.91.91`, the `www` record
+   (`CNAME` or `A`) and any `AAAA`. Left in place they conflict with the Pages
+   custom domain in 1.3. If you missed them here, they are under the zone's
+   **DNS → Records** afterwards.
+3. Cloudflare shows two nameservers, e.g. `xxx.ns.cloudflare.com` and
    `yyy.ns.cloudflare.com`. Copy both.
-3. Sign in to **Hostinger** → **Domains** → `vakilsaabagra.in` → **DNS / Nameservers**
-   → **Change nameservers** → **Use custom nameservers** → paste the two values →
-   **Save**.
-4. Wait for Cloudflare to show the domain as **Active**. This usually takes a few
-   minutes and can take up to 24 hours. Nothing below works until it does.
+4. Sign in to **Hostinger** → **Domains** → `vakilsaabagra.in`. **Check DNSSEC
+   first** and turn it off if it is on — changing nameservers with DNSSEC still
+   on makes the domain stop resolving.
+5. **DNS / Nameservers** → **Change nameservers** → **Use custom nameservers** →
+   paste the two values → **Save**.
+6. Wait for Cloudflare to show the domain as **Active** (it also emails). This
+   usually takes a few minutes and can take up to 24 hours. 1.3 does not work
+   until it does.
 
-> Do not delete anything at Hostinger. The domain stays registered there; only
-> DNS moves to Cloudflare.
+> **A newly registered domain may be locked.** On the day of registration
+> Hostinger refused the change with *"Nameserver changes for this domain are
+> temporarily unavailable. Please try again in 24 hours or contact support."*
+> Wait the 24 hours and save again; if it still refuses, Hostinger's support
+> chat. The zone waits in Cloudflare as **Pending** meanwhile — do not add it a
+> second time, or you get a different pair of nameservers.
+
+> Do not delete anything else at Hostinger. The domain stays registered there;
+> only DNS moves to Cloudflare.
 
 ### 1.2 Create the Pages project
 
-1. Cloudflare dashboard → **Workers & Pages** → **Create** → **Pages** →
-   **Connect to Git**.
-2. Authorise GitHub and pick the **`Wrath-Labs/vakilsaabagra`** repository.
+1. Cloudflare dashboard → **Workers & Pages** → **Create** → the **Pages** tab →
+   **Import an existing Git repository** (older dashboards: **Connect to Git**).
+2. Authorise GitHub. When GitHub asks where to install, choose **Only select
+   repositories** → **`Wrath-Labs/vakilsaabagra`**. The repository belongs to an
+   organisation, so if you are not an owner of Wrath-Labs, an owner has to
+   approve the install before the repository appears.
 3. Set up the build:
+   - **Project name:** `vakilsaabagra` — this gives `vakilsaabagra.pages.dev`
    - **Production branch:** `main`
    - **Framework preset:** *None*
    - **Build command:** `npm run build`
@@ -54,12 +78,23 @@ for day-to-day work.
 3. Repeat for `www.vakilsaabagra.in`.
 4. Wait for both to show **Active** with a valid certificate.
 
+Add **only these two** here. Microsite subdomains are added one at a time as
+real advocates pay for them ([Part 2, step 6](#6-add-the-subdomain-microsite-advocates-only)) —
+never `ramesh`, `neha`, `deepak` or `rajeev`, which are sample bios.
+
 `vakilsaabagra.in` is the canonical host. `www` serves the same site; the
 middleware passes both through untouched.
 
 ### 1.4 Create and bind the database
 
-In a terminal, from the repository root:
+Either in the dashboard, with no tools installed:
+
+1. **Workers & Pages** → **D1 SQL Database** → **Create** → name it
+   `vakilsaabagra`.
+2. Open the database → **Console** → paste the whole of `schema.sql` (one table,
+   three indexes) → **Execute**.
+
+Or in a terminal, from the repository root:
 
 ```bash
 npx wrangler login
@@ -67,7 +102,7 @@ npx wrangler d1 create vakilsaabagra
 npx wrangler d1 execute vakilsaabagra --remote --file=./schema.sql
 ```
 
-The second command prints a database id — you do not need to copy it anywhere,
+Either way prints or shows a database id — you do not need to copy it anywhere,
 the binding is done in the dashboard:
 
 1. Pages project → **Settings** → **Bindings** (older dashboards:
@@ -83,16 +118,20 @@ the binding is done in the dashboard:
 
 ### 1.5 Set the admin token
 
-1. Generate a long random string:
+1. Generate a long random string, at the moment you set it — not ahead of
+   time, where it only sits in a file somewhere:
    ```bash
-   openssl rand -hex 32
+   openssl rand -hex 32 | tee /dev/tty | pbcopy
    ```
-2. Pages project → **Settings** → **Environment variables** → **Add variable**:
+2. Pages project → **Settings** → **Variables and Secrets** (older dashboards:
+   **Environment variables**) → **Add**:
+   - **Type:** **Secret** (encrypted)
    - **Name:** `ADMIN_TOKEN`
    - **Value:** the string from step 1
-   - **Type:** **Secret** (encrypted)
    - **Environment:** Production
-3. Save, then **Retry deployment** so the running build picks it up.
+3. Save, then **Deployments** → the latest one → **Retry deployment**. A
+   binding or secret only reaches a *new* deployment, so this one retry also
+   picks up the `DB` binding from 1.4.
 
 Store the token in a password manager. **Never commit it.** It is the only thing
 protecting `/api/stats`, and anyone holding it can read every advocate's numbers.
@@ -112,6 +151,26 @@ curl -s -o /dev/null -w '%{http_code}\n' -X POST \
 curl -s -o /dev/null -w '%{http_code}\n' \
   'https://vakilsaabagra.in/api/stats?lawyer=<some-id>'
 ```
+
+### 1.7 An address on the domain (optional, after 1.1)
+
+1. Cloudflare → `vakilsaabagra.in` → **Email** → **Email Routing** → enable.
+   Cloudflare adds the `MX` and `TXT` records itself.
+2. **Destination addresses** → add `vakilsaabagra@gmail.com` → click the
+   verification link Cloudflare sends to that inbox.
+3. **Routing rules** → create `hello@vakilsaabagra.in` → forward to it.
+4. Put the new address in `data/site.json` → `business.email` and `npm run build`.
+
+This receives only; replies still go out from the Gmail unless it is set up to
+**Send mail as** the new address.
+
+### 1.8 Turn off the old GitHub Pages copy (after 1.3)
+
+The first version of the site was hosted on GitHub Pages and
+`wrath-labs.github.io/vakilsaabagra/` still serves it. Once the Cloudflare site
+is live: GitHub → `Wrath-Labs/vakilsaabagra` → **Settings** → **Pages** → set the
+source to **None** (or **Unpublish site**), and remove any old
+`www.vakilsaabagra.com` custom domain listed there.
 
 ---
 

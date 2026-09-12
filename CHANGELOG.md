@@ -921,6 +921,51 @@ in `site.json` asks for.
 
 ---
 
+## 2026-09-12 — Cloudflare setup started; Hostinger holds the nameservers for a day
+
+**Where it stopped.** `vakilsaabagra.in` was added to Cloudflare on the Free plan
+and its two nameservers issued. Saving them at Hostinger failed:
+
+> Nameserver changes for this domain are temporarily unavailable. Please try
+> again in 24 hours or contact support.
+
+The domain was registered at 05:30 UTC the same day and WHOIS still shows the
+registry's `addPeriod`, so this is most likely Hostinger's hold on a newly
+registered domain rather than anything misconfigured. At 12:25 UTC `dig` still
+returned `pixel`/`byte.dns-parking.com` and the parking page at `2.57.91.91`.
+
+**Resume** after about 12:30 UTC (18:00 IST) on 2026-09-13, at `docs/DEPLOY.md`
+1.1 step 4 — check DNSSEC, then save the same two nameservers. The zone waits in
+Cloudflare as Pending; adding it again would issue a different pair. If Hostinger
+still refuses, its support chat. 1.2, 1.4 and 1.5 do not wait on any of this.
+
+**`docs/DEPLOY.md` Part 1 revised** from walking through it for real:
+
+- an **Order** note up front — 1.1 first because it is slow; 1.2, 1.4, 1.5 in
+  parallel; 1.3 only once the zone is Active
+- 1.1: delete Hostinger's parking `A`/`www`/`AAAA` records at the scan, or they
+  conflict with the Pages custom domain; turn DNSSEC off before changing
+  nameservers; the new-domain lock and its exact message; the dashboard now
+  says **Add a domain**
+- 1.2: **Only select repositories**, the Wrath-Labs owner approval an
+  organisation repository needs, and the project name that yields
+  `vakilsaabagra.pages.dev`
+- 1.3: only the apex and `www` — never the four sample slugs
+- 1.4: a dashboard route (create D1, paste `schema.sql` into its Console)
+  alongside wrangler, so no tooling is needed
+- 1.5: generate the token at the moment it is set, not ahead of time;
+  **Variables and Secrets** is the current label; the one **Retry deployment**
+  also picks up the `DB` binding, which 1.4 never said needs a new deploy
+- new **1.7**, Email Routing for `hello@vakilsaabagra.in`, and **1.8**, turning
+  off GitHub Pages — outstanding items 4 and 5, now with steps
+
+**No secret is in the repository.** An `ADMIN_TOKEN` was generated earlier in
+the session into a temporary scratch file outside it. It had not been set in
+Cloudflare when this was written; if it has been since, keep that one, and
+otherwise step 1.5 generates a fresh one.
+
+---
+
 ## Outstanding
 
 Carried forward until done. Also in the README launch checklist.
@@ -929,11 +974,11 @@ Item 1 blocks everything public; 5 and 6 wait for it.
 
 | # | Item | Where |
 |---|---|---|
-| 1 | Cloudflare setup — all of Part 1, now unblocked. Start with 1.1 (nameservers at Hostinger), the slow part; delete the imported parking `A` record before 1.3 | `docs/DEPLOY.md` Part 1 |
+| 1 | Cloudflare setup. **Zone added 2026-09-12; Hostinger refused the nameserver change for 24 hours** — retry after 18:00 IST on 2026-09-13 at 1.1 step 4. 1.2, 1.4, 1.5 can go ahead meanwhile; 1.3 waits for the zone to be Active | `docs/DEPLOY.md` Part 1 |
 | 2 | Replace the 20 sample advocates — all carry `chambers@example.com` and `+9199990000xx` — then set `flags.demoNotice: false` | `data/lawyers.json`, `data/site.json` |
 | 3 | The four demo microsites (`ramesh`, `neha`, `deepak`, `rajeev`) have hand-written sample bios. Do **not** add their slugs as Cloudflare custom domains — no subdomain exists and the apex `robots.txt` disallows `/sites/`, so they are unreachable today, and a custom domain is exactly what would make a sample advocate look real | `data/lawyers.json` |
-| 4 | An address on the domain — `hello@vakilsaabagra.in` via Cloudflare Email Routing, forwarding to `vakilsaabagra@gmail.com` | Cloudflare → Email Routing, then `data/site.json` → `business.email` |
-| 5 | Turn off GitHub Pages. `wrath-labs.github.io/vakilsaabagra/` still serves the first version — a second public copy with no Functions behind it | repository Settings → Pages |
+| 4 | An address on the domain — `hello@vakilsaabagra.in` via Cloudflare Email Routing, forwarding to `vakilsaabagra@gmail.com` | `docs/DEPLOY.md` 1.7 |
+| 5 | Turn off GitHub Pages. `wrath-labs.github.io/vakilsaabagra/` still serves the first version — a second public copy with no Functions behind it | `docs/DEPLOY.md` 1.8 |
 | 6 | Submit `sitemap.xml` in Google Search Console and set up a Google Business Profile. Was in the README checklist only | Search Console, Google Business |
 
 **Done.** The phone number and the contact email (2026-08-24), then the domain
