@@ -1046,6 +1046,84 @@ Cloudflare is now unused and can be deleted.
 
 ---
 
+## 2026-10-10 — Admin site: manage advocates, microsites and stats
+
+**Why.** The only way to add, change or take down an advocate was to hand-edit
+`data/lawyers.json`, run the build and push. That is fine for one developer and
+wrong for running a business: renewals happen monthly and the person doing them
+should not need a terminal. The admin also only showed one advocate's report at
+a time.
+
+**Design decision: the admin commits to git; it does not own a second copy.**
+Options were (a) move the data to D1 and render dynamically, (b) keep the data in
+D1 and have the build pull it, (c) have the admin commit `data/lawyers.json`.
+(a) throws away the pre-rendered, indexable pages and the microsite generator;
+(b) needs a read token in the build environment and makes git a stale copy; (c)
+keeps one source of truth, keeps the whole existing pipeline, and gives an audit
+log and an undo for free. The price of (c) is a `GITHUB_TOKEN` that can write to
+the repository and a ~2 minute delay between save and live. Both are documented
+(DEPLOY.md 1.9); the token is fine-grained, one repository, Contents only.
+
+**The safety property.** `tools/lib/validate.js` is now the single
+implementation of the data rules, extracted from `tools/sync.js` with no change
+in behaviour (the build output was byte-identical). The admin API runs it over
+the whole file before committing, so an edit that the build would reject is
+refused with the build's own message and never reaches git. Without that, a typo
+in a slug would leave production stuck on the last good deploy.
+
+**What was added.**
+- `functions/api/admin/` — `lawyers` (list, add), `lawyers/[id]` (update,
+  remove with typed confirmation), `photo` (JPEG/PNG/WebP up to 400 KB, magic
+  bytes checked, SVG refused), `overview` (site-wide numbers from D1),
+  `activity` (git history), `domains` (attach/check a microsite address),
+  `status`. All require the admin session; every state-changing call also checks
+  `Origin`.
+- `functions/_gh.js`, `_lawyers.js`, `_admin.js` — GitHub client, pure record
+  operations (unknown fields dropped, types coerced, `id` immutable), and the
+  read-modify-commit loop, which retries once if the file changed underneath.
+- `admin/index.html` + `admin/admin.js` — Overview, Advocates, Microsites,
+  Activity; a full editor with Hindi fields, FAQs, billing and microsite blocks.
+  The existing monthly report page is unchanged and linked from the nav.
+- `tailwind.config.js` now scans `admin/*.js`, otherwise the new classes would
+  be purged from the build.
+- `tools/test/` and `npm test`: sign-in (20 assertions) and admin API (46).
+
+**Guard rails worth knowing.**
+- *Sample advocates never get a real domain.* A record whose email ends
+  `@example.com` or whose number is `+9199990000xx` is refused by the domain
+  endpoint. That was a documented rule that depended on someone remembering it.
+- *Removing is separate from taking down.* Take down sets `listing.active:
+  false` and keeps the record, so a lapsed advocate comes back unchanged;
+  Remove deletes it and needs the id typed.
+- *The edit form sends only what changed*, so the commit says
+  `update Adv. Neha Sharma (availability)` and not "everything".
+- *No orphan files:* the photo endpoint checks the advocate exists before it
+  commits the image.
+
+**Verified.** 66 assertions with the real Function code, the real `schema.sql`
+in `node:sqlite`, a fake GitHub and the real validator; the last one hands the
+file the admin wrote to the real `tools/sync.js` and confirms it builds, with the
+new advocate's microsite. The UI was then driven in a browser against the same
+fakes: add (with microsite and FAQ), a rejected reserved slug shown inline, an
+edit, take down and reinstate, attach (sample rows have no button), activity,
+and delete (wrong confirmation refused). `data/lawyers.json` is confirmed 404 on
+`vakilsaabagra.in` and `*.pages.dev`; only the published, billing-free dataset
+is served.
+
+**Not done / limits.**
+- Hindi FAQ answers (`microsite.faqsHi`) are not editable in the form; existing
+  ones are preserved untouched.
+- No bulk operations and no CSV import.
+- A change is live after the Pages rebuild, not at once. The UI says so.
+- Live GitHub and Cloudflare calls were exercised against fakes only. First real
+  use after setting `GITHUB_TOKEN` is the real test: add a throwaway advocate
+  and remove it again.
+
+**To switch it on.** Deploy, then DEPLOY.md 1.9 (GitHub token) and, optionally,
+1.10 (Cloudflare token for the Attach button).
+
+---
+
 ## Outstanding
 
 Carried forward until done. Also in the README launch checklist.
@@ -1054,7 +1132,7 @@ Items 4 and 5 wait on item 1.
 
 | # | Item | Where |
 |---|---|---|
-| 1 | Cloudflare setup is **live on `vakilsaabagra.in`** (2026-10-10). Remaining: deploy the admin sign-in, then set the admin password with `node tools/set-admin-password.js` (1.5); delete the now-unused `ADMIN_TOKEN` secret | `docs/DEPLOY.md` 1.5 |
+| 1 | Cloudflare setup is **live on `vakilsaabagra.in`** and the admin sign-in works (2026-10-10). Remaining: add `GITHUB_TOKEN` so the admin can save (1.9), optionally the Cloudflare token for **Attach** (1.10), and delete the unused `ADMIN_TOKEN` secret | `docs/DEPLOY.md` 1.9, 1.10 |
 | 2 | Replace the 20 sample advocates — all carry `chambers@example.com` and `+9199990000xx` — then set `flags.demoNotice: false` | `data/lawyers.json`, `data/site.json` |
 | 3 | The four demo microsites (`ramesh`, `neha`, `deepak`, `rajeev`) have hand-written sample bios. Do **not** add their slugs as Cloudflare custom domains — no subdomain exists and the apex `robots.txt` disallows `/sites/`, so they are unreachable today, and a custom domain is exactly what would make a sample advocate look real | `data/lawyers.json` |
 | 4 | Turn off GitHub Pages. `wrath-labs.github.io/vakilsaabagra/` still serves the first version — a second public copy with no Functions behind it | `docs/DEPLOY.md` 1.8 |

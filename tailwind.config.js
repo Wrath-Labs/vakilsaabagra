@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   // Light theme only — dark mode is deliberately not enabled.
-  content: ['./*.html', './js/**/*.js', './admin/*.html', './templates/*.html'],
+  content: ['./*.html', './js/**/*.js', './admin/*.html', './admin/*.js', './templates/*.html'],
   theme: {
     extend: {
       fontFamily: {

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin — Vakil Saab Agra (internal)</title>
+
+<!-- internal tool: never indexed, never linked from the site, also
+     Disallow'ed in /robots.txt -->
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon.png">
+<link rel="stylesheet" href="../css/tailwind.css">
+</head>
+<body class="bg-[var(--paper-2)] antialiased">
+
+<main class="mx-auto max-w-6xl px-4 py-8 sm:px-6">
+
+  <header class="flex flex-wrap items-end justify-between gap-4">
+    <div>
+      <p class="text-xs font-bold uppercase tracking-[.2em] text-[var(--gold)]">Internal tool</p>
+      <h1 class="mt-1 font-display text-3xl font-bold text-[var(--ink)]">Vakil Saab Agra — Admin</h1>
+    </div>
+    <nav id="nav" class="hidden flex-wrap items-center gap-2 text-sm">
+      <a href="#/" data-nav="overview" class="chip">Overview</a>
+      <a href="#/advocates" data-nav="advocates" class="chip">Advocates</a>
+      <a href="#/microsites" data-nav="microsites" class="chip">Microsites</a>
+      <a href="#/activity" data-nav="activity" class="chip">Activity</a>
+      <a href="stats.html" class="chip">Monthly report</a>
+      <button type="button" id="signout" class="btn btn-ghost px-3 py-1.5 text-sm">Sign out</button>
+    </nav>
+  </header>
+
+  <div id="toast" class="mt-4 hidden rounded-lg border px-4 py-3 text-sm" role="status"></div>
+  <div id="banner" class="mt-4"></div>
+
+  <!-- ------------------------------------------------------------- sign in -->
+  <form id="login" class="card mt-8 hidden max-w-md gap-4 p-5 sm:p-6" autocomplete="on">
+    <div>
+      <label for="password" class="mb-1.5 block text-xs font-bold uppercase tracking-[.14em] text-[var(--muted-2)]">Admin password</label>
+      <input id="password" type="password" autocomplete="current-password" spellcheck="false"
+             class="select-field w-full px-3 py-2.5 text-sm text-[var(--ink)]">
+    </div>
+    <div class="flex flex-wrap items-center gap-3">
+      <button type="submit" class="btn btn-primary px-6 py-2.5 text-sm">Sign in</button>
+      <span id="login-status" class="text-sm text-[var(--muted)]"></span>
+    </div>
+  </form>
+
+  <div id="view" class="mt-8"></div>
+</main>
+
+<script src="admin.js"></script>
+</body>
+</html>

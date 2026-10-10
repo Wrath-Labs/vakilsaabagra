@@ -858,6 +858,11 @@ functions/_ids.js         generated; valid advocate ids for /api/track
 functions/api/track.js    POST — counts a view or a contact click
 functions/api/stats.js    GET  — reads it back, behind an admin session
 functions/api/login.js    GET/POST/DELETE — admin sign-in, session cookie
+functions/api/admin/*     the admin API: lawyers, photo, overview, activity, domains
+functions/_gh.js          GitHub Contents API client (commits data/lawyers.json)
+functions/_lawyers.js     pure add/update/remove over the parsed data
+tools/lib/validate.js     the data rules — shared by the build and the admin API
+tools/test/               npm test: sign-in and admin API, against fakes
 functions/_auth.js        password hashing and session checks
 schema.sql                the D1 table and its indexes
 
@@ -982,6 +987,34 @@ Nothing is ever deleted. An advocate who lapses disappears from the directory,
 the sitemap, the tracking id list and — if they had one — their microsite
 subdomain starts returning a real 404. Renewing restores all of it at the same
 URLs, because the record never left `data/lawyers.json`.
+
+### The admin site
+
+`/admin/` (unlinked, `noindex`, `Disallow`ed) is where the business is run
+from, behind the password login:
+
+| Tab | What it does |
+|---|---|
+| Overview | live / expiring / expired counts, monthly value from the plan prices, views and contacts for the period, daily chart, who needs attention, top advocates, top searches, sources |
+| Advocates | list with status filters and search; **add**, **edit**, **renew**, **take down / reinstate**, **remove**, photo upload |
+| Microsites | every microsite, its address and state, **Preview**, and **Attach** (Cloudflare domain + DNS) |
+| Activity | the last changes, straight from git |
+| Monthly report | the per-advocate report and Hindi WhatsApp message |
+
+**How a save works.** `data/lawyers.json` stays the single source of truth. The
+admin reads it from GitHub, applies the change in memory, runs the *same*
+validator the build uses (`tools/lib/validate.js`), and commits it as
+`admin: …`. Cloudflare Pages rebuilds from that commit. Three consequences:
+
+- an invalid edit is refused with the build's own message and nothing is
+  committed, so the admin cannot take production down;
+- every change is a git commit — the audit log, and revert is the undo;
+- a change is live after the rebuild (about two minutes), not instantly.
+
+It needs a `GITHUB_TOKEN` secret (`docs/DEPLOY.md` 1.9). The microsite **Attach**
+button also needs `CF_API_TOKEN`, `CF_ACCOUNT_ID`, `CF_ZONE_ID` (1.10) and is
+optional. After admin commits, `git pull` before you edit locally, and expect
+`npm run build` to regenerate the derived files (`sitemap.xml`, `sites/`, …).
 
 ### Sending the monthly numbers
 

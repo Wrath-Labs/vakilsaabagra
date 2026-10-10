@@ -2,7 +2,7 @@
   "name": "vakil-saab-agra",
   "version": "1.0.0",
   "private": true,
-  "description": "Vakil Saab Agra \u2014 a static directory of verified advocates practising in Agra, Uttar Pradesh.",
+  "description": "Vakil Saab Agra — a static directory of verified advocates practising in Agra, Uttar Pradesh.",
   "scripts": {
     "content": "node tools/content.js",
     "sync": "node tools/sync.js",
@@ -11,7 +11,8 @@
     "check": "node tools/content.js --check && node tools/i18n-extract.js --report",
     "brand": "node tools/brand/build-logos.js && node tools/brand/build-tokens.js && node tools/brand/check-contrast.js && node tools/brand/render.js",
     "serve": "python3 -m http.server 5173",
-    "set-domain": "node tools/set-domain.js"
+    "set-domain": "node tools/set-domain.js",
+    "test": "node --no-warnings tools/test/auth.test.mjs && node --no-warnings tools/test/admin-api.test.mjs"
   },
   "devDependencies": {
     "tailwindcss": "^3.4.17"

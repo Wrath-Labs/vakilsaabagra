@@ -176,12 +176,81 @@ is live: GitHub → `Wrath-Labs/vakilsaabagra` → **Settings** → **Pages** �
 source to **None** (or **Unpublish site**), and remove any old
 `www.vakilsaabagra.com` custom domain listed there.
 
+### 1.9 Let the admin site save changes (GitHub token)
+
+The admin site edits advocates by committing `data/lawyers.json` to this
+repository, which makes Cloudflare Pages rebuild. Without a token it still
+opens, but read-only, and says so at the top.
+
+1. GitHub → your profile photo → **Settings** → **Developer settings** →
+   **Personal access tokens** → **Fine-grained tokens** → **Generate new token**.
+2. **Resource owner:** `Wrath-Labs`. **Repository access:** *Only select
+   repositories* → `vakilsaabagra`. If the organisation has not allowed
+   fine-grained tokens, an owner has to switch that on first
+   (Organisation → **Settings** → **Personal access tokens**).
+3. **Permissions → Repository permissions → Contents: Read and write.**
+   *Metadata: Read* is added automatically. Nothing else — not Actions, not
+   Administration.
+4. **Expiration:** one year, and put the date in your calendar. When it lapses
+   the admin goes read-only until you replace it.
+5. Copy the token (it is shown once). Cloudflare → Pages project →
+   **Settings** → **Variables and Secrets** → **Add** → type **Secret**, name
+   `GITHUB_TOKEN`, **Production** → Save → **Deployments** → **Retry
+   deployment**.
+6. Reload `/admin/`; the "Read-only" notice is gone.
+
+The token can only write to this one repository, but it *can* write to any file
+in it. Treat it like the admin password: password manager, never in the repo.
+Every admin change is a commit named `admin: …`, so the **Activity** tab and
+`git log` are the audit trail, and reverting a commit is the undo.
+
+### 1.10 Attach microsite addresses from the admin (optional)
+
+Without this, attaching `<slug>.vakilsaabagra.in` is the manual dialog in
+Part 2 step 6, and everything else works. To make the **Attach** button on the
+Microsites tab do it:
+
+1. Cloudflare → **My Profile** → **API Tokens** → **Create Token** → *Create
+   Custom Token*:
+   - **Account → Cloudflare Pages → Edit**
+   - **Zone → DNS → Edit**, with **Zone Resources** set to *Include → Specific
+     zone → `vakilsaabagra.in`* (a token without the zone selected fails with
+     "Authentication error" on DNS calls)
+2. Add three **Secrets** on the Pages project, as in 1.9:
+   `CF_API_TOKEN` (that token), `CF_ACCOUNT_ID` (the long hex id in the
+   dashboard URL) and `CF_ZONE_ID` (zone **Overview**, right-hand column, *API*).
+3. **Retry deployment.**
+
+The button refuses sample advocates by design. `email` ending `@example.com` or
+a `+9199990000xx` number marks a record as sample, and a real domain is never
+attached to one.
+
 ---
 
 ## Part 2 — Onboarding a new advocate
 
-The whole job, in order. Steps 1–5 are on your machine; step 6 is one dialog in
-Cloudflare.
+### The short way: the admin site
+
+Needs 1.9 done once. Open `https://vakilsaabagra.in/admin/`, sign in, then:
+
+1. **Advocates → Add an advocate.** Fill in the form — name, enrolment, phone,
+   practice areas, bio, plan and *Paid until*. If they paid for a microsite,
+   tick **Has a microsite** and fill in the subdomain, tagline and long bio.
+2. **Add advocate.** The same validation the build uses runs first; anything
+   wrong is listed in red and nothing is saved. Success shows the commit, and
+   the site is live in about two minutes.
+3. Open the new record → **Upload a photo** (JPEG/PNG/WebP, 400 KB or less).
+4. Microsite advocates only: **Microsites → Attach** (needs 1.10), or add
+   `<slug>.vakilsaabagra.in` by hand as in step 6 below.
+5. Send them the link (step 7 below).
+
+Everything after that is a button: **Renew** (sets a new *Paid until*),
+**Take down** / **Reinstate**, **Edit**, and **Remove** (typed confirmation).
+
+### The manual way: edit the JSON
+
+The same job without the admin site. Steps 1–5 are on your machine; step 6 is
+one dialog in Cloudflare.
 
 ### 1. Add the record
 
@@ -364,6 +433,20 @@ was applied with `--remote`; the advocate's id is in `functions/_ids.js` (it is
 not, if they are expired); `navigator.doNotTrack` is not set in the browser you
 are testing with. `/api/track` returning `204` proves nothing — it returns `204`
 on failure too, by design.
+
+**The admin says "Read-only: GitHub is not connected yet".** `GITHUB_TOKEN` is
+missing, expired, or was added without a **Retry deployment** (1.9).
+
+**Saving says "GitHub: Resource not accessible by personal access token".** The
+token lacks *Contents: Read and write* on this repository, or it was created for
+a different owner. Make a new one as in 1.9.
+
+**Saving says "That would not pass validation".** The list under it is the
+build's own message. Nothing was committed. Fix the field and save again.
+
+**A change saved but the site did not change.** It saved as a commit; the build
+that follows can still fail. Cloudflare → Pages → **Deployments**. The previous
+good deployment keeps serving until a build succeeds.
 
 **`/api/stats` returns 401.** No session — sign in at `/admin/stats.html`.
 **Sign-in says "no admin password has been set yet".** Run
