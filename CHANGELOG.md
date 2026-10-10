@@ -1164,17 +1164,66 @@ literals and broke the moment the data changed; they now read the counts from
 
 ---
 
+## 2026-10-10 — End of session: where we stopped
+
+Sent to the business partner for review and testing on 2026-10-11. Nothing is
+half-done; everything below is in `main` at `3751ed0` and deployed.
+
+**State of the site.**
+- `vakilsaabagra.in` and `www` serve from Cloudflare Pages over HTTPS; D1 is
+  bound as `DB` and receiving events; `/api/track` and the admin API behave as
+  documented against the live domain.
+- The admin at `/admin/` works end to end against the live repository: the
+  `GITHUB_TOKEN` secret is set, and `66d860d` ("admin: update Adv. Rajeev
+  Upadhyay (categories)") is the first real save. The `ADMIN_TOKEN` secret has
+  been deleted; the password login is the only way in.
+- `demo.vakilsaabagra.in` is live (attached in Pages, `CNAME demo` added by hand
+  in Cloudflare DNS) and verified in a browser by the owner. This is the one
+  microsite address that exists; the four sample ones are still unattached.
+
+**A report that the apex was "blank white" was the old Hostinger parking page
+reaching one browser through a cached DNS answer, not the site.** Checked, not
+assumed: the apex returned the 56 KB homepage with every asset 200; public
+resolvers (8.8.8.8, 9.9.9.9, 208.67.222.222) all answered with Cloudflare
+addresses; a headless browser rendered the full page with no console errors;
+the parking IP `2.57.91.91` serves a page titled "Parked Domain name on Hostinger
+DNS system". A different browser showed the real site. No change was made.
+Expect this for any visitor whose resolver has not yet dropped the old
+delegation, for a day or two after a nameserver move.
+
+**For the reviewer — what is worth trying.**
+1. Browse the directory, a profile, a practice area, pricing, FAQ, contact; in
+   English and Hindi; on a phone.
+2. `https://demo.vakilsaabagra.in` — styled, subdomain stays in the bar, the
+   call button dials `+918954402360`.
+3. `/admin/` — sign in, Overview numbers, Advocates list and filters. To test a
+   write: add a throwaway advocate and **Remove** it again; each save is a
+   commit named `admin: …` and a rebuild of about two minutes.
+4. Anything that looks like a real advocate but is not is a sample. That is
+   expected until item 2 below.
+
+**Loose ends, deliberately left.**
+- The Cloudflare API token created for this session (account + Pages + D1) was
+  held in a scratch file outside the repository. It expires 2026-10-17 and
+  should be deleted at Cloudflare → My Profile → API Tokens. It is not in git.
+- The demo record is public in the directory, sitemap and search until removed.
+- The admin's **Attach** button needs `CF_API_TOKEN` (with **Zone → DNS → Edit**
+  scoped to the zone), `CF_ACCOUNT_ID`, `CF_ZONE_ID` — DEPLOY.md 1.10. The token
+  used this session could not edit DNS, which is why `demo` was a manual record.
+
+---
+
 ## Outstanding
 
 Carried forward until done. Also in the README launch checklist.
 
-Items 4 and 5 wait on item 1.
+Items 4 and 5 are independent of the rest.
 
 | # | Item | Where |
 |---|---|---|
-| 1 | Cloudflare setup is **live on `vakilsaabagra.in`** and the admin sign-in works (2026-10-10). Remaining: add `GITHUB_TOKEN` so the admin can save (1.9), optionally the Cloudflare token for **Attach** (1.10), and delete the unused `ADMIN_TOKEN` secret | `docs/DEPLOY.md` 1.9, 1.10 |
+| 1 | **Done 2026-10-10** — Cloudflare setup, database, admin sign-in, admin saves (`GITHUB_TOKEN`). Optional remainder: the Cloudflare token for the admin's **Attach** button (1.10); without it each microsite address is added by hand. Also delete the session API token (expires 2026-10-17) | `docs/DEPLOY.md` 1.10 |
 | 2 | Remove the labelled `demo-microsite` record when the walkthrough is done, and replace the 20 sample advocates — all carry `chambers@example.com` and `+9199990000xx` — then set `flags.demoNotice: false` | `data/lawyers.json`, `data/site.json` |
-| 3 | The four demo microsites (`ramesh`, `neha`, `deepak`, `rajeev`) have hand-written sample bios. Do **not** add their slugs as Cloudflare custom domains — no subdomain exists and the apex `robots.txt` disallows `/sites/`, so they are unreachable today, and a custom domain is exactly what would make a sample advocate look real | `data/lawyers.json` |
+| 3 | The four sample microsites (`ramesh`, `neha`, `deepak`, `rajeev`) have hand-written sample bios. Do **not** add their slugs as Cloudflare custom domains — they have no DNS record and the apex `robots.txt` disallows `/sites/`, so they are unreachable on purpose, and a custom domain is exactly what would make a sample advocate look real. The admin refuses to attach them. (`demo` is the exception: labelled, and live) | `data/lawyers.json` |
 | 4 | Turn off GitHub Pages. `wrath-labs.github.io/vakilsaabagra/` still serves the first version — a second public copy with no Functions behind it | `docs/DEPLOY.md` 1.8 |
 | 5 | Submit `sitemap.xml` in Google Search Console and set up a Google Business Profile. Was in the README checklist only | Search Console, Google Business |
 
@@ -1183,8 +1232,8 @@ registration, the social links and the business's own email address
 (2026-09-12). Items are renumbered as they close, so "item 3" in an older entry
 means the list as it stood that day.
 
-**Verified as far as is possible locally, needing Cloudflare to finish:**
-subdomain serving (30 middleware assertions pass and microsites render when
-served directly, but "subdomain visible in the address bar" needs the custom
-domain to exist) and D1 writes (33 assertions pass against the real
-`schema.sql` via `node:sqlite`, but the binding is set in the dashboard).
+**Verified live (2026-10-10):** D1 writes (a beacon from the real origin
+landed in `events`), subdomain serving on `demo.vakilsaabagra.in`, the admin
+login and the admin's first save. **Still verified only against fakes:** the
+admin's **Attach** button (Cloudflare calls) and **photo upload** (GitHub
+binary commit) — the partner's test is the first real use of either.
