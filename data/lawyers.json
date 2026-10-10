@@ -2,7 +2,7 @@
   "meta": {
     "city": "Agra",
     "state": "Uttar Pradesh",
-    "lastUpdated": "2026-08-18",
+    "lastUpdated": "2026-10-10",
     "note": "Sample directory entries for demonstration. Replace with verified advocate details before going live. rating and reviewsCount are null on purpose: there is no review pipeline yet, and invented review counts on a legal directory are a trust risk."
   },
   "categories": [
@@ -1071,9 +1071,9 @@
       "experienceYears": 17,
       "primaryCategory": "corporate",
       "categories": [
+        "civil",
         "corporate",
-        "tax-gst",
-        "civil"
+        "tax-gst"
       ],
       "topics": [
         "Company & LLP Incorporation",
