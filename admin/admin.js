@@ -526,7 +526,12 @@
   }
 
   function readForm() {
-    var cats = Array.prototype.map.call(d.querySelectorAll('#ed .cat:checked'), function (c) { return c.value; });
+    var checked = Array.prototype.map.call(d.querySelectorAll('#ed .cat:checked'), function (c) { return c.value; });
+    /* keep the stored order for what was already there, then append new ones,
+       so re-saving an untouched record is not reported as a change */
+    var was = (byId($('ed').getAttribute('data-id')) || {}).categories || [];
+    var cats = was.filter(function (c) { return checked.indexOf(c) !== -1; })
+      .concat(checked.filter(function (c) { return was.indexOf(c) === -1; }));
     var split = function (id) { return val(id).split('\n').map(function (s) { return s.trim(); }).filter(Boolean); };
     var faqs = Array.prototype.map.call(d.querySelectorAll('#ed .faq-row'), function (r) {
       return { q: r.querySelector('.faq-q').value.trim(), a: r.querySelector('.faq-a').value.trim() };

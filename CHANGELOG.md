@@ -1150,7 +1150,15 @@ sits among 20 samples under the "sample listings" notice, but it is public.
 **Remove it once the walkthrough is done** (Admin → Advocates → Demo Microsite →
 Remove), or before the sample advocates are replaced.
 
-**Also.** The admin API tests counted "20 advocates" and "5 microsites" as
+**Found by the first real admin save.** `66d860d` ("update Adv. Rajeev Upadhyay
+(categories)") was the live admin writing to GitHub for the first time — and
+the edit changed nothing but the order of `categories`, because the form
+returned the ticked boxes in the list's order rather than the record's. The form
+now keeps the stored order and appends only newly ticked areas, so re-saving an
+untouched record is no longer reported as a change.
+
+**Also.** The demo's area is "Central Agra" rather than "Agra", which made its
+page title read "… Advocate in Agra, Agra". The admin API tests counted "20 advocates" and "5 microsites" as
 literals and broke the moment the data changed; they now read the counts from
 `data/lawyers.json`.
 
