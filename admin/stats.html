@@ -20,20 +20,26 @@
     <h1 class="mt-2 font-display text-3xl font-bold text-[var(--ink)]">Listing stats</h1>
     <p class="mt-2 text-sm text-[var(--muted)]">
       Anonymous view and contact counts per advocate, straight out of D1. Nothing here
-      identifies a visitor. The admin token is held for this browser tab only and is never
-      written to disk.
+      identifies a visitor. Sign in with the admin password; the session lasts 12 hours
+      and ends when you sign out.
     </p>
   </header>
 
-  <!-- ------------------------------------------------------------- controls -->
-  <form id="f" class="card mt-8 grid gap-4 p-5 sm:p-6 sm:grid-cols-2">
-    <div class="sm:col-span-2">
-      <label for="token" class="mb-1.5 block text-xs font-bold uppercase tracking-[.14em] text-[var(--muted-2)]">Admin token</label>
-      <input id="token" type="password" autocomplete="off" spellcheck="false"
-             placeholder="paste ADMIN_TOKEN"
+  <!-- ------------------------------------------------------------- sign in -->
+  <form id="login" class="card mt-8 hidden gap-4 p-5 sm:p-6" autocomplete="on">
+    <div>
+      <label for="password" class="mb-1.5 block text-xs font-bold uppercase tracking-[.14em] text-[var(--muted-2)]">Admin password</label>
+      <input id="password" type="password" autocomplete="current-password" spellcheck="false"
              class="select-field w-full px-3 py-2.5 text-sm text-[var(--ink)]">
     </div>
+    <div class="flex flex-wrap items-center gap-3">
+      <button type="submit" class="btn btn-primary px-6 py-2.5 text-sm">Sign in</button>
+      <span id="login-status" class="text-sm text-[var(--muted)]"></span>
+    </div>
+  </form>
 
+  <!-- ------------------------------------------------------------- controls -->
+  <form id="f" class="card mt-8 hidden gap-4 p-5 sm:p-6 sm:grid-cols-2">
     <div class="sm:col-span-2">
       <label for="lawyer" class="mb-1.5 block text-xs font-bold uppercase tracking-[.14em] text-[var(--muted-2)]">Advocate</label>
       <select id="lawyer" class="select-field w-full px-3 py-2.5 text-sm text-[var(--ink)]">
@@ -54,6 +60,7 @@
       <button type="submit" class="btn btn-primary px-6 py-2.5 text-sm">Fetch report</button>
       <button type="button" id="this-month" class="btn btn-ghost px-4 py-2.5 text-sm">This month</button>
       <button type="button" id="last-month" class="btn btn-ghost px-4 py-2.5 text-sm">Last month</button>
+      <button type="button" id="signout" class="btn btn-ghost ml-auto px-4 py-2.5 text-sm">Sign out</button>
       <span id="status" class="text-sm text-[var(--muted)]"></span>
     </div>
   </form>
@@ -202,20 +209,70 @@
     el('out').classList.remove('hidden');
   }
 
+  /* -------------------------------------------------------------- sign in */
+  function showLogin(msg) {
+    el('login').classList.remove('hidden');
+    el('login').classList.add('grid');
+    el('f').classList.add('hidden');
+    el('f').classList.remove('grid');
+    el('out').classList.add('hidden');
+    el('login-status').textContent = msg || '';
+    el('password').value = '';
+    el('password').focus();
+  }
+
+  function showReport() {
+    el('login').classList.add('hidden');
+    el('login').classList.remove('grid');
+    el('f').classList.remove('hidden');
+    el('f').classList.add('grid');
+    el('login-status').textContent = '';
+  }
+
+  el('login').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var pw = el('password').value;
+    if (!pw) { el('login-status').textContent = 'Enter the password.'; return; }
+    el('login-status').textContent = 'signing in…';
+    fetch('/api/login', {
+      method: 'POST', credentials: 'same-origin', cache: 'no-store',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ password: pw })
+    })
+      .then(function (r) {
+        return r.json().then(function (body) {
+          if (!r.ok) throw new Error(body.error || ('HTTP ' + r.status));
+          return body;
+        });
+      })
+      .then(function () { el('password').value = ''; showReport(); })
+      .catch(function (err) { el('login-status').textContent = err.message; });
+  });
+
+  el('signout').addEventListener('click', function () {
+    fetch('/api/login', { method: 'DELETE', credentials: 'same-origin' })
+      .then(function () { showLogin('Signed out.'); });
+  });
+
+  fetch('/api/login', { credentials: 'same-origin', cache: 'no-store' })
+    .then(function (r) { return r.json(); })
+    .then(function (b) { if (b.authenticated) showReport(); else showLogin(); })
+    .catch(function () { showLogin(); });
+
   /* ----------------------------------------------------------------- wire */
   el('f').addEventListener('submit', function (ev) {
     ev.preventDefault();
-    var token = el('token').value.trim();
     var id = el('lawyer').value;
-    if (!token || !id) { el('status').textContent = 'Token and advocate are both needed.'; return; }
+    if (!id) { el('status').textContent = 'Pick an advocate.'; return; }
 
     el('status').textContent = 'fetching…';
     var qs = '?lawyer=' + encodeURIComponent(id) +
              '&from=' + encodeURIComponent(el('from').value) +
              '&to=' + encodeURIComponent(el('to').value);
 
-    fetch('/api/stats' + qs, { headers: { 'X-VS-Admin': token }, cache: 'no-store' })
+    fetch('/api/stats' + qs, { credentials: 'same-origin', cache: 'no-store' })
       .then(function (r) {
+        if (r.status === 401) { showLogin('Session ended — please sign in again.'); throw new Error('signed out'); }
         return r.json().then(function (body) {
           if (!r.ok) throw new Error(body.error || ('HTTP ' + r.status));
           return body;

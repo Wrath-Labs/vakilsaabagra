@@ -1000,6 +1000,52 @@ Nothing in `data/` or the HTML changed.
 
 ---
 
+## 2026-10-10 — Admin sign-in replaces the shared token
+
+**Why.** The stats page asked for `ADMIN_TOKEN`, a 64-character string that had
+to be pasted into the Cloudflare dashboard and then again into the page. In
+practice the two values drifted apart (a first `openssl … | pbcopy` run had
+failed, a second generated a different value) and the page answered "not
+authorised" with no way to see why. A secret that cannot be read back is the
+wrong shape for a human to type twice.
+
+**What changed.**
+- `functions/api/login.js` — `GET` reports whether the caller is signed in,
+  `POST {password}` signs in, `DELETE` signs out.
+- `functions/_auth.js` — PBKDF2-SHA256 (100,000 iterations, the Workers
+  maximum) with a per-password salt; sessions are 256-bit random values of which
+  only the SHA-256 is stored; the cookie is `HttpOnly; Secure; SameSite=Strict;
+  Path=/api/`, valid 12 hours.
+- `functions/api/stats.js` — now requires a session. The `X-VS-Admin` header and
+  `ADMIN_TOKEN` are gone; nothing reads the old secret any more.
+- `admin/stats.html` — a sign-in form and a sign-out button instead of the token
+  field; a 401 mid-report returns to the sign-in form.
+- `schema.sql` — `admin_auth`, `admin_sessions`, `admin_attempts`.
+- `tools/set-admin-password.js` — asks for the password twice with the typing
+  hidden and prints the SQL to run in the D1 console. The password is never
+  written anywhere; what is printed is a salted hash.
+
+**Deliberate limits.** One admin, not a user system. Eight failed sign-ins lock
+sign-in for 15 minutes, counted site-wide rather than per address, because the
+schema's rule is that no IP is stored — the cost is that someone hammering the
+form can lock the owner out for 15 minutes, which is a nuisance and not a
+breach. A cross-origin `POST` to `/api/login` is refused with 403.
+
+**Verified.** 20 assertions run the real Function code against the real
+`schema.sql` in `node:sqlite`: no password set → 503, wrong password → 401,
+foreign `Origin` → 403, correct password → 200 with the right cookie attributes,
+only the token's hash in the table, forged and malformed cookies → 401, sign-out
+and expiry revoke the session, eight failures → 429 and the right password is
+still refused until the window passes, and the password appears nowhere in the
+database. The password tool was run under a pseudo-terminal and does not echo.
+The three tables were created in the live D1 database.
+
+**Still to do after deploying.** Run `node tools/set-admin-password.js` and
+paste its output into the D1 console (DEPLOY.md 1.5). The `ADMIN_TOKEN` secret in
+Cloudflare is now unused and can be deleted.
+
+---
+
 ## Outstanding
 
 Carried forward until done. Also in the README launch checklist.
@@ -1008,7 +1054,7 @@ Items 4 and 5 wait on item 1.
 
 | # | Item | Where |
 |---|---|---|
-| 1 | Cloudflare setup is **live on `vakilsaabagra.in`** (2026-10-10). Remaining: set the `ADMIN_TOKEN` secret and retry the deployment (1.5), so `/api/stats` and the admin page work | `docs/DEPLOY.md` 1.5 |
+| 1 | Cloudflare setup is **live on `vakilsaabagra.in`** (2026-10-10). Remaining: deploy the admin sign-in, then set the admin password with `node tools/set-admin-password.js` (1.5); delete the now-unused `ADMIN_TOKEN` secret | `docs/DEPLOY.md` 1.5 |
 | 2 | Replace the 20 sample advocates — all carry `chambers@example.com` and `+9199990000xx` — then set `flags.demoNotice: false` | `data/lawyers.json`, `data/site.json` |
 | 3 | The four demo microsites (`ramesh`, `neha`, `deepak`, `rajeev`) have hand-written sample bios. Do **not** add their slugs as Cloudflare custom domains — no subdomain exists and the apex `robots.txt` disallows `/sites/`, so they are unreachable today, and a custom domain is exactly what would make a sample advocate look real | `data/lawyers.json` |
 | 4 | Turn off GitHub Pages. `wrath-labs.github.io/vakilsaabagra/` still serves the first version — a second public copy with no Functions behind it | `docs/DEPLOY.md` 1.8 |

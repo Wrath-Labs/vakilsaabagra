@@ -4,14 +4,14 @@
  * Reads back what /api/track counted, for one advocate over one period. This
  * is what the monthly renewal message is built from.
  *
- * Protected by a shared secret: send it as the X-VS-Admin header. The token
- * lives in the Cloudflare Pages dashboard under
- *   Settings → Environment variables → ADMIN_TOKEN
- * and must never be committed to this repo.
+ * Requires an admin session: sign in at /admin/stats.html, which posts the
+ * password to /api/login and receives the vs_admin cookie. Nothing here can be
+ * reached with a header or a query-string secret.
  *
  * `to` is inclusive. Both dates default to the current calendar month.
  */
 import IDS from '../_ids.js';
+import { isAdmin } from '../_auth.js';
 
 const known = new Set(IDS);
 const DAY = 86400000;
@@ -24,15 +24,6 @@ function json(body, status) {
   });
 }
 
-/** Compares in constant time, so a wrong token leaks nothing by how long it took. */
-function tokenMatches(given, expected) {
-  if (typeof given !== 'string' || typeof expected !== 'string') return false;
-  if (given.length !== expected.length) return false;
-  let diff = 0;
-  for (let i = 0; i < given.length; i++) diff |= given.charCodeAt(i) ^ expected.charCodeAt(i);
-  return diff === 0;
-}
-
 function monthStart() {
   const d = new Date();
   return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-01`;
@@ -41,11 +32,8 @@ function monthStart() {
 export async function onRequest({ request, env }) {
   if (request.method !== 'GET') return json({ error: 'GET only' }, 405);
 
-  if (!env.ADMIN_TOKEN) return json({ error: 'ADMIN_TOKEN is not configured' }, 500);
-  if (!tokenMatches(request.headers.get('X-VS-Admin'), env.ADMIN_TOKEN)) {
-    return json({ error: 'not authorised' }, 401);
-  }
   if (!env.DB) return json({ error: 'D1 binding "DB" is not configured' }, 500);
+  if (!(await isAdmin(request, env))) return json({ error: 'not authorised' }, 401);
 
   const url = new URL(request.url);
   const lawyer = url.searchParams.get('lawyer') || '';

@@ -122,25 +122,28 @@ the binding is done in the dashboard:
 > breaks — you simply record nothing. That is deliberate; tracking must never
 > cost a lead.
 
-### 1.5 Set the admin token
+### 1.5 Set the admin password
 
-1. Generate a long random string, at the moment you set it — not ahead of
-   time, where it only sits in a file somewhere:
+The stats page signs in with one password. It is stored as a salted hash in D1,
+so there is no secret to paste into the dashboard and nothing to retry-deploy.
+
+1. In a **real Terminal** (not the Claude `!` prompt — it needs a terminal to
+   hide what you type), from the repository root:
    ```bash
-   openssl rand -hex 32 | tee /dev/tty | pbcopy
+   node tools/set-admin-password.js
    ```
-2. Pages project → **Settings** → **Variables and Secrets** (older dashboards:
-   **Environment variables**) → **Add**:
-   - **Type:** **Secret** (encrypted)
-   - **Name:** `ADMIN_TOKEN`
-   - **Value:** the string from step 1
-   - **Environment:** Production
-3. Save, then **Deployments** → the latest one → **Retry deployment**. A
-   binding or secret only reaches a *new* deployment, so this one retry also
-   picks up the `DB` binding from 1.4.
+   Type a password of at least 12 characters, twice. A few random words is fine.
+2. It prints two SQL statements. Cloudflare dashboard → **Workers & Pages** →
+   **D1 SQL Database** → `vakilsaabagra` → **Console** → paste both → **Execute**.
+3. Open `https://vakilsaabagra.in/admin/stats.html` and sign in.
 
-Store the token in a password manager. **Never commit it.** It is the only thing
-protecting `/api/stats`, and anyone holding it can read every advocate's numbers.
+Store the password in a password manager. **Never commit it.** To change it,
+run the tool again; that also signs out every session. If you forget it, there
+is no recovery — run the tool and paste the new statement; it replaces the old.
+
+The three admin tables (`admin_auth`, `admin_sessions`, `admin_attempts`) are in
+`schema.sql`, so step 1.4's schema run already created them. On a database made
+before this change, run `schema.sql` again; every statement is idempotent.
 
 ### 1.6 Check it works
 
@@ -153,7 +156,7 @@ curl -s -o /dev/null -w '%{http_code}\n' -X POST \
   -H 'Origin: https://example.com' -H 'Content-Type: application/json' \
   -d '{"type":"view","lawyerId":"x"}' https://vakilsaabagra.in/api/track
 
-# should be 401 without the token, 200 with it
+# should be 401 — signed-out requests are refused
 curl -s -o /dev/null -w '%{http_code}\n' \
   'https://vakilsaabagra.in/api/stats?lawyer=<some-id>'
 ```
@@ -315,7 +318,8 @@ a proper 404 page. Remove it only if they are not coming back.
 
 1. Open `https://vakilsaabagra.in/admin/stats.html`. It is not linked from
    anywhere and is `Disallow`ed in `robots.txt`.
-2. Paste the `ADMIN_TOKEN`.
+2. Sign in with the admin password. The session lasts 12 hours; **Sign out**
+   ends it sooner.
 3. Pick the advocate, click **This month** (or **Last month**), then
    **Fetch report**.
 4. Read the numbers: profile views, calls, WhatsApp taps, number copies, how
@@ -361,8 +365,13 @@ not, if they are expired); `navigator.doNotTrack` is not set in the browser you
 are testing with. `/api/track` returning `204` proves nothing — it returns `204`
 on failure too, by design.
 
-**`/api/stats` returns 401.** Wrong or missing `X-VS-Admin` token.
-**`/api/stats` returns 500.** `ADMIN_TOKEN` or the `DB` binding is not set.
+**`/api/stats` returns 401.** No session — sign in at `/admin/stats.html`.
+**Sign-in says "no admin password has been set yet".** Run
+`node tools/set-admin-password.js` and paste what it prints into the D1 console.
+**Sign-in says "too many attempts".** Eight wrong passwords lock sign-in for 15
+minutes. Wait, or run `DELETE FROM admin_attempts;` in the D1 console.
+**Sign-in or `/api/stats` returns 500.** The `DB` binding is missing, or the
+admin tables do not exist yet — run `schema.sql` again.
 
 ---
 

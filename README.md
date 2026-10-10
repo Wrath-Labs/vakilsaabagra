@@ -470,8 +470,8 @@ Then in the Cloudflare Pages project:
 - **Settings → Functions → D1 database bindings** — variable name `DB`, bound to
   the `vakilsaabagra` database. The endpoint returns `204` and writes nothing if
   the binding is missing, so a misconfiguration loses stats but never breaks a page.
-- **Settings → Environment variables** — `ADMIN_TOKEN`, a long random string.
-  It is the only thing protecting `/api/stats`. **Never commit it.**
+- **No admin secret.** The stats page signs in with a password stored as a salted
+  hash in D1; set it with `node tools/set-admin-password.js`.
 - Optional, previews only: `ALLOW_LOCAL_ORIGIN = 1` lets `localhost` post
   events while you test with `wrangler pages dev`. Leave it unset in production.
 
@@ -856,7 +856,9 @@ functions/_middleware.js  host routing: subdomain → sites/<slug>/
 functions/_slugs.js       generated; the slug map the middleware imports
 functions/_ids.js         generated; valid advocate ids for /api/track
 functions/api/track.js    POST — counts a view or a contact click
-functions/api/stats.js    GET  — reads it back, behind ADMIN_TOKEN
+functions/api/stats.js    GET  — reads it back, behind an admin session
+functions/api/login.js    GET/POST/DELETE — admin sign-in, session cookie
+functions/_auth.js        password hashing and session checks
 schema.sql                the D1 table and its indexes
 
 tools/content.js          JSON → HTML: config, nav, footer, prices, all copy
@@ -933,7 +935,7 @@ The short version:
 | Output directory | `.` (the repository root) |
 | Custom domains | `vakilsaabagra.in`, `www.vakilsaabagra.in`, and one per microsite advocate |
 | Database | Cloudflare D1, bound as `DB` |
-| Secret | `ADMIN_TOKEN`, set in the dashboard, never committed |
+| Admin sign-in | one password, stored as a salted hash in D1 (`node tools/set-admin-password.js`) |
 
 `vakilsaabagra.in` is canonical. `www` serves the same site and the middleware
 passes both through untouched. `*.pages.dev` preview deployments and `localhost`
@@ -946,8 +948,8 @@ Cloudflare dashboard → your Pages project:
 - **Settings → Bindings → D1** — variable name `DB`, database `vakilsaabagra`.
   Without it `/api/track` still returns `204` and no page breaks; you simply
   record nothing.
-- **Settings → Environment variables** — `ADMIN_TOKEN`, marked as a Secret. It
-  is the only thing protecting `/api/stats`.
+- **No admin secret.** Sign-in is a password stored as a salted hash in D1, set
+  with `node tools/set-admin-password.js` and the SQL it prints.
 - Optional, previews only — `ALLOW_LOCAL_ORIGIN = 1` lets `localhost` post
   events while testing. Leave it unset in production.
 
@@ -983,7 +985,7 @@ URLs, because the record never left `data/lawyers.json`.
 
 ### Sending the monthly numbers
 
-Open `/admin/stats.html`, paste the `ADMIN_TOKEN`, pick the advocate and the
+Open `/admin/stats.html`, sign in with the admin password, pick the advocate and the
 month, and press **Fetch report**. It shows views, calls, WhatsApp taps, number
 copies and impressions, the conversion rates, a day-by-day table and the top
 searches for the period. **Copy message** produces the Hindi WhatsApp message
