@@ -53,8 +53,14 @@ until the domain shows **Active** in Cloudflare.
 
 ### 1.2 Create the Pages project
 
-1. Cloudflare dashboard → **Workers & Pages** → **Create** → the **Pages** tab →
-   **Import an existing Git repository** (older dashboards: **Connect to Git**).
+1. Cloudflare dashboard → **Workers & Pages** → **Create application**. The
+   page defaults to building a **Worker**, which is the wrong product here: it
+   has a *Deploy command* field, tries to upload the whole repository, and
+   ignores `functions/`. Click the small link at the bottom,
+   **"Looking to deploy Pages? Get started"** → **Import an existing Git
+   repository**. The right form has a *Build output directory* and **no**
+   *Deploy command*. If you land on a Worker by mistake, delete it first so the
+   name is free.
 2. Authorise GitHub. When GitHub asks where to install, choose **Only select
    repositories** → **`Wrath-Labs/vakilsaabagra`**. The repository belongs to an
    organisation, so if you are not an owner of Wrath-Labs, an owner has to
@@ -152,17 +158,12 @@ curl -s -o /dev/null -w '%{http_code}\n' \
   'https://vakilsaabagra.in/api/stats?lawyer=<some-id>'
 ```
 
-### 1.7 An address on the domain (optional, after 1.1)
+### 1.7 Business email — nothing to set up
 
-1. Cloudflare → `vakilsaabagra.in` → **Email** → **Email Routing** → enable.
-   Cloudflare adds the `MX` and `TXT` records itself.
-2. **Destination addresses** → add `vakilsaabagra@gmail.com` → click the
-   verification link Cloudflare sends to that inbox.
-3. **Routing rules** → create `hello@vakilsaabagra.in` → forward to it.
-4. Put the new address in `data/site.json` → `business.email` and `npm run build`.
-
-This receives only; replies still go out from the Gmail unless it is set up to
-**Send mail as** the new address.
+The site publishes one address, `vakilsaabagra@gmail.com`, and no address on the
+domain. That is deliberate: do not set up Email Routing or a `hello@` alias, and
+do not publish any other address. It lives in `data/site.json` →
+`business.email` and is the only email on the site.
 
 ### 1.8 Turn off the old GitHub Pages copy (after 1.3)
 

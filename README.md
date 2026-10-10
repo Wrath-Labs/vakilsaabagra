@@ -397,9 +397,8 @@ artefact.
 **`vakilsaabagra@gmail.com` — the business's own Gmail**, no longer a founder's
 personal address. Published on the contact page and in the JSON-LD as the
 LocalBusiness `email` (`js/home.js:166`), so it is a public address and will be
-scraped. An address on the domain would still read better and is on the
-outstanding list; once DNS is on Cloudflare, Email Routing can forward one to
-this inbox for free.
+scraped. It is the only address on the site, by decision: no address on the
+domain and no `hello@` alias is published or planned.
 
 ### The social links
 
@@ -795,12 +794,10 @@ Still outstanding before this is a real, public site, in order:
    `flags.demoNotice: false` — that removes the "sample listings" line from the
    footer of the directory and of every microsite. The sample records also carry
    `chambers@example.com` and `+9199990000xx` numbers.
-4. **An address on the domain** — `hello@vakilsaabagra.in`, forwarded to
-   `vakilsaabagra@gmail.com` by Cloudflare Email Routing once DNS is there.
-5. **Turn off GitHub Pages** on the repository once Cloudflare serves the site.
+4. **Turn off GitHub Pages** on the repository once Cloudflare serves the site.
    The first version was hosted there and `wrath-labs.github.io/vakilsaabagra/`
    still answers — a second public copy with no Functions behind it.
-6. Submit `sitemap.xml` in Google Search Console, and set up a Google Business
+5. Submit `sitemap.xml` in Google Search Console, and set up a Google Business
    Profile for Agra — for local search that matters more than anything on-page.
 
 **If you deploy to `*.pages.dev` before the domain exists**, note that every page

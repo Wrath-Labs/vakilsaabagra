@@ -966,20 +966,53 @@ otherwise step 1.5 generates a fresh one.
 
 ---
 
+## 2026-10-10 — Cloudflare go-live, and one published email address
+
+**Live.** `vakilsaabagra.in` and `www.vakilsaabagra.in` now serve the site from
+Cloudflare Pages over HTTPS. The nameserver change went through at Hostinger and
+the zone is Active. The first Pages project attempt was created as a *Workers*
+project (the Create page defaults to Workers), whose `npx wrangler deploy`
+tried to upload the whole repository and failed on `node_modules/workerd`
+(129 MiB, over the 25 MiB asset limit); it would also have ignored `functions/`.
+Re-created from the Pages flow, which keeps `functions/` live. DEPLOY.md 1.2
+now says where the Pages link is and how to tell the two forms apart.
+
+**Where we stopped.** Left for next session: the `ADMIN_TOKEN` secret (set by
+the user in the dashboard, then Retry deployment, then confirm `/api/stats` is
+401 without the token and 200 with it); turn off GitHub Pages (1.8); replace the
+20 sample advocates; Search Console. The Cloudflare API token used this session
+sits in the scratchpad outside the repo and expires 2026-10-17 — delete it at
+Cloudflare. An unverified Email Routing destination for the Gmail address was
+created by mistake and could not be deleted ("created too recently"); it is
+inert.
+
+**Verified against the live domain.** `/api/track` GET is 405, a foreign `Origin`
+is 403, a same-origin view beacon is 204 and lands in D1 (test row deleted).
+The D1 database `vakilsaabagra` exists with the schema applied and is bound as
+`DB`. `/api/stats` returns 500 until `ADMIN_TOKEN` is set — that is the
+remaining part of 1.5.
+
+**Decision: `vakilsaabagra@gmail.com` is the only email address on the site.**
+No address on the domain and no `hello@` alias. DEPLOY.md 1.7 (Email Routing)
+is now a note saying so, and the README launch checklist drops the item. The
+site data already used the Gmail address; only the docs mentioned `hello@`.
+Nothing in `data/` or the HTML changed.
+
+---
+
 ## Outstanding
 
 Carried forward until done. Also in the README launch checklist.
 
-Item 1 blocks everything public; 5 and 6 wait for it.
+Items 4 and 5 wait on item 1.
 
 | # | Item | Where |
 |---|---|---|
-| 1 | Cloudflare setup. **Zone added 2026-09-12; Hostinger refused the nameserver change for 24 hours** — retry after 18:00 IST on 2026-09-13 at 1.1 step 4. 1.2, 1.4, 1.5 can go ahead meanwhile; 1.3 waits for the zone to be Active | `docs/DEPLOY.md` Part 1 |
+| 1 | Cloudflare setup is **live on `vakilsaabagra.in`** (2026-10-10). Remaining: set the `ADMIN_TOKEN` secret and retry the deployment (1.5), so `/api/stats` and the admin page work | `docs/DEPLOY.md` 1.5 |
 | 2 | Replace the 20 sample advocates — all carry `chambers@example.com` and `+9199990000xx` — then set `flags.demoNotice: false` | `data/lawyers.json`, `data/site.json` |
 | 3 | The four demo microsites (`ramesh`, `neha`, `deepak`, `rajeev`) have hand-written sample bios. Do **not** add their slugs as Cloudflare custom domains — no subdomain exists and the apex `robots.txt` disallows `/sites/`, so they are unreachable today, and a custom domain is exactly what would make a sample advocate look real | `data/lawyers.json` |
-| 4 | An address on the domain — `hello@vakilsaabagra.in` via Cloudflare Email Routing, forwarding to `vakilsaabagra@gmail.com` | `docs/DEPLOY.md` 1.7 |
-| 5 | Turn off GitHub Pages. `wrath-labs.github.io/vakilsaabagra/` still serves the first version — a second public copy with no Functions behind it | `docs/DEPLOY.md` 1.8 |
-| 6 | Submit `sitemap.xml` in Google Search Console and set up a Google Business Profile. Was in the README checklist only | Search Console, Google Business |
+| 4 | Turn off GitHub Pages. `wrath-labs.github.io/vakilsaabagra/` still serves the first version — a second public copy with no Functions behind it | `docs/DEPLOY.md` 1.8 |
+| 5 | Submit `sitemap.xml` in Google Search Console and set up a Google Business Profile. Was in the README checklist only | Search Console, Google Business |
 
 **Done.** The phone number and the contact email (2026-08-24), then the domain
 registration, the social links and the business's own email address
