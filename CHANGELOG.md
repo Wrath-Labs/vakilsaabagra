@@ -1124,6 +1124,38 @@ is served.
 
 ---
 
+## 2026-10-10 — A labelled demo microsite at demo.vakilsaabagra.in
+
+**Why.** Every microsite address belongs to a sample advocate and is deliberately
+not attached, so there was nothing to *look at* on a real subdomain, and no way
+to show a prospective advocate what they would be buying.
+
+**What.** One new record, `demo-microsite` ("Adv. Demo Microsite"), with the
+microsite on slug `demo`. It is labelled as a demonstration in its name, bio,
+tagline, FAQ and address, and its enrolment is `DEMO/00000/2026`. Contact details
+are the business's own (`+918954402360`, `vakilsaabagra@gmail.com`), so anyone
+who calls reaches us rather than a stranger. Plan `none`, no `paidUntil`, which is
+how every sample is "live".
+
+**Decision: not marked as a sample record.** The sample marker
+(`@example.com` / `+9199990000xx`) is what stops the admin attaching a real
+domain, which is the right rule for invented advocates. This record is the
+opposite case: a page we want on a real address, clearly labelled. Keeping it
+off the marker lets the admin's **Attach** button work on it as it would for a
+real advocate, which is the flow being demonstrated.
+
+**Trade-off, stated plainly.** A live record appears in the directory, the
+sitemap and search results as well as on its own subdomain. It is labelled and it
+sits among 20 samples under the "sample listings" notice, but it is public.
+**Remove it once the walkthrough is done** (Admin → Advocates → Demo Microsite →
+Remove), or before the sample advocates are replaced.
+
+**Also.** The admin API tests counted "20 advocates" and "5 microsites" as
+literals and broke the moment the data changed; they now read the counts from
+`data/lawyers.json`.
+
+---
+
 ## Outstanding
 
 Carried forward until done. Also in the README launch checklist.
@@ -1133,7 +1165,7 @@ Items 4 and 5 wait on item 1.
 | # | Item | Where |
 |---|---|---|
 | 1 | Cloudflare setup is **live on `vakilsaabagra.in`** and the admin sign-in works (2026-10-10). Remaining: add `GITHUB_TOKEN` so the admin can save (1.9), optionally the Cloudflare token for **Attach** (1.10), and delete the unused `ADMIN_TOKEN` secret | `docs/DEPLOY.md` 1.9, 1.10 |
-| 2 | Replace the 20 sample advocates — all carry `chambers@example.com` and `+9199990000xx` — then set `flags.demoNotice: false` | `data/lawyers.json`, `data/site.json` |
+| 2 | Remove the labelled `demo-microsite` record when the walkthrough is done, and replace the 20 sample advocates — all carry `chambers@example.com` and `+9199990000xx` — then set `flags.demoNotice: false` | `data/lawyers.json`, `data/site.json` |
 | 3 | The four demo microsites (`ramesh`, `neha`, `deepak`, `rajeev`) have hand-written sample bios. Do **not** add their slugs as Cloudflare custom domains — no subdomain exists and the apex `robots.txt` disallows `/sites/`, so they are unreachable today, and a custom domain is exactly what would make a sample advocate look real | `data/lawyers.json` |
 | 4 | Turn off GitHub Pages. `wrath-labs.github.io/vakilsaabagra/` still serves the first version — a second public copy with no Functions behind it | `docs/DEPLOY.md` 1.8 |
 | 5 | Submit `sitemap.xml` in Google Search Console and set up a Google Business Profile. Was in the README checklist only | Search Console, Google Business |

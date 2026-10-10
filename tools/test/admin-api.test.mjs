@@ -54,6 +54,8 @@ const lawyers=await load('lawyers.js'), one=await load('lawyers/[id].js'), photo
 const call=(fn,method,p,{body,cookie=COOKIE,params={},e=env,origin}={})=>fn({env:e,params,request:new Request('https://vakilsaabagra.in'+p,{method,headers:{cookie,'content-type':'application/json',...(origin?{origin}:{})},body:body===undefined?undefined:JSON.stringify(body)})});
 let pass=0,fail=0; const ok=(c,m)=>{if(c){pass++;console.log('  ok  ',m)}else{fail++;console.log('  FAIL',m)}};
 const jb=async(r)=>r.json();
+const N0=JSON.parse(readFileSync(R+'/data/lawyers.json','utf8')).lawyers.length;
+const SITES0=JSON.parse(readFileSync(R+'/data/lawyers.json','utf8')).lawyers.filter(l=>l.microsite&&l.microsite.enabled).length;
 const db0=()=>JSON.parse(Buffer.from(store.get('data/lawyers.json').bytes).toString());
 
 console.log('guards');
@@ -65,7 +67,7 @@ let st=await jb(await call(status,'GET','/api/admin/status')); ok(st.github&&st.
 
 console.log('read');
 let r=await call(lawyers,'GET','/api/admin/lawyers'); let j=await jb(r);
-ok(r.status===200 && j.lawyers.length===20 && j.lawyers[0].listing,'lists 20 advocates including the billing block');
+ok(r.status===200 && j.lawyers.length===N0 && j.lawyers[0].listing,'lists every advocate ('+N0+') including the billing block');
 
 console.log('add');
 const input={name:'Adv. Ishaan Trivedi',phone:'+919811122233',email:'priya@example.org',primaryCategory:'family',categories:['family','civil'],experienceYears:'9',
@@ -75,7 +77,7 @@ const input={name:'Adv. Ishaan Trivedi',phone:'+919811122233',email:'priya@examp
 r=await call(lawyers,'POST','/api/admin/lawyers',{body:input}); j=await jb(r); if(r.status!==201) console.log('   DEBUG',r.status,JSON.stringify(j).slice(0,500));
 ok(r.status===201 && j.id==='ishaan-trivedi','POST creates id ishaan-trivedi');
 let d=db0(); const p=d.lawyers.find(l=>l.id==='ishaan-trivedi');
-ok(d.lawyers.length===21 && p.experienceYears===9 && p.whatsapp==='+919811122233','record stored, number coerced, whatsapp defaults to phone');
+ok(d.lawyers.length===N0+1 && p.experienceYears===9 && p.whatsapp==='+919811122233','record stored, number coerced, whatsapp defaults to phone');
 ok(p.microsite.faqs.length===1 && !('evil' in p) && !('evil' in p.microsite),'blank FAQ dropped, unknown keys ignored');
 ok(p.listing.onboardedOn===new Date().toISOString().slice(0,10),'onboardedOn defaults to today');
 ok(commits.at(-1).msg==='admin: add Adv. Ishaan Trivedi','commit message names the advocate');
@@ -117,7 +119,7 @@ console.log('delete');
 r=await call(one,'DELETE','/x',{params:{id:'ishaan-trivedi'},body:{}}); ok(r.status===400,'DELETE without confirm -> 400');
 ok(db0().lawyers.some(l=>l.id==='ishaan-trivedi'),'...and nothing removed');
 r=await call(one,'DELETE','/x',{params:{id:'ishaan-trivedi'},body:{confirm:'ishaan-trivedi'}}); ok(r.status===200 && !db0().lawyers.some(l=>l.id==='ishaan-trivedi'),'DELETE with confirm removes the record');
-ok(db0().lawyers.length===20,'back to 20 advocates');
+ok(db0().lawyers.length===N0,'back to the original '+N0+' advocates');
 
 console.log('photo');
 const png=Buffer.concat([Buffer.from([0x89,0x50,0x4e,0x47,0x0d,0x0a,0x1a,0x0a]),Buffer.alloc(200)]);
@@ -153,5 +155,5 @@ console.log('the committed file still builds');
 const tmp=mkdtempSync(path.join(os.tmpdir(),'vs-'));
 cpSync(R,tmp,{recursive:true,filter:(s)=>!/node_modules|\.git(\/|$)/.test(s)});
 writeFileSync(tmp+'/data/lawyers.json',store.get('data/lawyers.json').bytes);
-let out; try{ out=execFileSync('node',[tmp+'/tools/sync.js'],{encoding:'utf8',cwd:tmp}); ok(/live advocates/.test(out)&&/5 microsites/.test(out),'tools/sync.js accepts it and builds 5 microsites (4 sample + the new one)'); }catch(e){ ok(false,'sync.js rejected: '+(e.stderr||e.message).slice(0,300)); }
+let out; try{ out=execFileSync('node',[tmp+'/tools/sync.js'],{encoding:'utf8',cwd:tmp}); ok(/live advocates/.test(out)&&new RegExp('\\b'+(SITES0+1)+' microsites').test(out),'tools/sync.js accepts it and builds '+(SITES0+1)+' microsites (existing + the new one)'); }catch(e){ ok(false,'sync.js rejected: '+(e.stderr||e.message).slice(0,300)); }
 console.log(`\n${pass} passed, ${fail} failed`); process.exit(fail?1:0);

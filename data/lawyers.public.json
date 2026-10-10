@@ -2,7 +2,7 @@
   "meta": {
     "city": "Agra",
     "state": "Uttar Pradesh",
-    "lastUpdated": "2026-08-18",
+    "lastUpdated": "2026-10-10",
     "note": "Sample directory entries for demonstration. Replace with verified advocate details before going live. rating and reviewsCount are null on purpose: there is no review pipeline yet, and invented review counts on a legal directory are a trust risk."
   },
   "categories": [
@@ -859,9 +859,9 @@
       "experienceYears": 17,
       "primaryCategory": "corporate",
       "categories": [
+        "civil",
         "corporate",
-        "tax-gst",
-        "civil"
+        "tax-gst"
       ],
       "topics": [
         "Company & LLP Incorporation",
@@ -1799,6 +1799,57 @@
       "microsite": {
         "enabled": false,
         "slug": null
+      }
+    },
+    {
+      "id": "demo-microsite",
+      "name": "Adv. Demo Microsite",
+      "photo": "assets/lawyers/demo-microsite.svg",
+      "experienceYears": 10,
+      "primaryCategory": "civil",
+      "categories": [
+        "civil"
+      ],
+      "topics": [
+        "Injunction & Stay",
+        "Specific Performance",
+        "Money Recovery Suit"
+      ],
+      "topicsHi": [],
+      "about": "This is a demonstration profile used to show advocates what a Vakil Saab Agra microsite looks like. It is not a real advocate.",
+      "aboutHi": "",
+      "highlights": [
+        "A demonstration of a personal microsite",
+        "Own address, own writing, own contact details"
+      ],
+      "highlightsHi": [],
+      "languages": [
+        "Hindi",
+        "English"
+      ],
+      "courts": [
+        "District Court, Agra"
+      ],
+      "location": {
+        "area": "Agra",
+        "areaHi": "",
+        "address": "Demonstration page — not a real chamber, Agra, Uttar Pradesh"
+      },
+      "consultationFee": null,
+      "feeNote": "",
+      "availability": "Demonstration only",
+      "phone": "+918954402360",
+      "whatsapp": "+918954402360",
+      "email": "vakilsaabagra@gmail.com",
+      "enrollment": "DEMO/00000/2026",
+      "education": [],
+      "rating": null,
+      "reviewsCount": null,
+      "verified": false,
+      "featured": false,
+      "microsite": {
+        "enabled": true,
+        "slug": "demo"
       }
     }
   ]

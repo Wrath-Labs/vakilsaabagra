@@ -3,5 +3,6 @@ export default {
   "ramesh": "ramesh-chandra-chauhan",
   "neha": "neha-sharma",
   "deepak": "deepak-goyal",
-  "rajeev": "rajeev-upadhyay"
+  "rajeev": "rajeev-upadhyay",
+  "demo": "demo-microsite"
 };

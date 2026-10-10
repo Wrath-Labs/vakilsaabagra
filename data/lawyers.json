@@ -2200,6 +2200,77 @@
         "faqs": [],
         "accent": "gold"
       }
+    },
+    {
+      "id": "demo-microsite",
+      "name": "Adv. Demo Microsite",
+      "photo": "assets/lawyers/demo-microsite.svg",
+      "experienceYears": 10,
+      "primaryCategory": "civil",
+      "categories": [
+        "civil"
+      ],
+      "topics": [
+        "Injunction & Stay",
+        "Specific Performance",
+        "Money Recovery Suit"
+      ],
+      "topicsHi": [],
+      "about": "This is a demonstration profile used to show advocates what a Vakil Saab Agra microsite looks like. It is not a real advocate.",
+      "aboutHi": "",
+      "highlights": [
+        "A demonstration of a personal microsite",
+        "Own address, own writing, own contact details"
+      ],
+      "highlightsHi": [],
+      "languages": [
+        "Hindi",
+        "English"
+      ],
+      "courts": [
+        "District Court, Agra"
+      ],
+      "location": {
+        "area": "Agra",
+        "areaHi": "",
+        "address": "Demonstration page — not a real chamber, Agra, Uttar Pradesh"
+      },
+      "consultationFee": null,
+      "feeNote": "",
+      "availability": "Demonstration only",
+      "phone": "+918954402360",
+      "whatsapp": "+918954402360",
+      "email": "vakilsaabagra@gmail.com",
+      "enrollment": "DEMO/00000/2026",
+      "education": [],
+      "rating": null,
+      "reviewsCount": null,
+      "verified": false,
+      "featured": false,
+      "featuredUntil": null,
+      "listing": {
+        "plan": "none",
+        "paidUntil": null,
+        "active": true,
+        "onboardedOn": "2026-10-10"
+      },
+      "microsite": {
+        "enabled": true,
+        "slug": "demo",
+        "tagline": "What your own microsite on Vakil Saab Agra looks like",
+        "longAbout": "This page is a demonstration. It shows what an advocate gets when they take a microsite with their listing: a page of their own at their own address, written in their own words, with their courts, their practice areas, their contact details and the questions clients most often ask.\n\nThe directory listing is the thing that gets an advocate found by someone searching for a lawyer in Agra. The microsite is the page the advocate can put on a visiting card, a WhatsApp status or a signature, and which makes sense to someone who has never heard of the directory.\n\nNothing here is a real advocate, a real chamber or real legal advice. If you are an advocate in Agra and would like a page like this, contact Vakil Saab Agra using the details on this page.",
+        "faqs": [
+          {
+            "q": "Is this a real advocate?",
+            "a": "No. This is a demonstration page so that advocates can see what a microsite looks like before they decide."
+          },
+          {
+            "q": "How do I get a page like this?",
+            "a": "Contact Vakil Saab Agra on the number or email shown here. The microsite is priced separately from the listing — see the pricing page."
+          }
+        ],
+        "accent": "navy"
+      }
     }
   ]
 }

@@ -1,0 +1,5 @@
+# Adv. Demo Microsite — demo.vakilsaabagra.in
+User-agent: *
+Allow: /
+
+Sitemap: https://demo.vakilsaabagra.in/sitemap.xml
